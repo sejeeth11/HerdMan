@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_animal_registration"
+            android:title="1 Animal Registration" />
+
+        <item
+            android:id="@+id/nav_breeding_details"
+            android:title="2 Breeding Details" />
+
+        <item
+            android:id="@+id/nav_purchase_details"
+            android:title="3 Purchase Details" />
+
+        <item
+            android:id="@+id/nav_parent_details"
+            android:title="4 Parent Details" />
+
+        <item
+            android:id="@+id/nav_insurance_details"
+            android:title="5 Insurance Details" />
+
+        <item
+            android:id="@+id/nav_other_details"
+            android:title="6 Other Details" />
+
+    </group>
+
+</menu>

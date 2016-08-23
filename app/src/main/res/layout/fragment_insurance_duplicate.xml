@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/profile_icon" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/text_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/masterpolicyno"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Master Policy Number"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/calvingDateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/tansaction_details"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Transaction Details"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/profile_icon" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/hypo_lab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/hypo"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Hypothecation Number"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/agent_lab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/agent_name"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Agent Name"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/insurance_lab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/insurance_company"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Insurance Company"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/calvingTypeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/policy_lab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/policy_period"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Policy Period"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/policy_lab_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/policy_amount"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Policy Amount (RS)"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/pem_lab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/premium_amount"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Premium Amount (Rs)"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/issue_lab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/issue_date"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Issue date"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+                <Button
+                    android:id="@+id/prevButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#6c9c48"
+                    android:text="PREVIOUS"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#6c9c48"
+                    android:text="NEXT"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

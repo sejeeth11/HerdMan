@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/idNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:hint="Select Id"
+                    android:textSize="@dimen/text_size_medium"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:id="@+id/cattleError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff0000"
+                    android:paddingLeft="10dp"
+                    android:visibility="gone"
+                    android:text="CATTLE WITH THIS ID IS ALREADY REGISTERED"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/herdNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/herdName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_select_herd" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lotNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lotName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_select_lot" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ownerNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ownerName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_select_owner" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/birthDateGroupLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RadioGroup
+                        android:id="@+id/birthDateGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/birthDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Birth Date"/>
+
+                        <RadioButton
+                            android:id="@+id/age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Age"  />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/birthDateDateEdiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Birth Date"
+                        android:background="#aeaeae"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:textSize="12sp"
+                        android:padding="@dimen/padding_small"
+                        android:singleLine="true"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/ageMonth"
+                            android:layout_marginTop="1dp"
+                            android:background="#aeaeae"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Years"
+                            android:layout_alignParentBottom="true"
+                            android:enabled="false"
+                            android:singleLine="true"
+                            android:textSize="12sp"
+                            android:padding="@dimen/padding_small"
+                            android:inputType="number"
+                            android:layout_weight="1"/>
+                        <EditText
+                            android:id="@+id/ageYear"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginTop="1dp"
+                            android:background="#aeaeae"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Months"
+                            android:layout_alignParentBottom="true"
+                            android:enabled="false"
+                            android:singleLine="true"
+                            android:textSize="12sp"
+                            android:inputType="number"
+                            android:padding="@dimen/padding_small"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/registrationDateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/registrationDate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_registration_date" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calander" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sexLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sex"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_sex" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/speciesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/species"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_species" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/breedLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/breed"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_breed" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/farmBreedLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/farmBreed"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/cattle_registration_farm_breed" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/profile_icon" />
+
+                <EditText
+                    android:id="@+id/animalName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:hint="Animal Name"
+                    android:textSize="@dimen/text_size_medium"
+                    android:paddingLeft="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/animalImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/animalImageSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Animal Picture"
+                    android:textColor="@color/white"
+                    android:background="@color/heading"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+
+
+                <Button
+                    android:id="@+id/previous"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="01dp"
+                    android:layout_weight="1"
+                    android:background="#6c9c48"
+                    android:gravity="center"
+                    android:text="PREVIOUS"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#393f40"
+                    android:gravity="center"
+                    android:text="NEXT"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

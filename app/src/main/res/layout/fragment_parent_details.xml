@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/herdNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/text_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/sire"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sire"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lotNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/dam_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/dam"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Dam"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:src="@drawable/drop_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ownerNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/psire_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/psire"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Paternal Sire"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/idNumberLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/paterdam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/pdam"
+                        android:layout_width="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"
+                        android:hint="Paternal Dam"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:src="@drawable/drop_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+                <Button
+                    android:id="@+id/pre"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#6c9c48"
+                    android:text="PRE"
+                    android:layout_marginRight="10dp"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+
+                
+
+
+                <Button
+                    android:id="@+id/nex"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#6c9c48"
+                    android:text="NEXT"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

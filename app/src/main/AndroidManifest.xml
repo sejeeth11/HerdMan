@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="provab.herdman">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".activity.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/unnamed"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        /////////////////ACTIVITY/////////////////////
+        <activity
+            android:name=".activity.LoginActivity"
+            android:debuggable="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activity.SplashScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.FarmerDetailsLogin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AnimalMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AnimalDetailsLogin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VillageDetailsLogin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VillageMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AnimalRegistration"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name=".utility.HerdManContentProvider"
+            android:authorities="provab.herdman.db"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".utility.HerdManSyncService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/herdman_sync_adapter" />
+        </service>
+        <service
+            android:name=".utility.AuthenticatorService"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/herdman_authenticator" />
+        </service>
+
+        <activity android:name=".activity.VillageActivity" />
+        <activity android:name=".activity.SearchId"></activity>
+    </application>
+
+</manifest>

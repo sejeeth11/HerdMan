@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#9CC67A</color>
+    <color name="colorPrimaryDark">#679743</color>-->
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="colorPrimaryDark">#6c9c48</color>
+    <color name="colorPrimary">#b0d78f</color>
+    <color name="heading">#14212a</color>
+    <color name="button">#679743</color>
+    <color name="syncDialogBackground">#CCFFFFFF</color>
+
+</resources>

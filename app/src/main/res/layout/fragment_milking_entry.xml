@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/heading"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="Milking"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/white"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/animal_status"
+            android:background="@drawable/animal_status_icon"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/heading"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MILK UNION NAME"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#14212a"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/villageCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="BMS Code"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:padding="5dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/ownerCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Owner's Code"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:padding="5dp"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/profile_icon" />
+
+                <TextView
+                    android:id="@+id/ownersName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="10dp"
+                    android:gravity="left|center_vertical"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/idNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="10dp"
+                    android:gravity="left|center_vertical"
+
+                    />
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/maxDate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="10dp"
+                    android:gravity="left|center_vertical"/>
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/totalDays"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:paddingLeft="10dp"
+                    android:gravity="left|center_vertical"/>
+
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/dateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/milkingDate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:text="@string/Milking_milking_date"
+                    android:paddingLeft="10dp"
+                    android:gravity="left|center_vertical"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/tableLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:shrinkColumns="*"
+                android:stretchColumns="*"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp">
+
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/TextView21"
+                        android:text="" >
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/TextView22"
+                        android:gravity="center"
+                        android:text="Morning"
+                        android:textStyle="bold"
+                        android:typeface="serif"
+                        android:textColor="@android:color/black">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/TextView23"
+                        android:gravity="center"
+                        android:text="Evening"
+                        android:textStyle="bold"
+                        android:typeface="serif"
+                        android:textColor="@android:color/black">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/TextView24"
+                        android:gravity="center"
+                        android:text="Night"
+                        android:textStyle="bold"
+                        android:typeface="serif"
+                        android:textColor="@android:color/black">
+                    </TextView>
+
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:text="Milk (Ltr)"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black">
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/milkMorning"
+                        android:gravity="center_horizontal"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"/>
+
+                    <EditText
+                        android:id="@+id/milkEvening"
+                        android:gravity="center_horizontal"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        />
+
+                    <EditText
+                        android:id="@+id/milkNight"
+                        android:gravity="center_horizontal"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textView41"
+                        android:text="Fat(%)"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black">
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/fatMorning"
+                        android:gravity="center_horizontal"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        />
+
+                    <EditText
+                        android:id="@+id/fatEvening"
+                        android:gravity="center_horizontal"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        />
+
+                    <EditText
+                        android:id="@+id/fatNight"
+                        android:imeOptions="actionNext"
+                        android:gravity="center_horizontal"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:text="Scc"
+                        android:textColor="@android:color/black"
+                         android:textStyle="bold">
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/sccMorning"
+                        android:gravity="center_horizontal"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:inputType="number"
+                         />
+
+                    <EditText
+                        android:id="@+id/sccEvening"
+                        android:gravity="center_horizontal"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        />
+
+                    <EditText
+                        android:id="@+id/sccNight"
+                        android:gravity="center_horizontal"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/milkingSubmit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="01dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/submit_button_selector"
+                    android:gravity="center"
+                    android:text="SUBMIT"
+                    android:textColor="@drawable/submit_button_text_selector"
+                    android:textSize="16sp" />
+
+
+                <Button
+                    android:id="@+id/milkingCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="01dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/cancel_button_selector"
+                    android:gravity="center"
+                    android:text="CANCEL"
+                    android:textColor="@drawable/cancel_button_text_selector"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

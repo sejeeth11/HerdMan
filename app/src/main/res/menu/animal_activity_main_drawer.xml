@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_entry"
+            android:title="Entry" />
+
+        <item
+            android:id="@+id/nav_action"
+            android:title="Action" />
+
+        <item
+            android:id="@+id/nav_alarm"
+            android:title="Alarm" />
+
+        <item
+            android:id="@+id/nav_animal_details"
+            android:title="Animal Details" />
+
+        <item
+            android:id="@+id/nav_animal_properties"
+            android:title="Animal properties" />
+
+        <item
+            android:id="@+id/nav_report"
+            android:title="Reports" />
+
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout" />
+
+    </group>
+
+</menu>

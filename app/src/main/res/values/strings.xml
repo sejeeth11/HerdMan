@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">SmartMoo-Herdman</string>
+    <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="select_oeners_name">Select Owners Name</string>
+    <string name="select_oeners_number">9988998899</string>
+    <string name="ownerName">Owners Name</string>
+    <string name="date">Date</string>
+    <string name="reason">Reason</string>
+    <string name="treatment">Treatment</string>
+    <string name="enterOwner">Enter Owners Name</string>
+    <string name="id">ID.NO</string>
+    <string name="bodyWeight">Body Weight</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="serviceType">Service Type</string>
+    <string name="tagNo">Sire Ear Tag No</string>
+    <string name="inseminator">Inseminator</string>
+    <string name="selectid">Select ID.No</string>
+    <string name="selectDate">Select Date</string>
+    <string name="selectDisease">Select Disease</string>
+    <string name="vaccineBrand">Vaccine Brand</string>
+    <string name="batch">Batch No</string>
+    <string name="route">Route</string>
+    <string name="dose">Dose(in ml)</string>
+    <string name="medicine">MEDICINE GIVEN</string>
+    <string name="selectType">Select Type</string>
+    <string name="selectMedicine">Select Medicine Name</string>
+    <string name="enterRoute">Enter Route</string>
+    <string name="enterDose">Enter Dose</string>
+    <string name="temperature">Temperature</string>
+    <string name="pulse">Pulse</string>
+    <string name="cost">Cost</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="batch_number">Enter Batch Number</string>
+    <string name="dose_ml">Dose (ml)</string>
+    <string name="price">Price</string>
+    <string name="any_other_reason">Any Other Reasons</string>
+    <string name="remark">Remark</string>
+
+    <string-array name="temp_array">
+        <item>Temp one</item>
+    </string-array>
+
+    ////////////////SCAN MODULE CONSTANTS//////////
+    <string name="toggle_flash">Flash</string>
+    <string name="flash_on">Flash [ON]</string>
+    <string name="flash_off">Flash [OFF]</string>
+    <string name="auto_focus_on">Auto Focus [ON]</string>
+    <string name="auto_focus_off">Auto Focus [OFF]</string>
+    <string name="formats">Formats</string>
+    <string name="choose_formats">Choose Formats</string>
+    <string name="select_camera">Select a Camera</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="select_first_pd_result">Select First PD Result</string>
+    <string name="select_second_pd_result">Select Second PD Result</string>
+    <string name="select_pd_date">Select PD Date</string>
+    <string name="select_date_of_heat">Select Date Of Heat</string>
+    <string name="select_service_type">Select Service Type</string>
+    <string name="select_sire_ear_tag_no">Select Sire Ear Tag No</string>
+    <string name="select_inseminator">Select Inseminator</string>
+    <string name="Milking_milking_date">Milking Date</string>
+    <string name="select_calving_date">Select Calving Date</string>
+    <string name="select_calving_type">Select Calving Type</string>
+    <string name="select_calf_sex">Select Calf Sex</string>
+    <string name="select_reproductive_problems">Select Reproductive Problem</string>
+    <string name="select_dry_date">Select Dry Date</string>
+    <string name="select_reason">Select Reason</string>
+    <string name="select_treatment">Select Treatment</string>
+    <string name="cattle_registration_select_herd">Select Herd</string>
+    <string name="cattle_registration_select_lot">Select Lot</string>
+    <string name="cattle_registration_select_owner">Select Owner</string>
+    <string name="cattle_registration_registration_date">Registration Date</string>
+    <string name="cattle_registration_sex">Select Sex</string>
+    <string name="cattle_registration_species">Select species</string>
+    <string name="cattle_registration_breed">Select Breed</string>
+    <string name="cattle_registration_farm_breed">Select Farm Breed</string>
+    <string name="registration_milking_sire">Select Sire</string>
+    <string name="registration_milking_insem">Select Insim</string>
+    <string name="registration_pregnant_sire">Select Sire</string>
+    <string name="registration_pregnant_insim">Select Insim</string>
+    <string name="registration_breeding_calf_sex">Select Calf Sex</string>
+    <string name="vaccination_select_disease">Select Disease</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

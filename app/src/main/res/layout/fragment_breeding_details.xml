@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/herdNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/noOfCalvingDays"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:inputType="number"
+                    android:hint="No Of Calving" />
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/milkingDryGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/milking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Milking" />
+
+                    <RadioButton
+                        android:id="@+id/dry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Dry" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/milkingGroupLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RadioGroup
+                        android:id="@+id/milkingGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/milkingDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Last Calving Date"/>
+
+                        <RadioButton
+                            android:id="@+id/milkingDays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Days In Milk"  />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/milkingDateEdiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Last Calving Date"
+                        android:background="#aeaeae"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:textSize="12sp"
+                        android:padding="@dimen/padding_small"
+                        android:singleLine="true"/>
+
+                    <EditText
+                        android:layout_marginTop="1dp"
+                        android:id="@+id/milkingDaysEditText"
+                        android:background="#aeaeae"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Days In Milk"
+                        android:layout_weight="1"
+                        android:layout_alignParentBottom="true"
+                        android:enabled="false"
+                        android:singleLine="true"
+                        android:padding="@dimen/padding_small"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dryGroupLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RadioGroup
+                        android:id="@+id/dryGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/dryDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Last Dry Date" />
+                        />
+
+                        <RadioButton
+                            android:id="@+id/dryDays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Days In Dry" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/dryDateEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Last Dry Date"
+                        android:background="#aeaeae"
+                        android:enabled="false"
+                        android:textSize="12sp"
+                        android:singleLine="true"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/dryDaysEditText"
+                        android:background="#aeaeae"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Days In Dry"
+                        android:layout_marginTop="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:enabled="false"
+                        android:singleLine="true"
+                        android:layout_weight="1"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/totalAndAvgMilkingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <RadioGroup
+                        android:id="@+id/totalAndAvgMilkingGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/totalMilkYieldRadio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"/>
+
+                        <RadioButton
+                            android:id="@+id/averageMilkYieldRadio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"/>
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/totalMilkYield"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Total Milking (Kg)"
+                        android:background="#aeaeae"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:padding="@dimen/padding_small"
+                        android:textSize="12sp"
+                        android:inputType="number"
+                        android:singleLine="true"/>
+
+                    <EditText
+                        android:layout_marginTop="1dp"
+                        android:id="@+id/averageMilkYield"
+                        android:background="#aeaeae"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Average Milking (Kg)"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:layout_alignParentBottom="true"
+                        android:enabled="false"
+                        android:singleLine="true"
+                        android:padding="@dimen/padding_small"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/milkingDrySireEarTagNoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/milkingDrySireEarTagNo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_size_medium"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="@string/registration_milking_sire" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/milkingDryInseminatorLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/milkingDryInseminator"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/registration_milking_insem" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/calvingNormalAbnormalGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/calvingNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Normal" />
+
+                    <RadioButton
+                        android:id="@+id/calvingAbnormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Abnormal" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/calfSexLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/calfSex"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/registration_breeding_calf_sex" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/heading"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pregnant/A.I"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/pregnantAIGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="No" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pregnantGroupLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RadioGroup
+                        android:id="@+id/pregnantGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/pregnantDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Pregnancy Date"/>
+
+                        <RadioButton
+                            android:id="@+id/pregnantDays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="Pregnant Days"  />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/pregnantDateEdiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Pregnancy Date"
+                        android:background="#aeaeae"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:textSize="12sp"
+                        android:padding="@dimen/padding_small"
+                        android:singleLine="true"/>
+
+                    <EditText
+                        android:layout_marginTop="1dp"
+                        android:id="@+id/pregnantDaysEditText"
+                        android:background="#aeaeae"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Pregnancy Days"
+                        android:layout_weight="1"
+                        android:layout_alignParentBottom="true"
+                        android:enabled="false"
+                        android:padding="@dimen/padding_small"
+                        android:singleLine="true"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/aiGroupLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RadioGroup
+                        android:id="@+id/aiGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/aiDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="AI Date"/>
+
+                        <RadioButton
+                            android:id="@+id/aiDays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="AI Days"  />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/aiDateEdiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Last Calving Date"
+                        android:background="#aeaeae"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:textSize="12sp"
+                        android:singleLine="true"/>
+
+                    <EditText
+                        android:layout_marginTop="1dp"
+                        android:id="@+id/aiDaysEditText"
+                        android:background="#aeaeae"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Days In Milk"
+                        android:layout_weight="1"
+                        android:layout_alignParentBottom="true"
+                        android:enabled="false"
+                        android:singleLine="true"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/pregnantAiSireLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pregnantAiSire"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_size_medium"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="@string/registration_pregnant_sire" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pregnantAiInsimLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pregnantAiInsim"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="@string/registration_pregnant_insim" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/heatSequence"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:hint="Heat Sequence" />
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/drop_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+
+
+                <Button
+                    android:id="@+id/previous"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="01dp"
+                    android:layout_weight="1"
+                    android:background="#6c9c48"
+                    android:gravity="center"
+                    android:text="PREVIOUS"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#393f40"
+                    android:gravity="center"
+                    android:text="NEXT"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
