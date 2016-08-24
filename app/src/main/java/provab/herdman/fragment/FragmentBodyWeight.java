@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -61,6 +63,12 @@ public class FragmentBodyWeight extends Fragment {
     EditText Chest;
     EditText Girth;
     Button Submit;
+    RadioGroup group_selection;
+    RadioButton bodyweightManual,chestGirth;
+    LinearLayout chestlayout,girthlayout;
+
+
+
 
 
 
@@ -84,6 +92,12 @@ public class FragmentBodyWeight extends Fragment {
         last_weight = (TextView)view.findViewById(R.id.last_weight);
         date_picker = (TextView)view.findViewById(R.id.date_picker);
         Submit = (Button)view.findViewById(R.id.bodyWeightSubmit);
+        group_selection = (RadioGroup)view.findViewById(R.id.group);
+        bodyweightManual = (RadioButton)view.findViewById(R.id.bw);
+        chestGirth = (RadioButton)view.findViewById(R.id.chestgirth);
+        chestlayout = (LinearLayout)view.findViewById(R.id.chestLayout);
+        girthlayout = (LinearLayout)view.findViewById(R.id.girthlayout);
+        bodyweightManual.setChecked(true);
 
         ownerName=(TextView)view.findViewById(R.id.ownersName);
         ownerId=(TextView)view.findViewById(R.id.idNumber);
@@ -117,6 +131,54 @@ public class FragmentBodyWeight extends Fragment {
 
             }
         });
+
+
+
+        group_selection.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+
+
+               if(checkedId == R.id.bw){
+
+                   chestlayout.setVisibility(View.GONE);
+                   girthlayout.setVisibility(View.GONE);
+
+
+               }else{
+
+
+                   chestlayout.setVisibility(View.VISIBLE);
+                   girthlayout.setVisibility(View.VISIBLE);
+               }
+
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
        Submit.setOnClickListener(new View.OnClickListener() {

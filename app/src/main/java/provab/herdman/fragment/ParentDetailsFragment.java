@@ -1,5 +1,6 @@
 package provab.herdman.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,10 @@ public class ParentDetailsFragment extends Fragment {
     EditText sire ,dam, paternalsire,paternaldam;
     CattleBean bean;
     String Id;
+    boolean flag=false;
+
+    Activity activity_village;
+    Activity activity_animal;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +37,30 @@ public class ParentDetailsFragment extends Fragment {
     }
 
     @Nullable
+
+
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof VillageMainActivity) {
+            this.activity_village =  activity;
+            flag=true;
+        }
+        else if(activity instanceof AnimalRegistration){
+            this.activity_animal =  activity;
+            flag=false;
+        }
+    }
+
+
+
+
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_parent_details, container, false);
@@ -52,7 +81,12 @@ public class ParentDetailsFragment extends Fragment {
         pre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AnimalRegistration)getActivity()).swipeViewPagerToPreviousScreen();
+                if(flag){
+                    ((VillageMainActivity) getActivity()).swipeViewPagerToPreviousScreen();
+                }
+                else{
+                    ((AnimalRegistration) getActivity()).swipeViewPagerToPreviousScreen();
+                }
             }
         });
 
@@ -63,7 +97,12 @@ public class ParentDetailsFragment extends Fragment {
 
                  DatabaseHelper.getDatabaseHelperInstance(getActivity()).save_parent_detail(Id,sire.getText().toString(),dam.getText().toString(),paternalsire.getText().toString(),paternaldam.getText().toString());
                  Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
-                ((AnimalRegistration)getActivity()).swipeViewPagerToNextScreen();
+                if(flag){
+                    ((VillageMainActivity) getActivity()).swipeViewPagerToNextScreen();
+                }
+                else{
+                    ((AnimalRegistration) getActivity()).swipeViewPagerToNextScreen();
+                }
             }
         });
     }

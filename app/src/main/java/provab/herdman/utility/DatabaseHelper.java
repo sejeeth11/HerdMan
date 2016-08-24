@@ -18,6 +18,8 @@ import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
+
 import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,7 @@ import provab.herdman.beans.CattleBean;
 import provab.herdman.beans.DiseaseBean;
 import provab.herdman.beans.MedicineBean;
 import provab.herdman.beans.MultiSelectItem;
+import provab.herdman.beans.ReproductionBean;
 import provab.herdman.beans.SearchBean;
 import provab.herdman.beans.UserInfo;
 import provab.herdman.constants.AnimalDetailsData;
@@ -2742,6 +2745,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
                 System.out.println("SEE THE STATUS = " + db.insert(REPRODUCTION_TABLE_NAME, null, values));
 
+
+
+
+
+
             } else if (cattleBean.getCalvingDryPregnant() == 2) {
 
                 values = new ContentValues();
@@ -3601,6 +3609,160 @@ public  ArrayList<String> getSystemdata(){
 
 
         }
+
+
+
+
+     public String SyncCattleRegistration(){
+         ArrayList<ReproductionBean> arrayList = new ArrayList<ReproductionBean>();
+
+
+         SQLiteDatabase db = this.getWritableDatabase();
+         Cursor cursor = null;
+         JSONObject animalStatusObject= null;
+
+         String Query = "select * from reproduction\n";
+         cursor = db.rawQuery(Query, null);
+
+
+         if (cursor.moveToFirst()) {
+             do {
+
+                 ReproductionBean bean = new ReproductionBean();
+                     bean.setCompanycode(cursor.getString(0));
+                     bean.setIdno(cursor.getString(1));
+                     bean.setParity(cursor.getString(2));
+                     bean.setHeatseq(cursor.getString(3));
+                     bean.setService(cursor.getString(4));
+                     bean.setDtofheat(cursor.getString(5));
+                     bean.setInsim(cursor.getString(6));
+                     bean.setSireid(cursor.getString(7));
+                     bean.setPd1(cursor.getString(8));
+                     bean.setRmpd1(cursor.getString(9));
+                     bean.setPd2(cursor.getString(10));
+                     bean.setRmpd2(cursor.getString(11));
+                     bean.setPddate(cursor.getString(12));
+                     bean.setDateofcalving(cursor.getString(13));
+                     bean.setDtofdry(cursor.getString(14));
+                     bean.setDryreason(cursor.getString(15));
+                     bean.setDrytreatement(cursor.getString(16));
+                     bean.setFlg(cursor.getString(17));
+                     bean.setCalf(cursor.getString(18));
+                     bean.setSex(cursor.getString(19));
+                     bean.setCtype(cursor.getString(20));
+                     bean.setRop(cursor.getString(21));
+                     bean.setComments(cursor.getString(22));
+                     bean.setRp(cursor.getString(23));
+                     bean.setEntry(cursor.getString(24));
+
+
+
+
+
+                 bean.setTotaldose(cursor.getString(25));
+                 bean.setAbortionseq(cursor.getString(26));
+                 bean.setVaccine(cursor.getString(27));
+                 bean.setCreationdate(cursor.getString(28));
+                 bean.setSyncId(cursor.getString(29));
+                 arrayList.add(bean);
+
+
+             } while (cursor.moveToNext());
+         }
+
+
+         db.close();
+
+
+     JSONObject reproductiondata = new JSONObject();
+     JSONArray ReproductionArray = new JSONArray();
+     JSONObject Master = new JSONObject();
+     JSONObject GetMasterData = new JSONObject();
+
+         try {
+
+             for(int k=0;k<arrayList.size();k++){
+
+                 reproductiondata.put("CompanyCode",arrayList.get(k).getCompanycode());
+                reproductiondata.put("IdNo",arrayList.get(k).getIdno());
+              reproductiondata.put("Parity",arrayList.get(k).getParity());
+              reproductiondata.put("HeatSeq",arrayList.get(k).getHeatseq());
+              reproductiondata.put("Service",arrayList.get(k).getService());
+              reproductiondata.put("DtOfHeat",arrayList.get(k).getDtofheat());
+              reproductiondata.put("Insim",arrayList.get(k).getInsim());
+              reproductiondata.put("SireId",arrayList.get(k).getSireid());
+              reproductiondata.put("PD1",arrayList.get(k).getPd1());
+              reproductiondata.put("RemPD1",arrayList.get(k).getRmpd1());
+              reproductiondata.put("PD2",arrayList.get(k).getPd2());
+              reproductiondata.put("RemPD2",arrayList.get(k).getRmpd2());
+              reproductiondata.put("Pddate",arrayList.get(k).getPddate());
+              reproductiondata.put("DtOfCalving",arrayList.get(k).getDateofcalving());
+              reproductiondata.put("DtOfDry",arrayList.get(k).getDtofdry());
+              reproductiondata.put("Dry_Reson",arrayList.get(k).getDryreason());
+              reproductiondata.put("Dry_Treatment",arrayList.get(k).getDrytreatement());
+              reproductiondata.put("Flg",arrayList.get(k).getFlg());
+              reproductiondata.put("Calf",arrayList.get(k).getCalf());
+              reproductiondata.put("Sex",arrayList.get(k).getSex());
+              reproductiondata.put("C_Type",arrayList.get(k).getCtype());
+              reproductiondata.put("ROP",arrayList.get(k).getRop());
+              reproductiondata.put("Comments",arrayList.get(k).getComments());
+              reproductiondata.put("RP",arrayList.get(k).getRp());
+              reproductiondata.put("ENTRY",arrayList.get(k).getEntry());
+              reproductiondata.put("Total_Dose",arrayList.get(k).getTotaldose());
+              reproductiondata.put("Abortion_Seq",arrayList.get(k).getAbortionseq());
+              reproductiondata.put("Vaccine",arrayList.get(k).getVaccine());
+              reproductiondata.put("CretationDate",arrayList.get(k).getCreationdate());
+
+                 ReproductionArray.put(reproductiondata);
+             }
+
+             Master.put("reproduction",ReproductionArray);
+             GetMasterData.put("GetMasterData",Master);
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+
+         return GetMasterData.toString();
+
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

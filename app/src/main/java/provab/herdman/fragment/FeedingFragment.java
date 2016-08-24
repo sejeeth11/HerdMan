@@ -47,6 +47,7 @@ public class FeedingFragment  extends Fragment {
 
     TextView ownerId;
     ImageView animal_status;
+    TextView bmscode;
 
 
     @Override
@@ -65,6 +66,8 @@ public class FeedingFragment  extends Fragment {
     public void findViews(View view){
         ownerId = (TextView)view.findViewById(R.id.ownerid);
         ownerId.setText(GlobalVar.OWNERS_CODE);
+        bmscode = (TextView)view.findViewById(R.id.bmscode);
+        bmscode.setText(GlobalVar.VILLAGE_CODE);
 
         animal_status = (ImageView)view.findViewById(R.id.animal_status);
         animal_status.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +84,7 @@ public class FeedingFragment  extends Fragment {
 
 
 
+
     private Dialog showAnimalStatus() {
 
         final Dialog dialog = new Dialog(getActivity(), R.style.Theme_Dialog);
@@ -92,6 +96,7 @@ public class FeedingFragment  extends Fragment {
         LinearLayout chartContainer = (LinearLayout) dialog.findViewById(R.id.chart_container);
         Button milk = (Button) dialog.findViewById(R.id.milk);
         Button breeding = (Button) dialog.findViewById(R.id.breeding);
+
         Button health = (Button) dialog.findViewById(R.id.health);
 
 

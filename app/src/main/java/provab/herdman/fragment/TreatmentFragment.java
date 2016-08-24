@@ -45,6 +45,7 @@ import java.util.Iterator;
 import provab.herdman.R;
 import provab.herdman.activity.MyApplication;
 import provab.herdman.beans.MedicineBean;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.enume.SubStatus;
 import provab.herdman.utility.DatabaseHelper;
@@ -71,6 +72,8 @@ public class TreatmentFragment extends Fragment {
     EditText date_treatment;
     int FLAG = 1;
     int MedicineNameFlag = 1;
+    TextView BmsCode;
+
 
 
 
@@ -115,6 +118,9 @@ public class TreatmentFragment extends Fragment {
         note = (EditText)view.findViewById(R.id.note);
         treatmentcost = (EditText)view.findViewById(R.id.treatmentcost);
         ownerId.setText(GlobalVar.ID_NUMBER);
+        date_treatment.setText(CommonData.getInstance().getDefaultDate());
+        BmsCode = (TextView)view.findViewById(R.id.bmscode);
+
 
         temp = (EditText)view.findViewById(R.id.temp);
         Submit = (Button)view.findViewById(R.id.treatmentSubmit) ;
@@ -374,6 +380,8 @@ public class TreatmentFragment extends Fragment {
         });
 
         ownerId.setText(GlobalVar.OWNERS_CODE);
+        BmsCode.setText(GlobalVar.VILLAGE_CODE);
+
         animal_status = (ImageView)view.findViewById(R.id.animal_status);
 
         animal_status.setOnClickListener(new View.OnClickListener() {

@@ -65,7 +65,9 @@ public class DisposalFragment extends Fragment {
 
     Button disposalSubmit;
     String FLag;
+    LinearLayout soldTo;
 
+    TextView bmscode;
 
     ImageView animalstatus;
 
@@ -97,6 +99,9 @@ public class DisposalFragment extends Fragment {
         anyotherreason = (EditText)view.findViewById(R.id.anyotherreasons);
         price = (EditText)view.findViewById(R.id.price);
         soldto = (EditText)view.findViewById(R.id.soldto);
+        soldTo = (LinearLayout)view.findViewById(R.id.sold);
+        bmscode = (TextView)view.findViewById(R.id.bmscode);
+
 
         remark = (EditText)view.findViewById(R.id.remark);
         animalstatus = (ImageView)view.findViewById(R.id.animal_status);
@@ -104,6 +109,8 @@ public class DisposalFragment extends Fragment {
 
         OwnerName.setText(GlobalVar.OWNERS_NAME);
         ownerId.setText(GlobalVar.ID_NUMBER);
+        bmscode.setText(GlobalVar.VILLAGE_CODE);
+
 
         disposalType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,8 +177,6 @@ public class DisposalFragment extends Fragment {
                         .setListener(listener)
                         .setInitialDate(new Date())
                         .setMaxDate(new Date())
-                        //.setIs24HourTime(true)
-                        //.setTheme(SlideDateTimePicker.HOLO_DARK)
                         .setIndicatorColor(Color.parseColor("#6c9c48"))
                         .build()
                         .show();
@@ -233,6 +238,7 @@ public class DisposalFragment extends Fragment {
 
 
 
+
     public Dialog disposaltype(){
 
         final Dialog dialog = new Dialog(getActivity());
@@ -256,7 +262,11 @@ public class DisposalFragment extends Fragment {
 
                 disposalType.setText(lotList.get(position));
 
-
+                if(disposalType.getText().toString().equals("Sold")){
+                    soldTo.setVisibility(View.VISIBLE);
+                }else{
+                    soldTo.setVisibility(View.GONE);
+                }
                 dialog.dismiss();
             }
         });
@@ -279,6 +289,8 @@ public class DisposalFragment extends Fragment {
         for (int i = 0; i < lotList.size(); i++) {
             colors[i] = lotList.get(i);
         }
+
+
         for (int i = 0; i < lotList.size(); i++) {
             checkedColors[i] = false;
         }

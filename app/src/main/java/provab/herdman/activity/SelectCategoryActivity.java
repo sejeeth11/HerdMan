@@ -204,9 +204,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
                 intents.putExtra("Key","0");
                 startActivity(intents);
                 break;
-            case R.id.nav_animal_properties:
 
-                break;
             case R.id.nav_report:
 
                 break;
@@ -220,6 +218,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
 
 
     private void exportDB() {
+
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
         FileChannel source = null;

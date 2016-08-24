@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -466,6 +467,7 @@ public class BreedingDetailsFragment extends Fragment {
                                 if (aiGroup.getCheckedRadioButtonId() == R.id.aiDate) {
                                     if(aiDateEdiText.getText().toString().isEmpty()){
                                         cattleBean.setPregnantOrAi(3);
+
                                     }else{
                                         pregnantOrAiDate = GlobalVar.databaseFormat.format(GlobalVar.dialogeFormat.parse(aiDateEdiText.getText().toString()));
                                         pregnantOrAiDays = calculateDateDifference(cattleBean.getRegistrationDate(), pregnantOrAiDate);
@@ -474,6 +476,9 @@ public class BreedingDetailsFragment extends Fragment {
                                         cattleBean.setPregnantOrAi(2);
                                         cattleBean.setPregnantHeatDate(pregnantOrAiDate);
                                     }
+
+
+
                                 } else if (aiGroup.getCheckedRadioButtonId() == R.id.aiDays) {
                                     if(aiDaysEditText.getText().toString().isEmpty()){
                                         cattleBean.setPregnantOrAi(3);
@@ -498,6 +503,9 @@ public class BreedingDetailsFragment extends Fragment {
                                 }
                             }
                         }
+
+
+
                         if (pregnantAiSire.getTag() == null || pregnantAiSire.getText().toString().equals(resources.getString(R.string.registration_pregnant_sire))) {
                             if (Integer.parseInt(cattleBean.getSpeciesId()) == 1) {
                                 cattleBean.setPregnantSire("999999C");
@@ -519,14 +527,46 @@ public class BreedingDetailsFragment extends Fragment {
                         }
                     }
 
-
                     DatabaseHelper.getDatabaseHelperInstance(getActivity()).saveRegistration(cattleBean);
 
 
-                    AnimalRegistration activity = (AnimalRegistration)getActivity();
-                    activity.swipeViewPagerToNextScreen();
+                    String JSOn = DatabaseHelper.getDatabaseHelperInstance(getActivity()).SyncCattleRegistration();
 
-                    //  Toast.makeText(getActivity(),"SAVED SUCCESSFULLY",Toast.LENGTH_LONG).show();
+                    Log.e("Responce",JSOn);
+
+
+
+
+
+
+
+
+
+                    if(flag) {
+
+                        VillageMainActivity activity = (VillageMainActivity)getActivity();
+                        activity.swipeViewPagerToNextScreen();
+
+                    }else{
+                        AnimalRegistration activity = (AnimalRegistration)getActivity();
+                        activity.swipeViewPagerToNextScreen();
+                    }
+
+
+
+
+
+
+
+
+
+
+
+//                     AnimalRegistration activity = (AnimalRegistration)getActivity();
+  //                  activity.swipeViewPagerToNextScreen();
+
+
+                     Toast.makeText(getActivity(),"Save Successfully",Toast.LENGTH_LONG).show();
 
 
                 } catch (ParseException e) {
@@ -539,6 +579,16 @@ public class BreedingDetailsFragment extends Fragment {
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if(flag){
+                    ((VillageMainActivity) getActivity()).swipeViewPagerToPreviousScreen();
+                }
+                else{
+                    ((AnimalRegistration) getActivity()).swipeViewPagerToPreviousScreen();
+                }
+
+
             }
         });
 

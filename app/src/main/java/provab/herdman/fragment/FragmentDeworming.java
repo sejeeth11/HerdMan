@@ -90,6 +90,8 @@ public class FragmentDeworming extends Fragment {
     Button vaccineCancel;
     ImageView animal_status;
     TextView ownerId;
+    TextView bms;
+
 
 
 
@@ -124,7 +126,7 @@ public class FragmentDeworming extends Fragment {
         disease=(TextView)view.findViewById(R.id.disease);
         dose = (EditText)view.findViewById(R.id.dose);
         vaccineSubmit = (Button)view.findViewById(R.id.vaccineSubmit) ;
-
+        bms = (TextView)view.findViewById(R.id.bmscode);
         vaccineBrand=(TextView)view.findViewById(R.id.vaccineBrand);
         animal_status = (ImageView)view.findViewById(R.id.animal_status);
         OwnerName = (TextView)view.findViewById(R.id.ownersName);
@@ -139,6 +141,8 @@ public class FragmentDeworming extends Fragment {
         ownerId = (TextView)view.findViewById(R.id.ownerid);
 
         ownerId.setText(GlobalVar.OWNERS_CODE);
+        bms.setText(GlobalVar.VILLAGE_CODE);
+
 
 
 

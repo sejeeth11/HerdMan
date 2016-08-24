@@ -14,6 +14,8 @@ import org.apache.http.Header;
 import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by Anees Thyrantakath on 30/9/15.
@@ -28,6 +30,36 @@ public class WebServiceController {
         this.context = context;
         this.myInterface = (WebInterface) obj;
     }
+
+
+
+
+
+    public String getDefaultDate(){
+
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        return formattedDate;
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public void sendRequest(String url, RequestParams params ,final int flag) {

@@ -44,6 +44,7 @@ import java.util.Iterator;
 
 import provab.herdman.R;
 import provab.herdman.activity.MyApplication;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.enume.SubStatus;
 import provab.herdman.utility.DatabaseHelper;
@@ -127,6 +128,8 @@ public class FragmentMilking extends Fragment {
         ownerCode.setText(GlobalVar.OWNERS_CODE);
         ownerId.setText(GlobalVar.ID_NUMBER);
         ownerName.setText(GlobalVar.OWNERS_NAME);
+        milkingDate.setText(CommonData.getInstance().getDefaultDate());
+
         maxDate.setText(DatabaseHelper.getDatabaseHelperInstance(getActivity()).getMaxDateFromProduction(GlobalVar.ID_NUMBER));
         totalDays.setText(DatabaseHelper.getDatabaseHelperInstance(getActivity()).getTotalDaysFromProduction(GlobalVar.ID_NUMBER, maxDate.getText().toString()));
         dateLayout.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +159,7 @@ public class FragmentMilking extends Fragment {
             public void onClick(View v) {
 
                 Resources resources = getActivity().getResources();
-                if (milkingDate.getText().toString().equals(resources.getString(R.string.Milking_milking_date))) {
+            /*    if (milkingDate.getText().toString().equals(resources.getString(R.string.Milking_milking_date))) {
                     Toast.makeText(getActivity(), "PLEASE SELECT MILKING DATE", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -187,7 +190,7 @@ public class FragmentMilking extends Fragment {
                 if (sccEvening.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "PLEASE ENTER EVENING SCC", Toast.LENGTH_LONG).show();
                     return;
-                }
+                }*/
 
                 String maxDateProduction = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getMaxDate(GlobalVar.ID_NUMBER);
                 long Lactation_Total =0;

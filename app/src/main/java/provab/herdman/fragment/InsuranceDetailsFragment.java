@@ -1,5 +1,6 @@
 package provab.herdman.fragment;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import java.util.Date;
 
 import provab.herdman.R;
 import provab.herdman.activity.AnimalRegistration;
+import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.beans.CattleBean;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.utility.DatabaseHelper;
@@ -32,8 +34,25 @@ public class InsuranceDetailsFragment extends Fragment {
     EditText masterpolicyno,Tansactiondetails,HypoNo,agentname,insurancecompany,policyperiod,policyamount,premiumamount,issuedate;
     CattleBean bean;
     String Id;
+    boolean flag=false;
+
+    Activity activity_village;
+    Activity activity_animal;
 
 
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof VillageMainActivity) {
+            this.activity_village =  activity;
+            flag=true;
+        }
+        else if(activity instanceof AnimalRegistration){
+            this.activity_animal =  activity;
+            flag=false;
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,14 +116,24 @@ public class InsuranceDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DatabaseHelper.getDatabaseHelperInstance(getActivity()).save_Insurance_details(Id,masterpolicyno.getText().toString(),"",insurancecompany.getText().toString(),issuedate.getText().toString(),"","","","","","","");
-                ((AnimalRegistration)getActivity()).swipeViewPagerToNextScreen();
+                if(flag){
+                    ((VillageMainActivity) getActivity()).swipeViewPagerToNextScreen();
+                }
+                else{
+                    ((AnimalRegistration) getActivity()).swipeViewPagerToNextScreen();
+                }
             }
         });
 
     prevButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((AnimalRegistration)getActivity()).swipeViewPagerToPreviousScreen();
+            if(flag){
+                ((VillageMainActivity) getActivity()).swipeViewPagerToPreviousScreen();
+            }
+            else{
+                ((AnimalRegistration) getActivity()).swipeViewPagerToPreviousScreen();
+            }
         }
     });
 

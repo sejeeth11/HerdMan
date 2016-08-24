@@ -589,6 +589,8 @@
                     </RadioGroup>
                 </LinearLayout>
 
+
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -600,7 +602,7 @@
                         android:id="@+id/aiDateEdiText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Last Calving Date"
+                        android:hint="AI Date"
                         android:background="#aeaeae"
                         android:layout_weight="1"
                         android:enabled="false"
@@ -613,7 +615,7 @@
                         android:background="#aeaeae"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Days In Milk"
+                        android:hint="AI Days"
                         android:layout_weight="1"
                         android:layout_alignParentBottom="true"
                         android:enabled="false"
@@ -691,6 +693,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:inputType="number"
+
                     android:background="@android:color/transparent"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="10dp"

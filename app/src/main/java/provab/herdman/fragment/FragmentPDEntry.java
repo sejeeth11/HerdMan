@@ -46,6 +46,7 @@ import java.util.Iterator;
 import provab.herdman.R;
 import provab.herdman.activity.MyApplication;
 import provab.herdman.adapter.SpinnerAdapter;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.enume.SubStatus;
 import provab.herdman.utility.DatabaseHelper;
@@ -119,6 +120,8 @@ public class FragmentPDEntry extends Fragment {
         ownerCode.setText(GlobalVar.OWNERS_CODE);
         ownerId.setText(GlobalVar.ID_NUMBER);
         ownerName.setText(GlobalVar.OWNERS_NAME);
+        checkDate.setText(CommonData.getInstance().getDefaultDate());
+
 
 
 

@@ -16,6 +16,8 @@ import provab.herdman.fragment.PurchaseDetailsFragment;
  */
 public class VillagePagerAdapter extends FragmentStatePagerAdapter {
 
+
+
     String[] registrationForms={"Registration","Breeding","Purchase","Parent Details","Insurance Details","Other Details"};
 
 

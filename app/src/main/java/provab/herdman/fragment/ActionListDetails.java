@@ -117,9 +117,10 @@ public class ActionListDetails extends Fragment {
                 ArrayList<String> al=new ArrayList<>();
                  for (int n=0;n< tasklist.size();n++)
                  {
-                       if(tasklist.get(n).equals(task))
-                       {
+                       if(tasklist.get(n).equals(task)) {
+
                             al.add(Ids.get(n));
+
                        }
                  }
 
@@ -150,17 +151,11 @@ public class ActionListDetails extends Fragment {
         ViewGroup header = (ViewGroup) inflaters.inflate(R.layout.header, list_details,
                 false);
         filter = (Button)header.findViewById(R.id.filter);
-
         main(all_data);
-
-
-
-
-
         adapter = new ActionListAdapter(getActivity(),R.layout.list_item,arrayList);
-
         list_details.setAdapter(adapter);
         list_details.addHeaderView(header);
+
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,8 +184,12 @@ public class ActionListDetails extends Fragment {
               super.onStart();
               Dialog dialog = getDialog();
               if (dialog != null) {
+
+
                   int width = ViewGroup.LayoutParams.MATCH_PARENT;
                   int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+
                   dialog.getWindow().setLayout(width, height);
               }
           }
@@ -275,6 +274,7 @@ public class ActionListDetails extends Fragment {
               dialog.show();
 
           }
+
 
 
 

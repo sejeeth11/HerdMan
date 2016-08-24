@@ -56,6 +56,7 @@ import provab.herdman.activity.MyApplication;
 import provab.herdman.adapter.GridDiseaseAdapter;
 import provab.herdman.adapter.SpinnerAdapter;
 import provab.herdman.beans.DiseaseBean;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.enume.SubStatus;
 import provab.herdman.utility.DatabaseHelper;
@@ -89,7 +90,7 @@ public class FragmentVaccination extends Fragment {
     Button vaccineSubmit;
     Button vaccineCancel;
     ImageView animal_status;
-    TextView ownerId;
+    TextView ownerId,bms;
 
 
 
@@ -124,6 +125,7 @@ public class FragmentVaccination extends Fragment {
             disease=(TextView)view.findViewById(R.id.disease);
             dose = (EditText)view.findViewById(R.id.dose);
              vaccineSubmit = (Button)view.findViewById(R.id.vaccineSubmit) ;
+            bms = (TextView)view.findViewById(R.id.bmscode);
 
             vaccineBrand=(TextView)view.findViewById(R.id.vaccineBrand);
             animal_status = (ImageView)view.findViewById(R.id.animal_status);
@@ -137,8 +139,11 @@ public class FragmentVaccination extends Fragment {
 
 
             ownerId = (TextView)view.findViewById(R.id.ownerid);
+            vaccinDate.setText(CommonData.getInstance().getDefaultDate());
 
             ownerId.setText(GlobalVar.OWNERS_CODE);
+            bms.setText(GlobalVar.VILLAGE_CODE);
+
 
 
 

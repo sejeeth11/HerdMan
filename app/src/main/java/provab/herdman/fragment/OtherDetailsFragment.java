@@ -1,5 +1,6 @@
 package provab.herdman.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import provab.herdman.R;
+import provab.herdman.activity.AnimalRegistration;
+import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.beans.CattleBean;
 import provab.herdman.utility.DatabaseHelper;
 
@@ -23,13 +26,31 @@ public class OtherDetailsFragment extends Fragment {
     EditText marketvalue,noringsonhorn,rearingpurpose,horndistance,color,aitagno,birthweight,placeno,doctor;
     CattleBean bean;
     String Id;
+    boolean flag=false;
 
+    Activity activity_village;
+    Activity activity_animal;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof VillageMainActivity) {
+            this.activity_village =  activity;
+            flag=true;
+        }
+        else if(activity instanceof AnimalRegistration){
+            this.activity_animal =  activity;
+            flag=false;
+        }
+
+    }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Nullable
     @Override

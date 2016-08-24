@@ -49,6 +49,7 @@ import provab.herdman.activity.MyApplication;
 import provab.herdman.adapter.SpinnerAdapterString;
 import provab.herdman.adapter.SpinnerMultiSelect;
 import provab.herdman.beans.MultiSelectItem;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.enume.SubStatus;
 import provab.herdman.utility.DatabaseHelper;
@@ -106,6 +107,8 @@ public class DryOffFragment extends Fragment {
         ownerCode.setText(GlobalVar.OWNERS_CODE);
         ownerId.setText(GlobalVar.ID_NUMBER);
         ownerName.setText(GlobalVar.OWNERS_NAME);
+        dryOffDate.setText(CommonData.getInstance().getDefaultDate());
+
         datePickerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

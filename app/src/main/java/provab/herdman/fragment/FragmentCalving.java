@@ -49,6 +49,7 @@ import provab.herdman.activity.MyApplication;
 import provab.herdman.adapter.SpinnerAdapter;
 import provab.herdman.adapter.SpinnerMultiSelect;
 import provab.herdman.beans.MultiSelectItem;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.enume.SubStatus;
 import provab.herdman.utility.DatabaseHelper;
@@ -115,6 +116,13 @@ public class FragmentCalving extends Fragment {
         ownerCode.setText(GlobalVar.OWNERS_CODE);
         ownerId.setText(GlobalVar.ID_NUMBER);
         ownerName.setText(GlobalVar.OWNERS_NAME);
+        calvingDate.setText(CommonData.getInstance().getDefaultDate());
+
+
+
+
+
+
         calvingDateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

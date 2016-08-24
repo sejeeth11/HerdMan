@@ -26,7 +26,7 @@ public class EntryFragment extends Fragment {
 
     GridView gridView;
     GridAdapter adapter;
-    String[] entryList = {"A.I Natural Service", "PD Entry", "Calving", "Milk Record", "Dry off","Body Weight", "Treatment", "Vaccination", "Deworming", "Disposal", "Feeding"};
+    String[] entryList = {"A.I Natural Service", "PD Entry", "Calving", "Milk Record", "Dry off","Body Weight", "Treatment", "Vaccination", "Deworming", "Disposal", "DeHoring"};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

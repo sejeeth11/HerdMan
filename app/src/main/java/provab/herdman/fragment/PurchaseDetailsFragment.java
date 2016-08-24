@@ -1,5 +1,6 @@
 package provab.herdman.fragment;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +25,9 @@ import provab.herdman.R;
 import provab.herdman.activity.AnimalRegistration;
 import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.beans.CattleBean;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
+import provab.herdman.controller.WebServiceSyncController;
 import provab.herdman.utility.DatabaseHelper;
 
 /**
@@ -41,9 +44,10 @@ public class PurchaseDetailsFragment extends Fragment {
     TextView date_set;
     CattleBean bean;
     String Id;
+    boolean flag=false;
 
-
-
+    Activity activity_village;
+    Activity activity_animal;
 
 
     @Override
@@ -52,6 +56,32 @@ public class PurchaseDetailsFragment extends Fragment {
     }
 
     @Nullable
+
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof VillageMainActivity) {
+            this.activity_village =  activity;
+            flag=true;
+        }
+        else if(activity instanceof AnimalRegistration){
+            this.activity_animal =  activity;
+            flag=false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_purchase_details, container, false);
@@ -70,6 +100,7 @@ public class PurchaseDetailsFragment extends Fragment {
         purchaseDate = (TextView) view.findViewById(R.id.previous);
         rate = (EditText) view.findViewById(R.id.rate);
         date_set = (TextView)view.findViewById(R.id.purchaseDate);
+        date_set.setText(CommonData.getInstance().getDefaultDate());
 
         source= (EditText) view.findViewById(R.id.source);
 
@@ -83,7 +114,12 @@ public class PurchaseDetailsFragment extends Fragment {
                 DatabaseHelper.getDatabaseHelperInstance(getActivity()).Save_Purchase(Id,date_set.getText().toString(),rate.getText().toString(),source.getText().toString());
 
                 //Toast.makeText(getActivity(),"Saved Successfully",Toast.LENGTH_SHORT).show();
-                ((AnimalRegistration)getActivity()).swipeViewPagerToNextScreen();
+                if(flag){
+                    ((VillageMainActivity) getActivity()).swipeViewPagerToNextScreen();
+                }
+                else{
+                    ((AnimalRegistration) getActivity()).swipeViewPagerToNextScreen();
+                }
 
 
             }
@@ -93,7 +129,12 @@ public class PurchaseDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ((AnimalRegistration)getActivity()).swipeViewPagerToPreviousScreen();
+                if(flag){
+                    ((VillageMainActivity) getActivity()).swipeViewPagerToPreviousScreen();
+                }
+                else{
+                    ((AnimalRegistration) getActivity()).swipeViewPagerToPreviousScreen();
+                }
 
 
             }

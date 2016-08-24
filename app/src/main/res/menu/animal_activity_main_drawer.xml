@@ -19,9 +19,6 @@
             android:id="@+id/nav_animal_details"
             android:title="Animal Details" />
 
-        <item
-            android:id="@+id/nav_animal_properties"
-            android:title="Animal properties" />
 
         <item
             android:id="@+id/nav_report"

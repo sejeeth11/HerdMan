@@ -63,6 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/bmscode"
             android:text="BMS Code"
             android:textColor="@android:color/white"
             android:textSize="16sp"
@@ -217,7 +218,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:text="@string/vaccination_select_disease"
+                    android:text="Select Worm"
                     android:gravity="center_vertical|left"/>
 
                 <ImageView
@@ -241,7 +242,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:text="Select Vaccine Brand"
+                    android:text="Select Dewormer"
                     android:gravity="center_vertical|left"/>
 
 
@@ -354,7 +355,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:text="@string/select_inseminator"
+                    android:text="Deworming done by"
                     android:paddingLeft="10dp"
                     android:textSize="@dimen/text_size_medium"
                     android:gravity="left|center_vertical"/>

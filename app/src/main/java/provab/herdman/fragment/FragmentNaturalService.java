@@ -46,6 +46,7 @@ import java.util.Iterator;
 import provab.herdman.R;
 import provab.herdman.activity.MyApplication;
 import provab.herdman.adapter.SpinnerAdapter;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.enume.SubStatus;
 import provab.herdman.utility.DatabaseHelper;
@@ -60,6 +61,7 @@ public class FragmentNaturalService extends Fragment {
     TextView ownerName;
     TextView animalId;
     TextView heatDate;
+
     TextView serviceType;
     TextView sireEarTagNo;
     TextView inseminator;
@@ -119,6 +121,8 @@ public class FragmentNaturalService extends Fragment {
         ownerCode.setText(GlobalVar.OWNERS_CODE);
         animalId.setText(GlobalVar.ID_NUMBER);
         ownerName.setText(GlobalVar.OWNERS_NAME);
+        heatDate.setText(CommonData.getInstance().getDefaultDate());
+
 
 
         datePickLayout.setOnClickListener(new View.OnClickListener() {
