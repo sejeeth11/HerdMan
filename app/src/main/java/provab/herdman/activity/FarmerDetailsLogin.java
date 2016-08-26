@@ -29,6 +29,7 @@ public class FarmerDetailsLogin  extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.loginButton:
+
                 /*Intent intent=new Intent(FarmerDetailsLogin.this,AnimalMainActivity.class);
                 startActivity(intent);*/
                 break;

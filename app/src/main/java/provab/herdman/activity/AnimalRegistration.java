@@ -23,6 +23,7 @@ public class AnimalRegistration extends AppCompatActivity {
     TextView tootlBarTitle;
     FragmentManager fmanager;
     ViewPager pager;
+
     TabLayout tabLayout;
     VillagePagerAdapter adapter;
     String cattleId;
@@ -42,6 +43,7 @@ public class AnimalRegistration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_village);
+
 
         cattleBean=CattleBean.getCattleBeanInstance();
         toolbar = (Toolbar) findViewById(R.id.toolbar);

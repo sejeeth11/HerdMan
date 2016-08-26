@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import provab.herdman.R;
 import provab.herdman.beans.ActionBean;
@@ -182,6 +184,9 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
         return true;
     }
 
+
+
+
     private void showFragment(int id) {
         Fragment frag = null;
         switch (id) {
@@ -208,6 +213,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
             case R.id.nav_report:
 
                 break;
+
             case R.id.nav_logout:
                 SessionManager manager = new SessionManager(SelectCategoryActivity.this);
                 manager.logOut();
@@ -217,14 +223,27 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
     }
 
 
+
+
+
+
     private void exportDB() {
+
+        String Data =  DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).getDetails();
+        String JSOn = DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).SyncCattleRegistration();
+
+
+        Log.d("Details",Data);
+        Log.d("Reproduction",JSOn);
+
+
 
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
         FileChannel source = null;
         FileChannel destination = null;
         String currentDBPath = "/data/" + "provab.herdman" + "/databases/" + "HerdMan";
-        String backupDBPath = "MyDb.db";
+        String backupDBPath = "NewData.db";
         File currentDB = new File(data, currentDBPath);
         File backupDB = new File(sd, backupDBPath);
         try {
@@ -238,32 +257,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void writeToSD() throws IOException {
-        String DB_PATH;
-        String DB_NAME = "HerdMan";
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            DB_PATH = getFilesDir().getAbsolutePath().replace("files", "databases") + File.separator;
-        } else {
-            DB_PATH = getFilesDir().getPath() + getPackageName() + "/databases/";
-        }
-        File sd = Environment.getExternalStorageDirectory();
-
-        if (sd.canWrite()) {
-            String currentDBPath = DB_NAME;
-            String backupDBPath = "MyDb.db";
-            File currentDB = new File(DB_PATH, currentDBPath);
-            File backupDB = new File(sd, backupDBPath);
-
-            if (currentDB.exists()) {
-                FileChannel src = new FileInputStream(currentDB).getChannel();
-                FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                dst.transferFrom(src, 0, src.size());
-                src.close();
-                dst.close();
-            }
-        }
-    }
 
     /*@Override
     public void failureResponse(int statusCode) throws JSONException {

@@ -22,6 +22,7 @@
         android:icon="@drawable/unnamed"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         /////////////////ACTIVITY/////////////////////
         <activity
@@ -90,6 +91,20 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/herdman_authenticator" />
         </service>
+
+
+
+        <receiver android:name=".controller.NetworkStateReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+
+
+
+
+
 
         <activity android:name=".activity.VillageActivity" />
         <activity android:name=".activity.SearchId"></activity>

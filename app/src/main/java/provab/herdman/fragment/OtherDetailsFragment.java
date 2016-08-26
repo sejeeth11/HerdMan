@@ -85,6 +85,8 @@ public class OtherDetailsFragment extends Fragment {
                 Toast.makeText(getActivity(),"Registration Successfull",Toast.LENGTH_LONG).show();
                 getActivity().finish();
 
+
+
             }
         });
 

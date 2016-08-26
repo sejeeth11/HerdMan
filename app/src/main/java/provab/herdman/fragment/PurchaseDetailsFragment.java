@@ -75,13 +75,6 @@ public class PurchaseDetailsFragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_purchase_details, container, false);
@@ -173,5 +166,8 @@ public class PurchaseDetailsFragment extends Fragment {
         public void onDateTimeCancel() {
         }
     };
+
+
+
 
 }

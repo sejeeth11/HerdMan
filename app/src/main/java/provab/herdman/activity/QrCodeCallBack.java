@@ -6,6 +6,7 @@ package provab.herdman.activity;
 public interface QrCodeCallBack {
 
 
+
     public void setQrCodeResult(String idNumber);
 
 }

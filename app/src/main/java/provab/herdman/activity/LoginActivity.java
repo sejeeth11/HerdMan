@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void findView() {
+
         loginButton = (Button) findViewById(R.id.loginButton);
         userName = (EditText) findViewById(R.id.userName);
         userPassword = (EditText) findViewById(R.id.userPassword);
@@ -87,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                 SessionManager manager = new SessionManager(LoginActivity.this);
+
                 //  manager.checkLogin();
 
                 if ((userName.getText().toString().trim().equals("")) || userPassword.getText().toString().trim().equals("")) {
@@ -169,7 +171,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             RequestParams params = new RequestParams();
                             params.put("requestType", GET_THIRD_AND_FOURTH_MASTERS);
-                            params.put("Userid", 88);
+                            params.put("Userid",  userInfo.getUsercode());
                             params.put("Tablename", tableNameMaxId.toString());
                             WebServiceSyncController wc = new WebServiceSyncController(this, this);
                             wc.sendRequest(Links.GET_THIRD_AND_FOURTH_TYPE_MASTER, params, 5);
@@ -324,21 +326,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void setQrCodeResult(String idNumber) {
 //        Toast.makeText(LoginActivity.this, ""+DatabaseHelper.getDatabaseHelperInstance(this).getDetails("310001930018"), Toast.LENGTH_SHORT).show();
         JSONObject detailsJsonObject=DatabaseHelper.getDatabaseHelperInstance(this).getDetails(idNumber);
+
+
         if (detailsJsonObject!=null){
             try{
                 GlobalVar.ID_NUMBER=detailsJsonObject.getString("IdNo");
                 GlobalVar.VILLAGE_CODE=detailsJsonObject.getString("LotNo");
                 GlobalVar.OWNERS_NAME=detailsJsonObject.getString("name");
                 GlobalVar.OWNERS_CODE=detailsJsonObject.getString("Ownercode");
+            /*    Intent intent=new Intent(this,AnimalMainActivity.class);
+                startActivity(intent);*/
+                DatabaseHelper databaseHelpers = DatabaseHelper.getDatabaseHelperInstance(MyApplication.getContext());
+                userInfo = databaseHelpers.getUser(userName.getText().toString().trim(), userPassword.getText().toString().trim());
+
                 Intent intent=new Intent(this,AnimalMainActivity.class);
+                intent.putExtra("idNumber",idNumber);
+                intent.putExtra("Hint","1");
+
                 startActivity(intent);
+                finish();
+
             }catch (JSONException e){
                 e.printStackTrace();
             }
+
+
         }else{
             Intent intent=new Intent(this,VillageMainActivity.class);
             intent.putExtra("idNumber",idNumber);
             startActivity(intent);
+            finish();
+
+
         }
     }
     private void writeToSD() throws IOException {

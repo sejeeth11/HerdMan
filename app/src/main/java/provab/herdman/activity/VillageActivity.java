@@ -25,6 +25,7 @@ import provab.herdman.utility.DatabaseHelper;
  */
 public class VillageActivity extends AppCompatActivity implements View.OnClickListener{
 
+
     Button loginButton;
     LinearLayout lotInfoLayout;
     LinearLayout ownerInfoLayout;

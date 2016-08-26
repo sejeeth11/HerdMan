@@ -19,6 +19,9 @@
             android:id="@+id/nav_parent_details"
             android:title="4 Parent Details" />
 
+
+
+
         <item
             android:id="@+id/nav_insurance_details"
             android:title="5 Insurance Details" />
@@ -26,6 +29,11 @@
         <item
             android:id="@+id/nav_other_details"
             android:title="6 Other Details" />
+
+
+        <item
+            android:id="@+id/nav_scan"
+            android:title="7 Scan" />
 
     </group>
 

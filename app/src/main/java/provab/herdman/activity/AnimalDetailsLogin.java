@@ -36,10 +36,12 @@ public class AnimalDetailsLogin extends AppCompatActivity implements View.OnClic
     String flag;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_details_login);
+
         loginButton = (Button) findViewById(R.id.loginButton);
         lotInfoLayout = (LinearLayout) findViewById(R.id.lotInfoLayout);
         ownerInfoLayout = (LinearLayout) findViewById(R.id.ownerInfoLayout);

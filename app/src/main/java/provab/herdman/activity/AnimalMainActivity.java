@@ -60,6 +60,7 @@ public class AnimalMainActivity extends AppCompatActivity {
         //getSupportActionBar().setIcon(R.drawable.logo_toolbar);
         //getSupportActionBar().setTitle(" Smartmoo-Herdman");
 
+
         fmanager = getSupportFragmentManager();
 
      /*   drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -143,6 +144,13 @@ public class AnimalMainActivity extends AppCompatActivity {
         ft.replace(R.id.container, f);
         ft.commit();
     }
+    @Override
+    public void onBackPressed() {
+        // your code.
+        Intent intent = new Intent(AnimalMainActivity.this,SelectCategoryActivity.class);
+        startActivity(intent);
+        finish();
 
+    }
 }
 

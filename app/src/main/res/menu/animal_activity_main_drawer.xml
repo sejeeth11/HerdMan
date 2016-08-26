@@ -24,6 +24,9 @@
             android:id="@+id/nav_report"
             android:title="Reports" />
 
+        <item
+            android:id="@+id/nav_Scan"
+            android:title="Scan" />
 
         <item
             android:id="@+id/nav_logout"

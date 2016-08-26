@@ -6,6 +6,8 @@ package provab.herdman.constants;
 public class Links {
 
 
+
+
     //MANOJ
    /* public static String LOCAL_URL = "http://192.168.0.107/service/mobile/";
     public static String BASE_URL = LOCAL_URL;
@@ -19,7 +21,7 @@ public class Links {
     public static String PARTNER_BASE_URL = "http://192.168.0.184/service/";*/
 
     //SERVER
-    public static String SERVER_URL = "http://herdmanapp.vetware.in/herdmanapp/getdata.asmx/";
+    public static String SERVER_URL = "http://182.73.72.14/herdman/GetData.asmx/";
     public static String BASE_URL = SERVER_URL;
 
     public static String GET_REGISTERED_USERS= BASE_URL + "GetUSer";

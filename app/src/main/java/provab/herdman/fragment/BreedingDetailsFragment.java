@@ -23,9 +23,14 @@ import android.widget.Toast;
 
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +42,7 @@ import provab.herdman.adapter.SpinnerAdapter;
 import provab.herdman.beans.CattleBean;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.utility.DatabaseHelper;
+import provab.herdman.utility.SessionManager;
 
 /**
  * Created by PTBLR-1057 on 6/15/2016.
@@ -80,10 +86,12 @@ public class BreedingDetailsFragment extends Fragment {
     TextView calfSex;
     Button next;
     Button previous;
-
+    SessionManager manager;
+    public static final String USERCODE="UserCode";
     Activity activity_village;
     Activity activity_animal;
     boolean flag=false;
+    String Userid;
 
     @Override
     public void onAttach(Activity activity) {
@@ -151,6 +159,12 @@ public class BreedingDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_breeding_details, container, false);
+        manager = new SessionManager(getActivity());
+        Userid = manager.getPrefData(USERCODE);
+
+
+
+
         findViews(v);
 //        milkingDryGroup.check(R.id.milking);
         pregnantAIGroup.check(R.id.yes);
@@ -532,15 +546,15 @@ public class BreedingDetailsFragment extends Fragment {
 
                     String JSOn = DatabaseHelper.getDatabaseHelperInstance(getActivity()).SyncCattleRegistration();
 
-                    Log.e("Responce",JSOn);
+
+                    getDataFromSecondTime("http://182.73.72.14/HerdmanPost/SetData.asmx","",JSOn);
 
 
 
 
 
 
-
-
+                    longInfo(JSOn);
 
                     if(flag) {
 
@@ -693,6 +707,7 @@ public class BreedingDetailsFragment extends Fragment {
             }
         });
 
+
         dryGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -706,6 +721,8 @@ public class BreedingDetailsFragment extends Fragment {
             }
 
         });
+
+
 
         pregnantGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -748,6 +765,17 @@ public class BreedingDetailsFragment extends Fragment {
         });
     }
 
+
+    public  void longInfo(String str) {
+        if(str.length() > 10000) {
+            Log.i("TAG", str.substring(0, 10000));
+            longInfo(str.substring(10000));
+        } else
+            Log.i("TAG", str);
+    }
+
+
+
     public long calculateDateDifference(String firstDate, String secondDate) {
         Date d1 = null;
         Date d2 = null;
@@ -782,6 +810,7 @@ public class BreedingDetailsFragment extends Fragment {
         if(flag){
          lotList = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getSireEarTagListHardCoded(((VillageMainActivity) getActivity()).getCattleBean().getAnimalId());
         }
+
         else{
             lotList = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getSireEarTagListHardCoded(((AnimalRegistration) getActivity()).getCattleBean().getAnimalId());
         }
@@ -813,6 +842,7 @@ public class BreedingDetailsFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 milkingDryInseminator.setText(((TextView) view).getText());
                 milkingDryInseminator.setTag(view.getTag().toString());
                 dialog.dismiss();
@@ -892,5 +922,103 @@ public class BreedingDetailsFragment extends Fragment {
         });
         return dialog;
     }
+
+
+
+    public void getDataFromSecondTime(String url, String auth_key, String  js) {
+        try {
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(150000);
+            StringEntity entity = new StringEntity(js);
+
+
+
+            client.post(getActivity(), url, entity, "application/json", new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                    String response = "";
+
+                    try {
+
+                        response = new String(responseBody, "UTF-8");
+
+                        Log.e("Resp",response);
+
+
+
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                    System.out.println("Error");
+                    System.out.println(error.getMessage());
+
+
+                }
+
+            });
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

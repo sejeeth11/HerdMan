@@ -58,9 +58,11 @@ public class SplashScreen extends AppCompatActivity {
 
 
     private boolean checkPermissions() {
+
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE);
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int result3 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA);
+
 
 
         if ( result1==PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED && result3==PackageManager.PERMISSION_GRANTED) {
