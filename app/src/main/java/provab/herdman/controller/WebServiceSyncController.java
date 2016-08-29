@@ -58,6 +58,11 @@ public class WebServiceSyncController {
     public void sendRequest(String url, RequestParams params , final int flag) {
 
 
+        Log.e("Params",params.toString());
+
+
+
+
         ConnectionDetector cd = new ConnectionDetector(context);
         Boolean isInternetPresent = cd.isConnectingToInternet();
         if (isInternetPresent == true) {
@@ -76,9 +81,6 @@ public class WebServiceSyncController {
 
 
                         progresss.setProgress(bytesWritten);
-
-
-
                 }
 
                 @Override

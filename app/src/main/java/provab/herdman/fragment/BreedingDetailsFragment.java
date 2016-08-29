@@ -25,15 +25,23 @@ import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import provab.herdman.R;
 import provab.herdman.activity.AnimalRegistration;
@@ -41,13 +49,17 @@ import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.adapter.SpinnerAdapter;
 import provab.herdman.beans.CattleBean;
 import provab.herdman.constants.GlobalVar;
+import provab.herdman.constants.Links;
+import provab.herdman.controller.ConnectionDetector;
+import provab.herdman.controller.WebInterface;
+import provab.herdman.controller.WebServiceSyncController;
 import provab.herdman.utility.DatabaseHelper;
 import provab.herdman.utility.SessionManager;
 
 /**
  * Created by PTBLR-1057 on 6/15/2016.
  */
-public class BreedingDetailsFragment extends Fragment {
+public class BreedingDetailsFragment extends Fragment{
 
     RadioGroup milkingDryGroup;
     RadioGroup milkingGroup;
@@ -547,8 +559,11 @@ public class BreedingDetailsFragment extends Fragment {
                     String JSOn = DatabaseHelper.getDatabaseHelperInstance(getActivity()).SyncCattleRegistration();
 
 
-                    getDataFromSecondTime("http://182.73.72.14/HerdmanPost/SetData.asmx","",JSOn);
 
+
+                    RequestParams params1 = new RequestParams();
+                    params1.put("Json",JSOn);
+                    //sendRequest(Links.SERVER_PASS_DATA,params1,1);
 
 
 
@@ -566,18 +581,6 @@ public class BreedingDetailsFragment extends Fragment {
                         activity.swipeViewPagerToNextScreen();
                     }
 
-
-
-
-
-
-
-
-
-
-
-//                     AnimalRegistration activity = (AnimalRegistration)getActivity();
-  //                  activity.swipeViewPagerToNextScreen();
 
 
                      Toast.makeText(getActivity(),"Save Successfully",Toast.LENGTH_LONG).show();
@@ -922,93 +925,6 @@ public class BreedingDetailsFragment extends Fragment {
         });
         return dialog;
     }
-
-
-
-    public void getDataFromSecondTime(String url, String auth_key, String  js) {
-        try {
-
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.setTimeout(150000);
-            StringEntity entity = new StringEntity(js);
-
-
-
-            client.post(getActivity(), url, entity, "application/json", new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                    String response = "";
-
-                    try {
-
-                        response = new String(responseBody, "UTF-8");
-
-                        Log.e("Resp",response);
-
-
-
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                    System.out.println("Error");
-                    System.out.println(error.getMessage());
-
-
-                }
-
-            });
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

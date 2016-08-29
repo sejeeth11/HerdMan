@@ -22,6 +22,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,6 +36,9 @@ import java.util.logging.Logger;
 
 import provab.herdman.R;
 import provab.herdman.beans.ActionBean;
+import provab.herdman.constants.Links;
+import provab.herdman.controller.WebInterface;
+import provab.herdman.controller.WebServiceSyncController;
 import provab.herdman.fragment.ActionListDetails;
 import provab.herdman.fragment.AnimalDetailsFragment;
 import provab.herdman.fragment.AnimalPropertyFragment;
@@ -43,7 +50,7 @@ import provab.herdman.utility.SessionManager;
 /**
  * Created by PTBLR-1057 on 5/18/2016.
  */
-public class SelectCategoryActivity extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener/*, WebInterface */{
+public class SelectCategoryActivity extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener, WebInterface {
 
     DrawerLayout drawer;
     LinearLayout selectVillage;
@@ -134,6 +141,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
         }
     }
 
+
     private Account createDummyAccount(Context context) {
         Account dummyAccount = new Account("HerdManAccount", "com.provab.herdman");
         AccountManager accountManager = (AccountManager) context.getSystemService(ACCOUNT_SERVICE);
@@ -175,6 +183,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
             }
         }
     }*/
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         //int count = fmanager.getBackStackEntryCount();
@@ -232,9 +241,13 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
         String Data =  DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).getDetails();
         String JSOn = DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).SyncCattleRegistration();
 
+     //   RequestParams params = new RequestParams();
+       // params.put("Json", JSOn);
+       // WebServiceSyncController wc = new WebServiceSyncController(this, this);
+        //wc.sendRequest(Links.SERVER_PASS_DATA, params, 5);
 
-        Log.d("Details",Data);
-        Log.d("Reproduction",JSOn);
+
+
 
 
 
@@ -255,6 +268,16 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void getResponse(String response, int flag) throws JSONException {
+        Log.e("REs",response);
+    }
+
+    @Override
+    public void failureResponse(int statusCode) throws JSONException {
+
     }
 
 

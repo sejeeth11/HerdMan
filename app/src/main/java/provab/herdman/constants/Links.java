@@ -22,13 +22,16 @@ public class Links {
 
     //SERVER
     public static String SERVER_URL = "http://182.73.72.14/herdman/GetData.asmx/";
-    public static String BASE_URL = SERVER_URL;
+    public static String DATA_SEND = "http://182.73.72.14/HerdmanPost/SetData.asmx/";
 
+   // http://182.73.72.14/herdman/GetData.asmx?
+
+    public static String BASE_URL = SERVER_URL;
+    public static String SERVER_PASS_DATA = DATA_SEND+"SETJsonData";
     public static String GET_REGISTERED_USERS= BASE_URL + "GetUSer";
     public static String GET_ONE_TIME_PERMANENT_MASTER= BASE_URL + "GetOneTimeMaster";
     public static String GET_THIRD_AND_FOURTH_TYPE_MASTER= BASE_URL + "GetMasterData";
-
-   public static String GET_ANIMAL_DETAILS= BASE_URL + "GetAnimalDetails";
-   public static String GET_ANIMALs= BASE_URL + "GetAnimals";
+    public static String GET_ANIMAL_DETAILS= BASE_URL + "GetAnimalDetails";
+    public static String GET_ANIMALs= BASE_URL + "GetAnimals";
 
 }

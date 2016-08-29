@@ -2772,6 +2772,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_CALF_SEX, cattleBean.getCalfSex());
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
                 values.put(this.TABLE_REPRODUCTION_COLUMN_DATE_OF_DRY, cattleBean.getDryDate());
+
+
+
                 System.out.println("SEE THE STATUS = " + db.insert(REPRODUCTION_TABLE_NAME, null, values));
 
             }
@@ -3116,6 +3119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       values.put("[Dam]",dam);
       values.put("[paternalSire]",paternalsire);
       values.put("[PaternalDam]",paternaldam);
+
       db.update("[Details]",values,where,whereArgs);
 
 

@@ -162,12 +162,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
 
-
                         if (!preferences.getString("Sync_Login", "").equalsIgnoreCase("")) {
-
-
                             Toast.makeText(getApplicationContext(),"Synced Succesfully",Toast.LENGTH_SHORT).show();
-
                         } else {
                             RequestParams params = new RequestParams();
                             params.put("requestType", GET_THIRD_AND_FOURTH_MASTERS);
