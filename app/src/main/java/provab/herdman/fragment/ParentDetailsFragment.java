@@ -90,12 +90,17 @@ public class ParentDetailsFragment extends Fragment {
             }
         });
 
+     //   []	integer,
+
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                  DatabaseHelper.getDatabaseHelperInstance(getActivity()).save_parent_detail(Id,sire.getText().toString(),dam.getText().toString(),paternalsire.getText().toString(),paternaldam.getText().toString());
+
+
+
                  Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
                 if(flag){
                     ((VillageMainActivity) getActivity()).swipeViewPagerToNextScreen();

@@ -25,6 +25,7 @@ import provab.herdman.activity.AnimalRegistration;
 import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.beans.CattleBean;
 import provab.herdman.constants.Links;
+import provab.herdman.controller.ConnectionDetector;
 import provab.herdman.utility.DatabaseHelper;
 import provab.herdman.utility.SessionManager;
 
@@ -102,9 +103,22 @@ public class OtherDetailsFragment extends Fragment {
                 RequestParams params1 = new RequestParams();
                 params1.put("Json",JSOn);
 
+                ConnectionDetector detector = new ConnectionDetector(getActivity());
 
 
-                Send_data(Links.SERVER_PASS_DATA,params1);
+
+                if(detector.isConnectingToInternet()){
+                    Send_data(Links.SERVER_PASS_DATA,params1);
+
+
+                }else{
+
+                }
+
+
+
+               // DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("","1","SyncStatus");
+
 
                 Toast.makeText(getActivity(),"Registration Successfull",Toast.LENGTH_LONG).show();
                 getActivity().finish();
@@ -130,6 +144,8 @@ public class OtherDetailsFragment extends Fragment {
                 try {
                     response = new String(responseBody, "UTF-8");
                     Log.e("Success response", response);
+                    DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("details","1","SyncStatus");
+
                 } catch (UnsupportedEncodingException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

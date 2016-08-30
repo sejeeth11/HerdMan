@@ -70,6 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SMS_LABEL_TABLE_NAME = "SMSLabel";
     private static final String SMS_LANGUAGE_TABLE_NAME = "SMSLanguage";
     private static final String SMS_SETTINGS = "SMSSetting";
+    private static final String SYNC_STATUS = "SyncStatus";
 
     private static final String SOURCE_DETAILS_TABLE_NAME = "SourceDetails";
     private static final String SPECIES_TABLE_NAME = "Species";
@@ -319,9 +320,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE User(UID TEXT PRIMARY KEY, PASSWORD TEXT, GROUPS TEXT, HERD TEXT, CompanyCode TEXT ,AppType TEXT, UpdatedBy TEXT, UpdatedAt TEXT, UserCode TEXT ,QRCode TEXT)");
-        db.execSQL("CREATE TABLE [Reproduction] (\n\t[CompanyCode]\tnvarchar(5) COLLATE NOCASE,\n\t[IdNo]\tnvarchar(20) COLLATE NOCASE,\n\t[Parity]\tinteger,\n\t[HeatSeq]\tinteger,\n\t[Service]\tinteger,\n\t[DtOfHeat]\tdatetime,\n\t[Insim]\tnvarchar(20) COLLATE NOCASE,\n\t[SireId]\tnvarchar(20) COLLATE NOCASE,\n\t[PD1]\tinteger,\n\t[RemPD1]\tnvarchar(35) COLLATE NOCASE,\n\t[PD2]\tinteger,\n\t[RemPD2]\tnvarchar(35) COLLATE NOCASE,\n\t[Pddate]\tdatetime,\n\t[DtOfCalving]\tdatetime,\n\t[DtOfDry]\tdatetime,\n\t[Dry_Reson]\tnvarchar(50) COLLATE NOCASE,\n\t[Dry_Treatment]\tnvarchar(50) COLLATE NOCASE,\n\t[Flg]\tnvarchar(20) COLLATE NOCASE,\n\t[Calf]\tbit,\n\t[Sex]\tnvarchar(20) COLLATE NOCASE,\n\t[C_Type]\tnvarchar(10) COLLATE NOCASE,\n\t[ROP]\tbit,\n\t[Comments]\tnvarchar(100) COLLATE NOCASE,\n\t[RP]\tnvarchar COLLATE NOCASE,\n\t[ENTRY]\tnvarchar(50) COLLATE NOCASE,\n\t[Total_Dose]\tinteger,\n\t[Abortion_Seq]\tinteger DEFAULT 0,\n\t[Vaccine]\tinteger,\n\t[CretationDate]\tdatetime COLLATE NOCASE DEFAULT (CURRENT_TIMESTAMP),\n\t[SyncID] \tinteger \n\n)");
+        db.execSQL("CREATE TABLE [Reproduction] (\n\t[CompanyCode]\tnvarchar(5) COLLATE NOCASE,\n\t[IdNo]\tnvarchar(20) COLLATE NOCASE,\n\t[Parity]\tinteger,\n\t[HeatSeq]\tinteger,\n\t[Service]\tinteger,\n\t[DtOfHeat]\tdatetime,\n\t[Insim]\tnvarchar(20) COLLATE NOCASE,\n\t[SireId]\tnvarchar(20) COLLATE NOCASE,\n\t[PD1]\tinteger,\n\t[RemPD1]\tnvarchar(35) COLLATE NOCASE,\n\t[PD2]\tinteger,\n\t[RemPD2]\tnvarchar(35) COLLATE NOCASE,\n\t[Pddate]\tdatetime,\n\t[DtOfCalving]\tdatetime,\n\t[DtOfDry]\tdatetime,\n\t[Dry_Reson]\tnvarchar(50) COLLATE NOCASE,\n\t[Dry_Treatment]\tnvarchar(50) COLLATE NOCASE,\n\t[Flg]\tnvarchar(20) COLLATE NOCASE,\n\t[Calf]\tbit,\n\t[Sex]\tnvarchar(20) COLLATE NOCASE,\n\t[C_Type]\tnvarchar(10) COLLATE NOCASE,\n\t[ROP]\tbit,\n\t[Comments]\tnvarchar(100) COLLATE NOCASE,\n\t[RP]\tnvarchar COLLATE NOCASE,\n\t[ENTRY]\tnvarchar(50) COLLATE NOCASE,\n\t[Total_Dose]\tinteger,\n\t[Abortion_Seq]\tinteger DEFAULT 0,\n\t[Vaccine]\tinteger,\n\t[CretationDate]\tdatetime COLLATE NOCASE DEFAULT (CURRENT_TIMESTAMP),\n\t[SyncStatus]\tinteger default  NULL,\n\t[SyncID] \tinteger,\n\t[UID]\tinteger default NULL\n\n)");
+
+
+
+
+
         db.execSQL("CREATE TABLE Calvingtype(CalvingTypeCode TEXT, Name TEXT)");
         db.execSQL("CREATE TABLE Disposal(DisposalCode TEXT, Name TEXT)");
         db.execSQL("CREATE TABLE Farmbred(ID TEXT, Farmbred TEXT)");
@@ -343,7 +350,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE [Breed] (\n\t[Speciescode]\tinteger NOT NULL,\n\t[BreedCode]\tinteger,\n\t[Name]\tnvarchar(30) NOT NULL COLLATE NOCASE,\n\t[BreedType]\tnvarchar(15) COLLATE NOCASE,\n\t[SyncID]\tinteger NOT NULL\n\n)");
         db.execSQL("CREATE TABLE [Parameter] (\n\t[Breed]\tinteger,\n\t[Heat]\tinteger,\n\t[HeatVar]\tinteger,\n\t[PD1]\tinteger,\n\t[PD1Var]\tinteger,\n\t[PD2]\tinteger,\n\t[PD2Var]\tinteger,\n\t[Dried]\tinteger,\n\t[DriedVar]\tinteger,\n\t[InsuranceVar]\tinteger,\n\t[MilkInterval]\tinteger,\n\t[HeiferMaleAge]\tinteger,\n\t[HeiferFemaleAge]\tinteger,\n\t[MilkProd]\tnumeric,\n\t[Age]\tnumeric,\n\t[NoAI]\tnumeric,\n\t[Lactation]\tnumeric,\n\t[Firstheat]\tnumeric,\n\t[hundays]\tnumeric,\n\t[STRAWSTOCK]\tnumeric,\n\t[SIREPREGRATE]\tnumeric,\n\t[REPBRED]\tinteger,\n\t[ConCalv]\tinteger,\n\t[CALVINTER]\tinteger,\n\t[LACLEN]\tinteger,\n\t[SNF]\tnumeric,\n\t[FAT]\tnumeric,\n\t[PROTEIN]\tnumeric,\n\t[LACTOSE]\tnumeric,\n\t[Exp_First_Service]\tinteger,\n\t[AVG_Yield]\tnumeric,\n\t[Peak_Yield]\tnumeric,\n\t[Peak_Days]\tinteger,\n\t[Open_Period]\tinteger,\n\t[Dry_Period]\tinteger,\n\t[tfdmilk]\tinteger,\n\t[TF_Days]\tinteger,\n\t[Breed_Type]\tnvarchar(50) COLLATE NOCASE,\n\t[CalvDays]\tinteger,\n\t[SyncID]\tinteger NOT NULL\n\n)");
         db.execSQL("CREATE TABLE [SMSLabel] (\n\t[English]\tnvarchar(200) COLLATE NOCASE,\n\t[Tamil]\tnvarchar COLLATE NOCASE,\n\t[KAnnada]\tnvarchar COLLATE NOCASE,\n\t[Marati]\tnvarchar COLLATE NOCASE,\n\t[SyncID]\tinteger NOT NULL\n\n)");
+
         db.execSQL("CREATE TABLE [Medicineledger] (\n\t[CompanyCode]\tnvarchar(50) COLLATE NOCASE,\n\t[Name]\tnvarchar(50) COLLATE NOCASE,\n\t[ShortName]\tnvarchar(50) COLLATE NOCASE,\n\t[CompanyName]\tnvarchar(50) COLLATE NOCASE,\n\t[Type]\tnvarchar(30) COLLATE NOCASE,\n\t[GroupCode]\tnvarchar(20) COLLATE NOCASE,\n\t[Route]\tnvarchar(10) COLLATE NOCASE,\n\t[Dose]\tnvarchar(10) COLLATE NOCASE,\n\t[Units]\tnvarchar(5) COLLATE NOCASE,\n\t[Min_Stock]\tnumeric,\n\t[Suspend]\tbit,\n\t[UID]\tinteger,\n\t[AllowUSer]\tbit,\n\t[WithdrawPeriod]\tinteger,\n\t[Code]\tinteger,\n\t[SyncID]\tinteger NOT NULL\n\n)");
+
+
 
 
         db.execSQL("CREATE TABLE [Details] (\n\t[CompanyCode]\tnvarchar(5) COLLATE NOCASE,\n\t[HerdNo]\tnvarchar(50) COLLATE NOCASE,\n\t[LotNo]\tnvarchar(50) COLLATE NOCASE,\n\t[IdNo]\tnvarchar(50) COLLATE NOCASE,\n\t[SexFlg]\tinteger,\n\t[Species]\tinteger,\n\t[Breed]\tinteger,\n\t[Status]\tinteger,\n\t[DtOfBirth]\tdatetime,\n\t[Name]\tnvarchar(50) COLLATE NOCASE,\n\t[AgeFlg]\tinteger,\n\t[BirthWt]\tnumeric,\n\t[SalvFlg]\tbit,\n\t[GroupFlg]\tnvarchar(20) COLLATE NOCASE,\n\t[PBFlg]\tinteger,\n\t[CatCalfFlg]\tnvarchar(20) COLLATE NOCASE,\n\t[HLAname]\tnvarchar(50) COLLATE NOCASE,\n\t[SensorNo]\tnvarchar(25) COLLATE NOCASE,\n\t[Photo]\tnvarchar(50) COLLATE NOCASE,\n\t[Parity]\tinteger,\n\t[Disposalflg]\tinteger,\n\t[sel_cancel]\tbit,\n\t[Insurance_No]\tnvarchar(50) COLLATE NOCASE,\n\t[AI_Tagno]\tnvarchar(50) COLLATE NOCASE,\n\t[Current_Parity]\tinteger,\n\t[Registration_Date]\tdatetime,\n\t[Market_Value]\tnumeric,\n\t[No_rings]\tinteger,\n\t[Rearing_Purpose]\tnvarchar(50) COLLATE NOCASE,\n\t[Color]\tnvarchar(50) COLLATE NOCASE,\n\t[Horn_distance]\tinteger,\n\t[InsurNo]\tinteger,\n\t[Policy_period]\tinteger,\n\t[Transaction_Date]\tdatetime,\n\t[Hypothecation]\tnvarchar(50) COLLATE NOCASE,\n\t[Hypothecation_No]\tnvarchar(50) COLLATE NOCASE,\n\t[Doctor]\tnvarchar(50) COLLATE NOCASE,\n\t[Send_CMS]\tnvarchar(10) COLLATE NOCASE,\n\t[ImageContent]\tblob(2147483647),\n\t[Insurance_Flag]\tchar(10) COLLATE NOCASE,\n\t[BreedingStatus]\tnvarchar(20) COLLATE NOCASE,\n\t[HeatDate]\tdatetime,\n\t[HeatSeq]\tinteger,\n\t[AbortionSeq]\tinteger,\n\t[PDDate]\tdatetime,\n\t[PDI]\tinteger,\n\t[PDII]\tinteger,\n\t[CalvingDate]\tdatetime,\n\t[DryDate]\tdatetime,\n\t[MilkDate]\tdatetime,\n\t[LastMilk]\tfloat,\n\t[TotalMilk]\tnumeric,\n\t[SelectFlag]\tinteger,\n\t[SelectRemarks]\tnvarchar COLLATE NOCASE,\n\t[SelectColor]\tnvarchar(50) COLLATE NOCASE,\n\t[LastSire]\tnvarchar(50) COLLATE NOCASE,\n\t[DisposalRemarks]\tnvarchar(50) COLLATE NOCASE,\n\t[Sire]\tnvarchar(30) COLLATE NOCASE,\n\t[Dam]\tnvarchar(30) COLLATE NOCASE,\n\t[paternalSire]\tnvarchar(30) COLLATE NOCASE,\n\t[PaternalDam]\tnvarchar(30) COLLATE NOCASE,\n\t[NewownerCode]\tnvarchar(50) COLLATE NOCASE,\n\t[OwnerID]\tnvarchar(50) COLLATE NOCASE,\n\t[VirtualLot]\tnvarchar(30) COLLATE NOCASE,\n\t[UID]\tinteger,\n\t[AllowUser]\tbit,\n\t[ISSuspend]\tbit,\n\t[SyncID]\tinteger,\n" +
@@ -529,6 +539,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         values.put(USER_TABLE_FIELD_UPDATEDAT, userObject.getString(USER_TABLE_FIELD_UPDATEDAT));
                         values.put(USER_TABLE_FIELD_USERCODE, userObject.getString(USER_TABLE_FIELD_USERCODE));
                         values.put(USER_TABLE_FIELD_QRCODE, userObject.optString(USER_TABLE_FIELD_QRCODE));
+
+
                         String[] strArr = new String[DATABASE_VERSION];
                         strArr[0] = String.valueOf(UID);
                         db.update(USER_TABLE_NAME, values, "UID = ?", strArr);
@@ -2747,12 +2759,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_CALVING_TYPE, cattleBean.getCalvingNormalOrAbNormal());
                 values.put(this.TABLE_REPRODUCTION_COLUMN_CALF_SEX, cattleBean.getCalfSex());
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
+                values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "0");
+                values.put("SyncStatus","0");
+
+
+
+
                 System.out.println("SEE THE STATUS = " + db.insert(REPRODUCTION_TABLE_NAME, null, values));
-
-
-
-
-
 
             } else if (cattleBean.getCalvingDryPregnant() == 2) {
 
@@ -2773,6 +2786,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_CALF_SEX, cattleBean.getCalfSex());
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
                 values.put(this.TABLE_REPRODUCTION_COLUMN_DATE_OF_DRY, cattleBean.getDryDate());
+                values.put("SyncStatus","0");
 
 
 
@@ -2780,7 +2794,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             }
 
-
+           // values.put(this.TABLE_REPRODUCTION_COLUMN_DATE_OF_DRY, cattleBean.getDryDate());
 
             if (cattleBean.getPregnantOrAi() == DATABASE_VERSION) {
 
@@ -2804,6 +2818,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_PDII, "3");
                 values.put(this.TABLE_REPRODUCTION_COLUMN_PD_DATE, cattleBean.pregnantDate);
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
+               // values.put("SyncStatus","0");
+
+
                 System.out.println("SEE THE STATUS = " + db.insert(REPRODUCTION_TABLE_NAME, null, values));
 
             } else if (cattleBean.getPregnantOrAi() == 2) {
@@ -2820,6 +2837,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
                 System.out.println("SEE THE STATUS = " + db.insert(REPRODUCTION_TABLE_NAME, null, values));
             }
+
+
+
 
 
             db.setTransactionSuccessful();
@@ -2868,7 +2888,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             cursor = getWritableDatabase().rawQuery(Query, null);
 
-           // Log.e("Query","Select Name,CODE  FROM [Medicineledger] where type='" + diseaseId + "'");
 
 
 
@@ -3120,6 +3139,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       values.put("[Dam]",dam);
       values.put("[paternalSire]",paternalsire);
       values.put("[PaternalDam]",paternaldam);
+      values.put("[SyncStatus]","0");
+
 
       db.update("[Details]",values,where,whereArgs);
 
@@ -3181,6 +3202,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          values.put("Color",color);
          values.put("Horn_distance",horndistance);
          values.put("Doctor",doctor);
+         values.put("SyncStatus","0");
+
 
 
 
@@ -3627,12 +3650,37 @@ public  ArrayList<String> getSystemdata(){
 
 
 
+   public void Update_Sync_Flag(String TableName ,String FlagValue , String ColoumnName){
+
+
+
+       SQLiteDatabase db = this.getWritableDatabase();
+       db.beginTransaction();
+       ContentValues values = new ContentValues();
+       values.put("SyncStatus",FlagValue);
+       db.update(TableName,values,null,null);
+       db.endTransaction();
+
+
+
+
+
+
+
+   }
+
+
 
      public String SyncCattleRegistration(String Uid){
          ArrayList<ReproductionBean> arrayList = new ArrayList<ReproductionBean>();
 
 
          SQLiteDatabase db = this.getWritableDatabase();
+
+
+
+
+
          Cursor cursor = null;
          JSONObject animalStatusObject= null;
 
@@ -3697,44 +3745,48 @@ public  ArrayList<String> getSystemdata(){
          try {
 
              for(int k=0;k<arrayList.size();k++){
-                 JSONObject reproductiondata = new JSONObject();
-                 Log.e("IdNo",arrayList.get(k).getIdno());
-
-                  reproductiondata.put("CompanyCode",arrayList.get(k).getCompanycode());
-                  reproductiondata.put("IdNo",arrayList.get(k).getIdno());
-                  reproductiondata.put("Parity",arrayList.get(k).getParity());
-                  reproductiondata.put("HeatSeq",arrayList.get(k).getHeatseq());
-                  reproductiondata.put("Service",arrayList.get(k).getService());
-                  reproductiondata.put("DtOfHeat",arrayList.get(k).getDtofheat());
-                  reproductiondata.put("Insim",arrayList.get(k).getInsim());
-                  reproductiondata.put("SireId",arrayList.get(k).getSireid());
-                  reproductiondata.put("PD1",arrayList.get(k).getPd1());
-                  reproductiondata.put("RemPD1",arrayList.get(k).getRmpd1());
-                  reproductiondata.put("PD2",arrayList.get(k).getPd2());
-                  reproductiondata.put("RemPD2",arrayList.get(k).getRmpd2());
-                  reproductiondata.put("Pddate",arrayList.get(k).getPddate());
-                  reproductiondata.put("DtOfCalving",arrayList.get(k).getDateofcalving());
-                  reproductiondata.put("DtOfDry",arrayList.get(k).getDtofdry());
-                  reproductiondata.put("Dry_Reson",arrayList.get(k).getDryreason());
-                  reproductiondata.put("Dry_Treatment",arrayList.get(k).getDrytreatement());
-                  reproductiondata.put("Flg",arrayList.get(k).getFlg());
-                  reproductiondata.put("Calf",arrayList.get(k).getCalf());
-                  reproductiondata.put("Sex",arrayList.get(k).getSex());
-                  reproductiondata.put("C_Type",arrayList.get(k).getCtype());
-                  reproductiondata.put("ROP",arrayList.get(k).getRop());
-                  reproductiondata.put("Comments",arrayList.get(k).getComments());
-                  reproductiondata.put("RP",arrayList.get(k).getRp());
-                  reproductiondata.put("ENTRY",arrayList.get(k).getEntry());
-                  reproductiondata.put("Total_Dose",arrayList.get(k).getTotaldose());
-                  reproductiondata.put("Abortion_Seq",arrayList.get(k).getAbortionseq());
-                  reproductiondata.put("Vaccine",arrayList.get(k).getVaccine());
-                  reproductiondata.put("CretationDate",arrayList.get(k).getCreationdate());
-                  reproductiondata.put("UID",arrayList.get(k).getUID());
 
 
 
-                 ReproductionArray.put(reproductiondata);
-             }
+                 if(arrayList.get(k).getSyncId().equalsIgnoreCase("0")) {
+
+                     JSONObject reproductiondata = new JSONObject();
+                     Log.e("IdNo", arrayList.get(k).getIdno());
+
+                     reproductiondata.put("CompanyCode", arrayList.get(k).getCompanycode());
+                     reproductiondata.put("IdNo", arrayList.get(k).getIdno());
+                     reproductiondata.put("Parity", arrayList.get(k).getParity());
+                     reproductiondata.put("HeatSeq", arrayList.get(k).getHeatseq());
+                     reproductiondata.put("Service", arrayList.get(k).getService());
+                     reproductiondata.put("DtOfHeat", arrayList.get(k).getDtofheat());
+                     reproductiondata.put("Insim", arrayList.get(k).getInsim());
+                     reproductiondata.put("SireId", arrayList.get(k).getSireid());
+                     reproductiondata.put("PD1", arrayList.get(k).getPd1());
+                     reproductiondata.put("RemPD1", arrayList.get(k).getRmpd1());
+                     reproductiondata.put("PD2", arrayList.get(k).getPd2());
+                     reproductiondata.put("RemPD2", arrayList.get(k).getRmpd2());
+                     reproductiondata.put("Pddate", arrayList.get(k).getPddate());
+                     reproductiondata.put("DtOfCalving", arrayList.get(k).getDateofcalving());
+                     reproductiondata.put("DtOfDry", arrayList.get(k).getDtofdry());
+                     reproductiondata.put("Dry_Reson", arrayList.get(k).getDryreason());
+                     reproductiondata.put("Dry_Treatment", arrayList.get(k).getDrytreatement());
+                     reproductiondata.put("Flg", arrayList.get(k).getFlg());
+                     reproductiondata.put("Calf", arrayList.get(k).getCalf());
+                     reproductiondata.put("Sex", arrayList.get(k).getSex());
+                     reproductiondata.put("C_Type", arrayList.get(k).getCtype());
+                     reproductiondata.put("ROP", arrayList.get(k).getRop());
+                     reproductiondata.put("Comments", arrayList.get(k).getComments());
+                     reproductiondata.put("RP", arrayList.get(k).getRp());
+                     reproductiondata.put("ENTRY", arrayList.get(k).getEntry());
+                     reproductiondata.put("Total_Dose", arrayList.get(k).getTotaldose());
+                     reproductiondata.put("Abortion_Seq", arrayList.get(k).getAbortionseq());
+                     reproductiondata.put("Vaccine", arrayList.get(k).getVaccine());
+                     reproductiondata.put("CretationDate", arrayList.get(k).getCreationdate());
+                     reproductiondata.put("UID", arrayList.get(k).getUID());
+                     ReproductionArray.put(reproductiondata);
+                 }
+
+                 }
              CommonData.getInstance().setReproductioncommon(ReproductionArray);
 
 
@@ -3839,8 +3891,7 @@ public  ArrayList<String> getSystemdata(){
 
               bean.setAllowUser(String.valueOf(cursor.getString(65)));
               bean.setISSuspend(String.valueOf(cursor.getString(66)));
-              bean.setSyncID(String.valueOf(cursor.getString(67)));
-
+              bean.setSyncID(String.valueOf(cursor.getString(68)));
               arrayList.add(bean);
 
 
@@ -3854,9 +3905,6 @@ public  ArrayList<String> getSystemdata(){
       db.close();
 
 
-
-
-
       JSONArray detailsArrayy = new JSONArray();
       JSONObject Master = new JSONObject();
       JSONObject GetMasterData = new JSONObject();
@@ -3865,77 +3913,79 @@ public  ArrayList<String> getSystemdata(){
 
           for(int k=0;k<arrayList.size();k++){
 
-              JSONObject Detailsdata = new JSONObject();
-              Detailsdata.put("CompanyCode",arrayList.get(k).getCompanyCode());
-              Detailsdata.put("HerdNo",arrayList.get(k).getHerdNo());
-              Detailsdata.put("LotNo",arrayList.get(k).getLotNo());
-              Detailsdata.put("IdNo",arrayList.get(k).getIdNo());
-              Detailsdata.put("SexFlg",arrayList.get(k).getSexFlg());
-              Detailsdata.put("Species",arrayList.get(k).getSpecies());
-              Detailsdata.put("Breed",arrayList.get(k).getBreed());
-              Detailsdata.put("Status",arrayList.get(k).getStatus());
-              Detailsdata.put("DtOfBirth",arrayList.get(k).getDtOfBirth());
-              Detailsdata.put("Name",arrayList.get(k).getName());
-              Detailsdata.put("AgeFlg",arrayList.get(k).getAgeFlg());
-              Detailsdata.put("BirthWt",arrayList.get(k).getBirthWt());
-              Detailsdata.put("SalvFlg",arrayList.get(k).getSalvFlg());
-              Detailsdata.put("GroupFlg",arrayList.get(k).getGroupFlg());
-              Detailsdata.put("PBFlg",arrayList.get(k).getPBFlg());
-              Detailsdata.put("CatCalfFlg",arrayList.get(k).getCatCalfFlg());
-              Detailsdata.put("HLAname",arrayList.get(k).getHLAname());
-              Detailsdata.put("SensorNo",arrayList.get(k).getSensorNo());
-              Detailsdata.put("Photo",arrayList.get(k).getPhoto());
-              Detailsdata.put("Parity",arrayList.get(k).getParity());
-              Detailsdata.put("Disposalflg",arrayList.get(k).getDisposalflg());
-              Detailsdata.put("sel_cancel",arrayList.get(k).getSel_cancel());
-              Detailsdata.put("Insurance_No",arrayList.get(k).getInsurance_No());
-              Detailsdata.put("AI_Tagno",arrayList.get(k).getAI_Tagno());
-              Detailsdata.put("Current_Parity",arrayList.get(k).getCurrent_Parity());
-              Detailsdata.put("Registration_Date",arrayList.get(k).getRegistration_Date());
-              Detailsdata.put("Market_Value",arrayList.get(k).getMarket_Value());
-              Detailsdata.put("No_rings",arrayList.get(k).getNo_rings());
-              Detailsdata.put("Rearing_Purpose",arrayList.get(k).getRearing_Purpose());
-              Detailsdata.put("Color",arrayList.get(k).getColor());
-              Detailsdata.put("Horn_distance",arrayList.get(k).getHorn_distance());
-              Detailsdata.put("InsurNo",arrayList.get(k).getInsurNo());
-              Detailsdata.put("Policy_period",arrayList.get(k).getPolicy_period());
-              Detailsdata.put("Transaction_Date",arrayList.get(k).getTransaction_Date());
-              Detailsdata.put("Hypothecation",arrayList.get(k).getHypothecation());
-              Detailsdata.put("Hypothecation_No",arrayList.get(k).getHypothecation_No());
-              Detailsdata.put("Doctor",arrayList.get(k).getDoctor());
-              Detailsdata.put("Send_CMS",arrayList.get(k).getSend_CMS());
-              Detailsdata.put("ImageContent",arrayList.get(k).getImageContent());
-              Detailsdata.put("Insurance_Flag",arrayList.get(k).getInsurance_Flag());
-              Detailsdata.put("BreedingStatus",arrayList.get(k).getBreedingStatus());
-              Detailsdata.put("HeatDate",arrayList.get(k).getHeatDate());
-              Detailsdata.put("HeatSeq",arrayList.get(k).getHeatSeq());
-              Detailsdata.put("AbortionSeq",arrayList.get(k).getAbortionSeq());
-              Detailsdata.put("PDDate",arrayList.get(k).getPDDate());
-              Detailsdata.put("PDI",arrayList.get(k).getPDI());
-              Detailsdata.put("PDII",arrayList.get(k).getPDII());
-              Detailsdata.put("CalvingDate",arrayList.get(k).getCalvingDate());
-              Detailsdata.put("DryDate",arrayList.get(k).getDryDate());
-              Detailsdata.put("MilkDate",arrayList.get(k).getMilkDate());
-              Detailsdata.put("LastMilk",arrayList.get(k).getLastMilk());
-              Detailsdata.put("TotalMilk",arrayList.get(k).getTotalMilk());
-              Detailsdata.put("SelectFlag",arrayList.get(k).getSelectFlag());
-              Detailsdata.put("SelectRemarks",arrayList.get(k).getSelectRemarks());
-              Detailsdata.put("SelectColor",arrayList.get(k).getSelectColor());
-              Detailsdata.put("LastSire",arrayList.get(k).getLastSire());
-              Detailsdata.put("DisposalRemarks",arrayList.get(k).getDisposalRemarks());
-              Detailsdata.put("Sire",arrayList.get(k).getSire());
-              Detailsdata.put("Dam",arrayList.get(k).getDam());
-              Detailsdata.put("paternalSire",arrayList.get(k).getPaternalSire());
-              Detailsdata.put("PaternalDam",arrayList.get(k).getPaternalDam());
-              Detailsdata.put("NewownerCode",arrayList.get(k).getNewownerCode());
-              Detailsdata.put("OwnerID",arrayList.get(k).getOwnerID());
-              Detailsdata.put("VirtualLot",arrayList.get(k).getVirtualLot());
-              Detailsdata.put("UID",arrayList.get(k).getUID());
-              Detailsdata.put("AllowUser",arrayList.get(k).getAllowUser());
-              Detailsdata.put("ISSuspend",arrayList.get(k).getISSuspend());
-              //Detailsdata.put("SyncID",arrayList.get(k).getSyncID());
-              detailsArrayy.put(Detailsdata);
+              if(arrayList.get(k).getSyncID().equalsIgnoreCase("0")) {
 
+                  JSONObject Detailsdata = new JSONObject();
+                  Detailsdata.put("CompanyCode", arrayList.get(k).getCompanyCode());
+                  Detailsdata.put("HerdNo", arrayList.get(k).getHerdNo());
+                  Detailsdata.put("LotNo", arrayList.get(k).getLotNo());
+                  Detailsdata.put("IdNo", arrayList.get(k).getIdNo());
+                  Detailsdata.put("SexFlg", arrayList.get(k).getSexFlg());
+                  Detailsdata.put("Species", arrayList.get(k).getSpecies());
+                  Detailsdata.put("Breed", arrayList.get(k).getBreed());
+                  Detailsdata.put("Status", arrayList.get(k).getStatus());
+                  Detailsdata.put("DtOfBirth", arrayList.get(k).getDtOfBirth());
+                  Detailsdata.put("Name", arrayList.get(k).getName());
+                  Detailsdata.put("AgeFlg", arrayList.get(k).getAgeFlg());
+                  Detailsdata.put("BirthWt", arrayList.get(k).getBirthWt());
+                  Detailsdata.put("SalvFlg", arrayList.get(k).getSalvFlg());
+                  Detailsdata.put("GroupFlg", arrayList.get(k).getGroupFlg());
+                  Detailsdata.put("PBFlg", arrayList.get(k).getPBFlg());
+                  Detailsdata.put("CatCalfFlg", arrayList.get(k).getCatCalfFlg());
+                  Detailsdata.put("HLAname", arrayList.get(k).getHLAname());
+                  Detailsdata.put("SensorNo", arrayList.get(k).getSensorNo());
+                  Detailsdata.put("Photo", arrayList.get(k).getPhoto());
+                  Detailsdata.put("Parity", arrayList.get(k).getParity());
+                  Detailsdata.put("Disposalflg", arrayList.get(k).getDisposalflg());
+                  Detailsdata.put("sel_cancel", arrayList.get(k).getSel_cancel());
+                  Detailsdata.put("Insurance_No", arrayList.get(k).getInsurance_No());
+                  Detailsdata.put("AI_Tagno", arrayList.get(k).getAI_Tagno());
+                  Detailsdata.put("Current_Parity", arrayList.get(k).getCurrent_Parity());
+                  Detailsdata.put("Registration_Date", arrayList.get(k).getRegistration_Date());
+                  Detailsdata.put("Market_Value", arrayList.get(k).getMarket_Value());
+                  Detailsdata.put("No_rings", arrayList.get(k).getNo_rings());
+                  Detailsdata.put("Rearing_Purpose", arrayList.get(k).getRearing_Purpose());
+                  Detailsdata.put("Color", arrayList.get(k).getColor());
+                  Detailsdata.put("Horn_distance", arrayList.get(k).getHorn_distance());
+                  Detailsdata.put("InsurNo", arrayList.get(k).getInsurNo());
+                  Detailsdata.put("Policy_period", arrayList.get(k).getPolicy_period());
+                  Detailsdata.put("Transaction_Date", arrayList.get(k).getTransaction_Date());
+                  Detailsdata.put("Hypothecation", arrayList.get(k).getHypothecation());
+                  Detailsdata.put("Hypothecation_No", arrayList.get(k).getHypothecation_No());
+                  Detailsdata.put("Doctor", arrayList.get(k).getDoctor());
+                  Detailsdata.put("Send_CMS", arrayList.get(k).getSend_CMS());
+                  Detailsdata.put("ImageContent", arrayList.get(k).getImageContent());
+                  Detailsdata.put("Insurance_Flag", arrayList.get(k).getInsurance_Flag());
+                  Detailsdata.put("BreedingStatus", arrayList.get(k).getBreedingStatus());
+                  Detailsdata.put("HeatDate", arrayList.get(k).getHeatDate());
+                  Detailsdata.put("HeatSeq", arrayList.get(k).getHeatSeq());
+                  Detailsdata.put("AbortionSeq", arrayList.get(k).getAbortionSeq());
+                  Detailsdata.put("PDDate", arrayList.get(k).getPDDate());
+                  Detailsdata.put("PDI", arrayList.get(k).getPDI());
+                  Detailsdata.put("PDII", arrayList.get(k).getPDII());
+                  Detailsdata.put("CalvingDate", arrayList.get(k).getCalvingDate());
+                  Detailsdata.put("DryDate", arrayList.get(k).getDryDate());
+                  Detailsdata.put("MilkDate", arrayList.get(k).getMilkDate());
+                  Detailsdata.put("LastMilk", arrayList.get(k).getLastMilk());
+                  Detailsdata.put("TotalMilk", arrayList.get(k).getTotalMilk());
+                  Detailsdata.put("SelectFlag", arrayList.get(k).getSelectFlag());
+                  Detailsdata.put("SelectRemarks", arrayList.get(k).getSelectRemarks());
+                  Detailsdata.put("SelectColor", arrayList.get(k).getSelectColor());
+                  Detailsdata.put("LastSire", arrayList.get(k).getLastSire());
+                  Detailsdata.put("DisposalRemarks", arrayList.get(k).getDisposalRemarks());
+                  Detailsdata.put("Sire", arrayList.get(k).getSire());
+                  Detailsdata.put("Dam", arrayList.get(k).getDam());
+                  Detailsdata.put("paternalSire", arrayList.get(k).getPaternalSire());
+                  Detailsdata.put("PaternalDam", arrayList.get(k).getPaternalDam());
+                  Detailsdata.put("NewownerCode", arrayList.get(k).getNewownerCode());
+                  Detailsdata.put("OwnerID", arrayList.get(k).getOwnerID());
+                  Detailsdata.put("VirtualLot", arrayList.get(k).getVirtualLot());
+                  Detailsdata.put("UID", arrayList.get(k).getUID());
+                  Detailsdata.put("AllowUser", arrayList.get(k).getAllowUser());
+                  Detailsdata.put("ISSuspend", arrayList.get(k).getISSuspend());
+                  //Detailsdata.put("SyncID",arrayList.get(k).getSyncID());
+                  detailsArrayy.put(Detailsdata);
+              }
           }
 
 

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -36,8 +37,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -570,10 +575,29 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
                     Send_data(Links.SERVER_PASS_DATA,params1);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   //  WebServiceSyncController wc = new WebServiceSyncController(getActivity(), this);
                     //wc.sendRequest(Links.SERVER_PASS_DATA, params1,6);
 
 
+
+                    exportDB();
 
 
 
@@ -783,6 +807,49 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
     }
 
 
+
+
+
+
+
+
+    private void exportDB() {
+
+
+
+
+
+        File sd = Environment.getExternalStorageDirectory();
+        File data = Environment.getDataDirectory();
+        FileChannel source = null;
+        FileChannel destination = null;
+        String currentDBPath = "/data/" + "provab.herdman" + "/databases/" + "HerdMan";
+        String backupDBPath = "Insert.db";
+        File currentDB = new File(data, currentDBPath);
+        File backupDB = new File(sd, backupDBPath);
+        try {
+            source = new FileInputStream(currentDB).getChannel();
+            destination = new FileOutputStream(backupDB).getChannel();
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+            destination.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public  void longInfo(String str) {
         if(str.length() > 10000) {
             Log.i("TAG", str.substring(0, 10000));
@@ -972,6 +1039,9 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
               try {
                   response = new String(responseBody, "UTF-8");
                   Log.e("Success response", response);
+
+                  DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("reproduction","1","SyncStatus");
+
               } catch (UnsupportedEncodingException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();

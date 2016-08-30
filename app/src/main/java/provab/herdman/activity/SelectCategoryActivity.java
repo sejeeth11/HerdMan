@@ -111,7 +111,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
         View headerView = navigationView.getHeaderView(0);
         LinearLayout headerNav = (LinearLayout) headerView.findViewById(R.id.navHeader);
 
-        exportDB();
+        //exportDB();
     }
 
     public void findViews() {
@@ -237,45 +237,7 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
 
 
 
-    private void exportDB() {
 
-     //   String Data =  DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).getDetails();
-       // String JSOn = DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).SyncCattleRegistration();
-
-
-      //  Log.e("Detail",Data);
-        //Log.e("Reproduction",JSOn);
-
-
-
-     //   RequestParams params = new RequestParams();
-       // params.put("Json", JSOn);
-       // WebServiceSyncController wc = new WebServiceSyncController(this, this);
-        //wc.sendRequest(Links.SERVER_PASS_DATA, params, 5);
-
-
-
-
-
-
-        File sd = Environment.getExternalStorageDirectory();
-        File data = Environment.getDataDirectory();
-        FileChannel source = null;
-        FileChannel destination = null;
-        String currentDBPath = "/data/" + "provab.herdman" + "/databases/" + "HerdMan";
-        String backupDBPath = "NewData.db";
-        File currentDB = new File(data, currentDBPath);
-        File backupDB = new File(sd, backupDBPath);
-        try {
-            source = new FileInputStream(currentDB).getChannel();
-            destination = new FileOutputStream(backupDB).getChannel();
-            destination.transferFrom(source, 0, source.size());
-            source.close();
-            destination.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void getResponse(String response, int flag) throws JSONException {

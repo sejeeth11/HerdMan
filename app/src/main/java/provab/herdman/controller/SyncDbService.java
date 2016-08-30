@@ -137,12 +137,16 @@ public class SyncDbService extends Service implements WebInterface {
                     response = new String(responseBody, "UTF-8");
                     Log.e("Success response", response);
 
+                    DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("reproduction","1","SyncStatus");
+
 
                     if(flag == 1) {
 
                         SessionManager manager = new SessionManager(getApplicationContext());
                         String DetailsJSon = DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).getDetailss(manager.getPrefData("UserCode"));
                         getDataFromBundle(DetailsJSon);
+                        DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("details","1","SyncStatus");
+
                         flag = 2;
 
 
