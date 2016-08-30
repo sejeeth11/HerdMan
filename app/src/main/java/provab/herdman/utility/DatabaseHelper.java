@@ -36,6 +36,7 @@ import provab.herdman.beans.ReproductionBean;
 import provab.herdman.beans.SearchBean;
 import provab.herdman.beans.UserInfo;
 import provab.herdman.constants.AnimalDetailsData;
+import provab.herdman.constants.CommonData;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String BREED_TABLE_NAME = "Breed";
@@ -3627,13 +3628,15 @@ public  ArrayList<String> getSystemdata(){
 
 
 
-     public String SyncCattleRegistration(){
+     public String SyncCattleRegistration(String Uid){
          ArrayList<ReproductionBean> arrayList = new ArrayList<ReproductionBean>();
 
 
          SQLiteDatabase db = this.getWritableDatabase();
          Cursor cursor = null;
          JSONObject animalStatusObject= null;
+
+
 
          String Query = "select * from reproduction\n";
          cursor = db.rawQuery(Query, null);
@@ -3673,7 +3676,9 @@ public  ArrayList<String> getSystemdata(){
                      bean.setVaccine(String.valueOf(cursor.getString(27)));
                      bean.setCreationdate(String.valueOf(cursor.getString(28)));
                      bean.setSyncId(String.valueOf(cursor.getString(29)));
-                     arrayList.add(bean);
+                     bean.setUID(Uid);
+
+                  arrayList.add(bean);
 
 
              } while (cursor.moveToNext());
@@ -3681,6 +3686,7 @@ public  ArrayList<String> getSystemdata(){
 
 
          db.close();
+
 
 
 
@@ -3723,9 +3729,14 @@ public  ArrayList<String> getSystemdata(){
                   reproductiondata.put("Abortion_Seq",arrayList.get(k).getAbortionseq());
                   reproductiondata.put("Vaccine",arrayList.get(k).getVaccine());
                   reproductiondata.put("CretationDate",arrayList.get(k).getCreationdate());
+                  reproductiondata.put("UID",arrayList.get(k).getUID());
+
+
 
                  ReproductionArray.put(reproductiondata);
              }
+             CommonData.getInstance().setReproductioncommon(ReproductionArray);
+
 
              Master.put("reproduction",ReproductionArray);
              //GetMasterData.put("GetMasterData",Master);
@@ -3741,7 +3752,7 @@ public  ArrayList<String> getSystemdata(){
 
 
 
-  public String getDetails(){
+  public String getDetailss(String UID){
 
 
       ArrayList<DetailsBean> arrayList = new ArrayList<DetailsBean>();
@@ -3824,10 +3835,12 @@ public  ArrayList<String> getSystemdata(){
               bean.setNewownerCode(String.valueOf(cursor.getString(61)));
               bean.setOwnerID(String.valueOf(cursor.getString(62)));
               bean.setVirtualLot(String.valueOf(cursor.getString(63)));
-              bean.setUID(String.valueOf(cursor.getString(64)));
+              bean.setUID(UID);
+
               bean.setAllowUser(String.valueOf(cursor.getString(65)));
               bean.setISSuspend(String.valueOf(cursor.getString(66)));
               bean.setSyncID(String.valueOf(cursor.getString(67)));
+
               arrayList.add(bean);
 
 
@@ -3925,7 +3938,15 @@ public  ArrayList<String> getSystemdata(){
 
           }
 
+
+          CommonData.getInstance().setReproductioncommon(detailsArrayy);
+
+
+
+
+
           Master.put("details",detailsArrayy);
+
           //GetMasterData.put("GetMasterData",Master);
       } catch (JSONException e) {
           e.printStackTrace();

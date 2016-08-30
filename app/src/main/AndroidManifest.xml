@@ -80,6 +80,13 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/herdman_sync_adapter" />
         </service>
+
+        <service android:name=".controller.SyncDbService"/>
+
+
+
+
+
         <service
             android:name=".utility.AuthenticatorService"
             android:enabled="true">

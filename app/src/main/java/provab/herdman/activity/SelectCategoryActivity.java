@@ -236,10 +236,17 @@ public class SelectCategoryActivity extends AppCompatActivity implements View.On
 
 
 
+
     private void exportDB() {
 
-        String Data =  DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).getDetails();
-        String JSOn = DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).SyncCattleRegistration();
+     //   String Data =  DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).getDetails();
+       // String JSOn = DatabaseHelper.getDatabaseHelperInstance(SelectCategoryActivity.this).SyncCattleRegistration();
+
+
+      //  Log.e("Detail",Data);
+        //Log.e("Reproduction",JSOn);
+
+
 
      //   RequestParams params = new RequestParams();
        // params.put("Json", JSOn);

@@ -7,6 +7,15 @@ public class ReproductionBean {
 
   String companycode,idno,parity,heatseq,service,dtofheat,insim,sireid,pd1,Rmpd1,pd2,Rmpd2,
           pddate,dateofcalving,dtofdry,dryreason,drytreatement,flg,calf,sex,ctype,rop,comments,rp,entry,totaldose,abortionseq,vaccine,creationdate,syncId;
+  String UID;
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
 
     public String getRmpd1() {
         return Rmpd1;

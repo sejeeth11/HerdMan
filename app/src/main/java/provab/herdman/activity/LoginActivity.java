@@ -53,6 +53,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button SyncButton;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         wc.sendRequest(Links.GET_REGISTERED_USERS, params,1);
 
     }
+
+
 
 
     @Override

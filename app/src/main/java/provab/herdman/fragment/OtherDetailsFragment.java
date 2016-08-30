@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
+import java.io.UnsupportedEncodingException;
+
 import provab.herdman.R;
 import provab.herdman.activity.AnimalRegistration;
 import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.beans.CattleBean;
+import provab.herdman.constants.Links;
 import provab.herdman.utility.DatabaseHelper;
+import provab.herdman.utility.SessionManager;
 
 /**
  * Created by PTBLR-1057 on 6/14/2016.
@@ -75,12 +86,25 @@ public class OtherDetailsFragment extends Fragment {
         Id =   bean.getCattleBeanInstance().getAnimalId();
 
 
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
+                SessionManager manager = new SessionManager(getActivity());
+
+
                 DatabaseHelper.getDatabaseHelperInstance(getActivity()).addOtherDetails(Id,marketvalue.getText().toString(),noringsonhorn.getText().toString(),rearingpurpose.getText().toString(),color.getText().toString(),horndistance.getText().toString(),doctor.getText().toString());
+                String JSOn = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getDetailss(manager.getPrefData("UserCode"));
+
+                Log.e("Message",JSOn);
+                RequestParams params1 = new RequestParams();
+                params1.put("Json",JSOn);
+
+
+
+                Send_data(Links.SERVER_PASS_DATA,params1);
 
                 Toast.makeText(getActivity(),"Registration Successfull",Toast.LENGTH_LONG).show();
                 getActivity().finish();
@@ -92,5 +116,64 @@ public class OtherDetailsFragment extends Fragment {
 
     }
 
+    public void Send_data(String links,RequestParams params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(120000);
+        client.addHeader("content-Type", "application/x-www-form-urlencoded");
 
+        client.post(links, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+
+                String response = "";
+                try {
+                    response = new String(responseBody, "UTF-8");
+                    Log.e("Success response", response);
+                } catch (UnsupportedEncodingException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                Log.e("Error",error.getMessage());
+
+
+
+            }
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 }

@@ -10,7 +10,14 @@ import android.util.Log;
 
 
 public class NetworkStateReceiver extends BroadcastReceiver {
+
+     Context cxt;
+
+
     public void onReceive(Context context, Intent intent) {
+
+        this.cxt = context;
+
         ConnectivityManager cm =
                                      (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -20,11 +27,20 @@ public class NetworkStateReceiver extends BroadcastReceiver {
             Log.e("internet", isConnected + "");
 
             if (isConnected) {
-           /*     Intent in = new Intent();
-                in.setAction("SERVICE_ACTION");
-                in.putExtra("type", "1");
-                context.sendBroadcast(in);*/
+                dbSync();
             }
         
    }
+
+    private void dbSync() {
+
+        Intent intent = new Intent(cxt, SyncDbService.class);
+       // intent.putExtra(UpdateImageInfoService.KEY_IMAGE_ID, imgId);
+        cxt.startService(intent);
+
+//        Intent intent = new Intent(context, UpdateImageInfoService.class);
+//        intent.putExtra(UpdateImageInfoService.KEY_IMAGE_ID, imgId);
+//        context.startService(intent);
+    }
+
 }

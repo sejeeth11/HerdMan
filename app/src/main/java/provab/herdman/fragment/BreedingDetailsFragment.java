@@ -59,7 +59,7 @@ import provab.herdman.utility.SessionManager;
 /**
  * Created by PTBLR-1057 on 6/15/2016.
  */
-public class BreedingDetailsFragment extends Fragment{
+public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
     RadioGroup milkingDryGroup;
     RadioGroup milkingGroup;
@@ -553,17 +553,31 @@ public class BreedingDetailsFragment extends Fragment{
                         }
                     }
 
+
+                    SessionManager manager = new SessionManager(getActivity());
+
+
+
                     DatabaseHelper.getDatabaseHelperInstance(getActivity()).saveRegistration(cattleBean);
-
-
-                    String JSOn = DatabaseHelper.getDatabaseHelperInstance(getActivity()).SyncCattleRegistration();
-
+                    String JSOn = DatabaseHelper.getDatabaseHelperInstance(getActivity()).SyncCattleRegistration(manager.getPrefData("UserCode"));
+                    Log.e("Message",JSOn);
 
 
 
                     RequestParams params1 = new RequestParams();
                     params1.put("Json",JSOn);
-                    //sendRequest(Links.SERVER_PASS_DATA,params1,1);
+
+                    Send_data(Links.SERVER_PASS_DATA,params1);
+
+
+                  //  WebServiceSyncController wc = new WebServiceSyncController(getActivity(), this);
+                    //wc.sendRequest(Links.SERVER_PASS_DATA, params1,6);
+
+
+
+
+
+
 
 
 
@@ -905,6 +919,7 @@ public class BreedingDetailsFragment extends Fragment{
         return dialog;
     }
 
+
     private Dialog showCalfSex(String calvingType) {
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -925,6 +940,96 @@ public class BreedingDetailsFragment extends Fragment{
         });
         return dialog;
     }
+
+
+    @Override
+    public void getResponse(String response, int flag) throws JSONException {
+
+        Log.e("Sync",response);
+
+
+
+    }
+
+    @Override
+    public void failureResponse(int statusCode) throws JSONException {
+
+    }
+
+
+
+  public void Send_data(String links,RequestParams params){
+          AsyncHttpClient client = new AsyncHttpClient();
+          client.setTimeout(120000);
+          client.addHeader("content-Type", "application/x-www-form-urlencoded");
+
+      client.post(links, params, new AsyncHttpResponseHandler() {
+              @Override
+              public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+
+              String response = "";
+              try {
+                  response = new String(responseBody, "UTF-8");
+                  Log.e("Success response", response);
+              } catch (UnsupportedEncodingException e) {
+                  // TODO Auto-generated catch block
+                  e.printStackTrace();
+              }
+
+          }
+
+          @Override
+          public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+              Log.e("Error",error.getMessage());
+
+
+
+          }
+
+
+
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

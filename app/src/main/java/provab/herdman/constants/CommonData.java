@@ -1,5 +1,7 @@
 package provab.herdman.constants;
 
+import org.json.JSONArray;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -11,6 +13,24 @@ public class CommonData {
 
     public static CommonData getInstance() {
         return ourInstance;
+    }
+    public JSONArray reproductionarray;
+    JSONArray detailsarray;
+
+    public JSONArray getDetailsarray() {
+        return detailsarray;
+    }
+
+    public void setDetailsarray(JSONArray detailsarray) {
+        this.detailsarray = detailsarray;
+    }
+
+    public JSONArray getReArraycommon() {
+        return reproductionarray;
+    }
+
+    public void setReproductioncommon(JSONArray arraycommon) {
+        reproductionarray = arraycommon;
     }
 
     private CommonData() {
