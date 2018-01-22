@@ -1,7 +1,9 @@
 package provab.herdman.fragment;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import provab.herdman.activity.AnimalRegistration;
 import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.beans.CattleBean;
 import provab.herdman.utility.DatabaseHelper;
+import provab.herdman.utility.SessionManager;
 
 /**
  * Created by PTBLR-1057 on 6/14/2016.
@@ -30,6 +33,7 @@ public class ParentDetailsFragment extends Fragment {
 
     Activity activity_village;
     Activity activity_animal;
+    SharedPreferences preferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,17 +58,21 @@ public class ParentDetailsFragment extends Fragment {
         }
     }
 
-
-
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v=inflater.inflate(R.layout.fragment_parent_details, container, false);
-        Id =   bean.getCattleBeanInstance().getAnimalId();
+        SessionManager manager = new SessionManager(getActivity());
+        //SharedPreferences
+
+
+
+
+
+        System.out.println("My Ids"+Id);
+
+
+
         findViews(v);
         return v;
     }
@@ -97,7 +105,11 @@ public class ParentDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                 DatabaseHelper.getDatabaseHelperInstance(getActivity()).save_parent_detail(Id,sire.getText().toString(),dam.getText().toString(),paternalsire.getText().toString(),paternaldam.getText().toString());
+                preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+                Id = preferences.getString("IDSOFANIMAL","");
+
+                DatabaseHelper.getDatabaseHelperInstance(getActivity()).save_parent_detail(Id,sire.getText().toString(),dam.getText().toString(),paternalsire.getText().toString(),paternaldam.getText().toString());
 
 
 
@@ -111,5 +123,21 @@ public class ParentDetailsFragment extends Fragment {
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

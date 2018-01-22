@@ -28,6 +28,20 @@
             android:id="@+id/nav_Scan"
             android:title="Scan" />
 
+
+        <item
+            android:id="@+id/nav_manual_sync"
+            android:title="Manual Sync" />
+
+        <item
+            android:id="@+id/nav_viewdata"
+            android:title="View Data"
+            />
+
+
+
+
+
         <item
             android:id="@+id/nav_logout"
             android:title="Logout" />

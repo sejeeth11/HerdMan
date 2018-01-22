@@ -2,10 +2,12 @@ package provab.herdman.controller;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.SearchRecentSuggestions;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import provab.herdman.activity.MyApplication;
 import provab.herdman.constants.CommonData;
 import provab.herdman.constants.Links;
 import provab.herdman.utility.DatabaseHelper;
@@ -33,13 +36,12 @@ public class SyncDbService extends Service implements WebInterface {
 
 
 
-
-
     @Override
     public void onCreate() {
         super.onCreate();
 
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -50,83 +52,151 @@ public class SyncDbService extends Service implements WebInterface {
 
 
 
+            getDataFromBundle();
 
-            SessionManager manager = new SessionManager(getApplicationContext());
-            String ReproductionJSOn = DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).SyncCattleRegistration(manager.getPrefData("UserCode"));
-     //       String DetailsJSon = DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).getDetailss(manager.getPrefData("UserCode"));
+            SynctheUserDetails();
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// mSession = new SessionManager(this);
-//            userId = mSession.getPrefData(SessionManager.KEY_USER_ID);
-            getDataFromBundle(ReproductionJSOn);
+
+
         } catch (Exception ne) {
             ne.printStackTrace();
         }
         return START_NOT_STICKY;
     }
 
-    private void getDataFromBundle(String json) {
-        try {
-
-            String TotalData = "";
 
 
+       public void SynctheUserDetails(){
 
 
-            try {
-              JSONObject object = new JSONObject();
-              object.put("reproduction", CommonData.getInstance().getReArraycommon());
-              object.put("details",CommonData.getInstance().getDetailsarray());
+           System.out.println("Status"+DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).getallUser());
 
-                Log.e("Object",object.toString());
+           if(DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).getallUser().equalsIgnoreCase("0")){
+               RequestParams params = new RequestParams();
+               params.put("requestType", 1);
+               WebServiceSyncController wc = new WebServiceSyncController(this.getApplicationContext(), this);
+               wc.sendRequest(Links.GET_REGISTERED_USERS, params,1);
+           }else{
 
-
-
-                RequestParams params1 = new RequestParams();
-                params1.put("Json",json);
-                ConnectionDetector detector = new ConnectionDetector(getApplicationContext());
-
-
-                if(detector.isConnectingToInternet()) {
-                    Send_data(Links.SERVER_PASS_DATA, params1);
-                }else{
-
-                }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+               
+           }
 
 
 
-        } catch (NullPointerException ne) {
-            ne.printStackTrace();
-        } finally {
-            stopSelf();
+
+
+
+
+
+
+
+
+       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            private void getDataFromBundle() {
+                try {
+
+                   String Details;
+                    final String[] Production = new String[1];
+                    final String[] Reproduction = new String[1];
+
+
+                    final  SessionManager manager = new SessionManager(getApplicationContext());
+
+                            Details = DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).getDetailss(manager.getPrefData("UserCode"));
+                            Log.e("Message Details",Details);
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Production[0] = DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Production_Tabel(manager.getPrefData("UserCode"));
+                            Log.e("Message Production", Production[0]);
+                        }
+                    }, 1000);
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Reproduction[0] = DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).SyncCattleRegistration(manager.getPrefData("UserCode"));
+                            Log.e("Message Reproduction", Reproduction[0]);
+                        }
+                    }, 2000);
+
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            JSONObject object = new JSONObject();
+                            try {
+                                object.put("reproduction",CommonData.getInstance().getReArraycommon());
+                                object.put("details",CommonData.getInstance().getDetailsarray());
+                                object.put("production",CommonData.getInstance().getProductionArray());
+
+                                RequestParams params1 = new RequestParams();
+                                params1.put("Json",String.valueOf(object.toString()));
+                                ConnectionDetector detector = new ConnectionDetector(getApplicationContext());
+
+                                if(detector.isConnectingToInternet()){
+
+                                    Send_data(Links.SERVER_PASS_DATA,params1);
+
+                                }else{
+
+
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, 3000);
+
+
+                } catch (NullPointerException ne) {
+
+                    ne.printStackTrace();
+
+                } finally {
+              stopSelf();
         }
 
     }
-
-
-
-
 
 
     public void Send_data(String links,RequestParams params){
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(150000);
         client.addHeader("content-Type", "application/x-www-form-urlencoded");
-
         client.post(links, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -135,25 +205,10 @@ public class SyncDbService extends Service implements WebInterface {
                 String response = "";
                 try {
                     response = new String(responseBody, "UTF-8");
-                    Log.e("Success response", response);
 
-                    DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("reproduction","1","SyncStatus");
-
-
-                    if(flag == 1) {
-
-                        SessionManager manager = new SessionManager(getApplicationContext());
-                        String DetailsJSon = DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).getDetailss(manager.getPrefData("UserCode"));
-                        getDataFromBundle(DetailsJSon);
-                        DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("details","1","SyncStatus");
-
-                        flag = 2;
-
-
-                    }else{
-
-                    }
-
+                    DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("Reproduction","1","SyncStatus");
+                    DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("Details","1","SyncStatus");
+                    DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("Production","1","SyncStatus");
 
 
                 } catch (UnsupportedEncodingException e) {
@@ -177,8 +232,6 @@ public class SyncDbService extends Service implements WebInterface {
 
 
         });
-
-
 
     }
 
@@ -209,11 +262,79 @@ public class SyncDbService extends Service implements WebInterface {
     public void getResponse(String response, int flag) throws JSONException {
 
 
-        stopSelf(serviceStartId);
+        final JSONObject responseObject = new JSONObject(response);
+
+        if (flag == 1) {
+            JSONArray registeredUserList = responseObject.getJSONArray("User");
+
+            Log.e("Calling","1");
+
+            Log.e("Calling",responseObject.toString());
+
+            DatabaseHelper.getDatabaseHelperInstance(MyApplication.getContext()).addRegisteredUsers(registeredUserList);
+
+
+            System.out.println("Sync "+DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).masterSyncStatus());
+
+
+
+
+
+
+            if (!DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).masterSyncStatus()) {
+
+                //   Toast.makeText(getApplicationContext(),"1",Toast.LENGTH_SHORT).show();
+
+                RequestParams params = new RequestParams();
+                WebServiceSyncController wc = new WebServiceSyncController(this.getApplicationContext(), this);
+                params.put("Userid", 0);
+                params.put("requestType", 2);
+                wc.sendRequest(Links.GET_ONE_TIME_PERMANENT_MASTER, params,2);
+            }
+
+
+
+
+
+        } else if (flag == 2) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Log.e("Calling","2");
+                        Log.e("Calling",responseObject.toString());
+                        //System.out.println("FALG "+"THREE");
+                        DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).addMasterData(responseObject.getJSONObject("OneTimeMasterTable"));
+
+                         Toast.makeText(getApplicationContext()," Data Synced Successfully Continue Login ",Toast.LENGTH_LONG).show();
+
+                        stopSelf(serviceStartId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            thread.start();
+        }
+
+
+
+
+
     }
 
     @Override
     public void failureResponse(int statusCode) throws JSONException {
 
     }
+
+
+
+
+
+
+
+
+
+
 }

@@ -36,5 +36,9 @@
         <item name = "android:backgroundDimEnabled">true</item>
         <item name = "android:windowBackground" >@color/syncDialogBackground</item>
     </style >
+    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 
 </resources>

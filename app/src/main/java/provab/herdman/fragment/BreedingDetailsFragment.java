@@ -2,12 +2,18 @@ package provab.herdman.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +42,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,15 +51,18 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.FileChannel;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import provab.herdman.R;
 import provab.herdman.activity.AnimalRegistration;
+import provab.herdman.activity.SelectCategoryActivity;
 import provab.herdman.activity.VillageMainActivity;
 import provab.herdman.adapter.SpinnerAdapter;
 import provab.herdman.beans.CattleBean;
+import provab.herdman.constants.CommonData;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.constants.Links;
 import provab.herdman.controller.ConnectionDetector;
@@ -66,6 +76,7 @@ import provab.herdman.utility.SessionManager;
  */
 public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
+
     RadioGroup milkingDryGroup;
     RadioGroup milkingGroup;
     RadioGroup dryGroup;
@@ -74,21 +85,26 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
     RadioGroup aiGroup;
     RadioGroup totalAndAvgMilkingGroup;
     RadioGroup calvingNormalAbnormalGroup;
+
     LinearLayout milkingGroupLayout;
     LinearLayout dryGroupLayout;
     LinearLayout calfSexLayout;
+
     EditText milkingDateEdiText;
     EditText milkingDaysEditText;
     EditText dryDateEditText;
     EditText dryDaysEditText;
     EditText heatSequence;
+
     Activity activity;
+
     LinearLayout pregnantGroupLayout;
     LinearLayout aiGroupLayout;
     LinearLayout milkingDrySireEarTagNoLayout;
     LinearLayout milkingDryInseminatorLayout;
     LinearLayout pregnantAiSireLayout;
     LinearLayout pregnantAiInsimLayout;
+
     EditText noOfCalvingDays;
     EditText pregnantDateEdiText;
     EditText pregnantDaysEditText;
@@ -96,19 +112,27 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
     EditText aiDaysEditText;
     EditText totalMilkYield;
     EditText averageMilkYield;
+
     TextView milkingDrySireEarTagNo;
     TextView milkingDryInseminator;
     TextView pregnantAiSire;
     TextView pregnantAiInsim;
     TextView calfSex;
+
     Button next;
     Button previous;
+
     SessionManager manager;
     public static final String USERCODE="UserCode";
     Activity activity_village;
     Activity activity_animal;
     boolean flag=false;
     String Userid;
+    SharedPreferences preferences;
+    String FLAGS = "1";
+
+
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -138,12 +162,29 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
         @Override
         public void onDateTimeSet(Date date) {
             dryDateEditText.setText(GlobalVar.dialogeFormat.format(date));
+            String dates[] = dryDateEditText.getText().toString().split(" ");
+            String datefinal = dates[0];
+            String currentdate = CommonData.getInstance().getDefaultDate();
+            SimpleDateFormat simpleDateFormat =
+                    new SimpleDateFormat("MM-dd-yyyy");
+
+            try {
+                Date date1 = simpleDateFormat.parse(datefinal);
+                Date date2 = simpleDateFormat.parse(currentdate);
+                String difference = printDifference(date1,date2);
+                dryDaysEditText.setText(difference);
+
+            }catch(Exception e){}
+
         }
 
         @Override
         public void onDateTimeCancel() {
         }
     };
+
+
+
     private SlideDateTimeListener listener3 = new SlideDateTimeListener() {
         @Override
         public void onDateTimeSet(Date date) {
@@ -177,6 +218,8 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_breeding_details, container, false);
         manager = new SessionManager(getActivity());
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         Userid = manager.getPrefData(USERCODE);
 
 
@@ -292,6 +335,7 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
                 long pregnantOrAiDays;
                 String pregnantOrAiDate;
                 Resources resources = getActivity().getResources();
+                final SessionManager manager = new SessionManager(getActivity());
 
 
                 CattleBean cattleBean = null;
@@ -457,14 +501,31 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
                                     if(pregnantDateEdiText.getText().toString().isEmpty()){
                                         cattleBean.setPregnantOrAi(3);
                                     }else{
+
+
+
                                         pregnantOrAiDate = GlobalVar.databaseFormat.format(GlobalVar.dialogeFormat.parse(pregnantDateEdiText.getText().toString()));
+
                                         pregnantOrAiDays = calculateDateDifference(cattleBean.getRegistrationDate(), pregnantOrAiDate);
+
                                         cattleBean.setPregnantDate(pregnantOrAiDate);
+
                                         cattleBean.setPregnantDays(String.valueOf(pregnantOrAiDays));
+
                                         cattleBean.setPregnantOrAi(1);
+
                                         cattleBean.setPregnantHeatDate(pregnantOrAiDate);
+
+
+
+                                   //     Log.e("Date Differnce",String.valueOf(pregnantOrAiDays));
+
+
+
                                     }
                                 } else if (pregnantGroup.getCheckedRadioButtonId() == R.id.pregnantDays) {
+
+
                                     if(pregnantDaysEditText.getText().toString().isEmpty()){
                                         cattleBean.setPregnantOrAi(3);
                                     }else{
@@ -483,11 +544,19 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
 
                                         cattleBean.setPregnantDate(pregnantOrAiDate);
+
+                                        Log.e("Date of Pregnant days",pregnantOrAiDate);
+
+
                                         cattleBean.setPregnantDays(String.valueOf(pregnantOrAiDays));
                                         cattleBean.setPregnantOrAi(1);
                                         Date registrationDate = GlobalVar.databaseFormat.parse(cattleBean.getRegistrationDate());
                                         Date heatDate = DateUtils.addDays(registrationDate, (int) (pregnantOrAiDays*-1));
                                         cattleBean.setPregnantHeatDate(GlobalVar.databaseFormat.format(heatDate));
+
+
+
+
                                     }
                                 }
                             }
@@ -537,6 +606,7 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
 
 
+
                         if (pregnantAiSire.getTag() == null || pregnantAiSire.getText().toString().equals(resources.getString(R.string.registration_pregnant_sire))) {
                             if (Integer.parseInt(cattleBean.getSpeciesId()) == 1) {
                                 cattleBean.setPregnantSire("999999C");
@@ -559,69 +629,189 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
                     }
 
 
-                    SessionManager manager = new SessionManager(getActivity());
-
-
-
-                    DatabaseHelper.getDatabaseHelperInstance(getActivity()).saveRegistration(cattleBean);
-                    String JSOn = DatabaseHelper.getDatabaseHelperInstance(getActivity()).SyncCattleRegistration(manager.getPrefData("UserCode"));
-                    Log.e("Message",JSOn);
-
-
-
-                    RequestParams params1 = new RequestParams();
-                    params1.put("Json",JSOn);
-
-                    Send_data(Links.SERVER_PASS_DATA,params1);
+                    final String[] Production = new String[1];
+                    final String[] Reproduction = new String[1];
 
 
 
 
+                    if(FLAGS.equalsIgnoreCase("1")) {
+
+                        if (!averageMilkYield.getText().toString().equalsIgnoreCase("")) {
+                            int days = Integer.parseInt(milkingDaysEditText.getText().toString());
+                            int k = days * Integer.parseInt(averageMilkYield.getText().toString());
+
+                            totalMilkYield.setText(k + "");
 
 
+                        }
+                        if (!totalMilkYield.getText().toString().equalsIgnoreCase("")) {
+                            int days = Integer.parseInt(milkingDaysEditText.getText().toString());
+                            int k = days * Integer.parseInt(totalMilkYield.getText().toString());
+                            averageMilkYield.setText(k + "");
 
-
-
-
-
-
-
-
-
-
-
-
-
-                  //  WebServiceSyncController wc = new WebServiceSyncController(getActivity(), this);
-                    //wc.sendRequest(Links.SERVER_PASS_DATA, params1,6);
-
-
-
-                    exportDB();
-
-
-
-
-
-
-
-
-
-                    longInfo(JSOn);
-
-                    if(flag) {
-
-                        VillageMainActivity activity = (VillageMainActivity)getActivity();
-                        activity.swipeViewPagerToNextScreen();
+                            //   AverageMilkYieldString = k+"";
+                        }
 
                     }else{
-                        AnimalRegistration activity = (AnimalRegistration)getActivity();
-                        activity.swipeViewPagerToNextScreen();
+
+                        if (!averageMilkYield.getText().toString().equalsIgnoreCase("")) {
+                            int days = Integer.parseInt(dryDaysEditText.getText().toString());
+                            int k = days * Integer.parseInt(averageMilkYield.getText().toString());
+
+
+                            totalMilkYield.setText(k + "");
+
+
+                        }
+                        if (!totalMilkYield.getText().toString().equalsIgnoreCase("")) {
+                            int days = Integer.parseInt(dryDaysEditText.getText().toString());
+                            int k = days * Integer.parseInt(totalMilkYield.getText().toString());
+                            averageMilkYield.setText(k + "");
+
+                            //   AverageMilkYieldString = k+"";
+                        }
+                        milkingDaysEditText.setText(dryDateEditText.getText().toString());
+
                     }
 
 
 
-                     Toast.makeText(getActivity(),"Save Successfully",Toast.LENGTH_LONG).show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                           // DatabaseHelper.getDatabaseHelperInstance(getActivity()).saveRegistration(finalCattleBean);
+                            DatabaseHelper.getDatabaseHelperInstance(getActivity()).Insert_Milking_production(preferences.getString("IDSOFANIMAL",""), CommonData.getInstance().getDefaultDate(),noOfCalvingDays.getText().toString(), averageMilkYield.getText().toString(),averageMilkYield.getText().toString(), totalMilkYield.getText().toString(),milkingDaysEditText.getText().toString(),manager.getPrefData("UserCode"));
+                        }
+                    }, 100);
+
+
+
+                    final CattleBean finalCattleBean = cattleBean;
+                    final CattleBean finalCattleBean1 = cattleBean;
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+
+
+                            DatabaseHelper.getDatabaseHelperInstance(getActivity()).saveRegistration(finalCattleBean);
+                            String  Id =   finalCattleBean1.getCattleBeanInstance().getAnimalId();
+
+                            Log.e("Id s",Id);
+
+                            DatabaseHelper.getDatabaseHelperInstance(getActivity()).save_Insurance_details(Id,"","","","","","","","","","","");
+
+                            DatabaseHelper.getDatabaseHelperInstance(getActivity()).Save_Purchase(Id,"","","");
+
+                            DatabaseHelper.getDatabaseHelperInstance(getActivity()).addOtherDetails(Id,"","","","","","");
+
+                            DatabaseHelper.getDatabaseHelperInstance(getActivity()).save_parent_detail(Id,"","","","");
+
+
+
+                        }
+                    }, 500);
+
+
+
+
+
+
+
+
+
+
+
+
+                    final String[] Details = new String[1];
+
+
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Details[0] = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getDetailss(manager.getPrefData("UserCode"));
+
+                            Log.e("Message Details", Details[0]);
+                        }
+                    }, 1000);
+
+
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Production[0] = DatabaseHelper.getDatabaseHelperInstance(getActivity()).Production_Tabel(manager.getPrefData("UserCode"));
+                            Log.e("Message Production", Production[0]);
+                        }
+                    }, 2000);
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+                            Reproduction[0] = DatabaseHelper.getDatabaseHelperInstance(getActivity()).SyncCattleRegistration(manager.getPrefData("UserCode"));
+                            Log.e("Message Reproduction", Reproduction[0]);
+                        }
+                    }, 3000);
+
+
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+
+                            JSONObject object = new JSONObject();
+                            try {
+
+
+                                object.put("details",CommonData.getInstance().getDetailsarray());
+                                object.put("production",CommonData.getInstance().getProductionArray());
+                                object.put("reproduction", CommonData.getInstance().getReArraycommon());
+
+
+
+                                Log.e("FUll Data",object.toString());
+
+
+                                RequestParams params1 = new RequestParams();
+                                params1.put("Json",String.valueOf(object.toString()));
+
+                                // ConnectionDetector detector = new ConnectionDetector(getActivity());
+
+
+                                Send_data(Links.SERVER_PASS_DATA,params1);
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+                    }, 4000);
+
+                    Toast.makeText(getActivity(),"Save Successfully",Toast.LENGTH_LONG).show();
+                    getActivity().finish();
+
+
+                    Intent intent = new Intent(getActivity(), SelectCategoryActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
 
 
                 } catch (ParseException e) {
@@ -630,6 +820,96 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
             }
         });
+
+
+
+
+
+
+        milkingDateEdiText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                int daysinMilk = 0;
+
+                if(!milkingDateEdiText.getText().toString().equals("")){
+
+                    String date[] = milkingDateEdiText.getText().toString().split(" ");
+                    String datefinal = date[0];
+                    String currentdate = CommonData.getInstance().getDefaultDate();
+                    SimpleDateFormat simpleDateFormat =
+                            new SimpleDateFormat("MM-dd-yyyy");
+
+
+                    try {
+                        Date date1 = simpleDateFormat.parse(datefinal);
+                        Date date2 = simpleDateFormat.parse(currentdate);
+                        String difference = printDifference(date1,date2);
+                        daysinMilk = Integer.parseInt(difference);
+                        milkingDaysEditText.setText(difference);
+
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
+
+
+        totalMilkYield.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                int daysinMilk = 0;
+
+
+
+                 Log.e("totalMilkYield",s+"");
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
 
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -652,9 +932,13 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // find which radio button is selected
                 if (checkedId == R.id.milking) {
+                    FLAGS = "1";
                     milkingGroupLayout.setVisibility(View.VISIBLE);
                     dryGroupLayout.setVisibility(View.GONE);
                 } else if (checkedId == R.id.dry) {
+
+                    FLAGS = "2";
+
                     dryGroupLayout.setVisibility(View.VISIBLE);
                     milkingGroupLayout.setVisibility(View.GONE);
                 }
@@ -808,55 +1092,27 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
 
 
+    public String  printDifference(Date startDate, Date endDate){
+
+        //milliseconds
+        long different = endDate.getTime() - startDate.getTime();
 
 
 
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        return elapsedDays+"";
 
 
-    private void exportDB() {
-
-
-
-
-
-        File sd = Environment.getExternalStorageDirectory();
-        File data = Environment.getDataDirectory();
-        FileChannel source = null;
-        FileChannel destination = null;
-        String currentDBPath = "/data/" + "provab.herdman" + "/databases/" + "HerdMan";
-        String backupDBPath = "Insert.db";
-        File currentDB = new File(data, currentDBPath);
-        File backupDB = new File(sd, backupDBPath);
-        try {
-            source = new FileInputStream(currentDB).getChannel();
-            destination = new FileOutputStream(backupDB).getChannel();
-            destination.transferFrom(source, 0, source.size());
-            source.close();
-            destination.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    public  void longInfo(String str) {
-        if(str.length() > 10000) {
-            Log.i("TAG", str.substring(0, 10000));
-            longInfo(str.substring(10000));
-        } else
-            Log.i("TAG", str);
-    }
 
 
 
@@ -892,10 +1148,8 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
         final ArrayList<String> lotList;
 
         if(flag){
-         lotList = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getSireEarTagListHardCoded(((VillageMainActivity) getActivity()).getCattleBean().getAnimalId());
-        }
-
-        else{
+            lotList = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getSireEarTagListHardCoded(((VillageMainActivity) getActivity()).getCattleBean().getAnimalId());
+        }else{
             lotList = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getSireEarTagListHardCoded(((AnimalRegistration) getActivity()).getCattleBean().getAnimalId());
         }
 
@@ -965,6 +1219,9 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
         return dialog;
     }
 
+
+
+
     private Dialog showInseminator1() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1018,6 +1275,8 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
     }
 
+
+
     @Override
     public void failureResponse(int statusCode) throws JSONException {
 
@@ -1025,12 +1284,13 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
 
 
-  public void Send_data(String links,RequestParams params){
-          AsyncHttpClient client = new AsyncHttpClient();
-          client.setTimeout(120000);
-          client.addHeader("content-Type", "application/x-www-form-urlencoded");
 
-      client.post(links, params, new AsyncHttpResponseHandler() {
+    public void Send_data(String links,RequestParams params){
+
+          AsyncHttpClient client = new AsyncHttpClient();
+          client.setTimeout(200000);
+          client.addHeader("content-Type", "application/x-www-form-urlencoded");
+          client.post(links, params, new AsyncHttpResponseHandler() {
               @Override
               public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -1038,9 +1298,40 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
               String response = "";
               try {
                   response = new String(responseBody, "UTF-8");
-                  Log.e("Success response", response);
+                  final String finalResponse = response;
 
-                  DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("reproduction","1","SyncStatus");
+
+                 // DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("Reproduction","1","SyncStatus");
+
+                  DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("Reproduction","1","SyncStatus");
+
+
+
+                  new Handler().postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                          DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("Production","1","SyncStatus");
+
+                          //  Log.e("Message Reproduction", Reproduction[0]);
+                      }
+                  }, 500);
+
+                  new Handler().postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                         // DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("Production","1","SyncStatus");
+
+                          DatabaseHelper.getDatabaseHelperInstance(getActivity()).Update_Sync_Flag("Details","1","SyncStatus");
+
+                          //  Log.e("Message Reproduction", Reproduction[0]);
+                      }
+                  }, 1000);
+
+                  Log.e("Success response", finalResponse);
+
+
+                //  DatabaseHelper.getDatabaseHelperInstance(getApplicationContext()).Update_Sync_Flag("Details","1","SyncStatus");
+
 
               } catch (UnsupportedEncodingException e) {
                   // TODO Auto-generated catch block
@@ -1052,7 +1343,7 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
           @Override
           public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-              Log.e("Error",error.getMessage());
+           //   Log.e("Error",error.getMessage());
 
 
 
@@ -1061,26 +1352,6 @@ public class BreedingDetailsFragment extends Fragment implements WebInterface{
 
 
       });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

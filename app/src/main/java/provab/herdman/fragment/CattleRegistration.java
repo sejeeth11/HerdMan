@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,9 +16,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +39,17 @@ import android.widget.Toast;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import provab.herdman.R;
 import provab.herdman.activity.AnimalRegistration;
@@ -48,6 +58,7 @@ import provab.herdman.adapter.SpinnerAdapter;
 import provab.herdman.beans.CattleBean;
 import provab.herdman.constants.GlobalVar;
 import provab.herdman.utility.DatabaseHelper;
+import provab.herdman.utility.SessionManager;
 
 /**
  * Created by PTBLR-1057 on 6/14/2016.
@@ -339,6 +350,14 @@ public class CattleRegistration extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("IDSOFANIMAL",etIdNumber.getText().toString());
+
+                editor.commit();
+
                 Resources resources = getActivity().getResources();
                 if (isInvalidId) {
                     Toast.makeText(getActivity(), "INVALID ID", Toast.LENGTH_LONG).show();
@@ -405,19 +424,55 @@ public class CattleRegistration extends Fragment {
                     else{
                          cattleBean = ((AnimalRegistration) getActivity()).getCattleBean();
                     }
+                  //  SessionManager manager = new SessionManager(getActivity());
+
+
                     cattleBean.setRegistrationDate(GlobalVar.databaseFormat.format(GlobalVar.dialogeFormat.parse(registrationDate.getText().toString())));
                     cattleBean.setHerdId(herdName.getTag().toString());
                     cattleBean.setLotId(lotName.getTag().toString());
                     cattleBean.setOwnerId(ownerName.getTag().toString());
                     cattleBean.setAnimalId(etIdNumber.getText().toString());
-                    //////BIRTHDATE MISSING//////
+
+                    System.out.println("Idssss"+etIdNumber.getText().toString());
+
+
+                //    manager.setPrefData("AnimalIds",etIdNumber.getText().toString());
+
+
+
                     int selectedBirthDate = birthDateGroup.getCheckedRadioButtonId();
                     if (selectedBirthDate == R.id.birthDate) {
+
                         cattleBean.setBirthDate(birthDateDateEdiText.getText().toString());
+
+
                     } else if (selectedBirthDate == R.id.age) {
-                        StringBuilder dateOfBirth = new StringBuilder();
-                        dateOfBirth.append(ageYear.getText().toString().trim() + "-" + ageMonth.getText().toString().trim() + "-30");
-                        cattleBean.setBirthDate(dateOfBirth.toString());
+
+                        Calendar cal = Calendar.getInstance();
+                        Date today = cal.getTime();
+                        cal.add(Calendar.YEAR, -Integer.parseInt(ageYear.getText().toString()));
+                        cal.add(Calendar.MONTH,-Integer.parseInt(ageMonth.getText().toString()));
+
+                        Date nextYear = cal.getTime();
+
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                        String reportDate = df.format(nextYear);
+                        cattleBean.setBirthDate(reportDate.toString());
+
+                        Log.e("BirthDate",reportDate.toString());
+
+
+
+
+
+
+
+                        //StringBuilder dateOfBirth = new StringBuilder();
+
+                        //dateOfBirth.append(ageYear.getText().toString().trim() + "-" + ageMonth.getText().toString().trim() + "-30");
+
+
+                        //cattleBean.setBirthDate(dateOfBirth.toString());
                     }
                     cattleBean.setSexId(sex.getTag().toString());
                     cattleBean.setSpeciesId(species.getTag().toString());
@@ -426,6 +481,8 @@ public class CattleRegistration extends Fragment {
                     if (picturePath != null ) {
                         cattleBean.setAnimalImagePath(picturePath);
                     }
+
+
 
 
 
@@ -440,14 +497,22 @@ public class CattleRegistration extends Fragment {
 
 
 
+
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         });
+
+
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
 
                 if(flag) {
                     ((VillageMainActivity) getActivity()).swipeViewPagerToPreviousScreen();
@@ -492,6 +557,7 @@ public class CattleRegistration extends Fragment {
         final ListView list = (ListView) dialog.findViewById(R.id.dialogListView);
         final TextView title = (TextView) dialog.findViewById(R.id.tv_dialog_title);
         final ArrayList<String> lotList = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getHerds();
+
         SpinnerAdapter adapter = new SpinnerAdapter(getActivity(), R.layout.spinner_content, lotList);
         title.setText("Select Herd");
         list.setAdapter(adapter);
@@ -521,6 +587,7 @@ public class CattleRegistration extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 lotName.setText(((TextView) view).getText());
                 lotName.setTag(view.getTag().toString());
+
                 dialog.dismiss();
             }
         });
@@ -540,10 +607,15 @@ public class CattleRegistration extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ownerName.setText(((TextView) view).getText());
+
+
+                ownerName.setText(((TextView) view).getText()+" "+view.getTag().toString());
+
                 ownerName.setTag(view.getTag().toString());
                 dialog.dismiss();
+
             }
+
         });
         return dialog;
     }
@@ -555,7 +627,9 @@ public class CattleRegistration extends Fragment {
         final ListView list = (ListView) dialog.findViewById(R.id.dialogListView);
         final TextView title = (TextView) dialog.findViewById(R.id.tv_dialog_title);
         final ArrayList<String> lotList = DatabaseHelper.getDatabaseHelperInstance(getActivity()).getSex();
+
         SpinnerAdapter adapter = new SpinnerAdapter(getActivity(), R.layout.spinner_content, lotList);
+
         title.setText("Select Sex");
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

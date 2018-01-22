@@ -371,7 +371,7 @@ public class FragmentPDEntry extends Fragment {
         }else if (subStatus==SubStatus.BREEDING){
             lotList=DatabaseHelper.getDatabaseHelperInstance(getActivity()).getBreedingAnimalStatus(ownerId.getText().toString());
         }else if(subStatus==SubStatus.HEALTH){
-//            lotList=DatabaseHelper.getDatabaseHelperInstance(getActivity()).getMilkAnimalStatus(animalId.getText().toString());
+
         }
         if(lotList!=null) {
             createTable(lotList, tableLayout);

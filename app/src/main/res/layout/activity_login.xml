@@ -103,14 +103,13 @@
             android:textColor="@drawable/cancel_button_text_selector"
             android:text="LOGIN"/>
         <Button
-            android:id="@+id/Sync"
+            android:id="@+id/change_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
             android:background="@drawable/cancel_button_selector"
             android:textColor="@drawable/cancel_button_text_selector"
-            android:text="Sync"/>b
+            android:text="Change Password"/>
 
     </LinearLayout>
 

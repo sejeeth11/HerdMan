@@ -16,6 +16,15 @@ public class CommonData {
     }
     public JSONArray reproductionarray;
     JSONArray detailsarray;
+    JSONArray ProductionArray;
+
+    public JSONArray getProductionArray() {
+        return ProductionArray;
+    }
+
+    public void setProductionArray(JSONArray productionArray) {
+        ProductionArray = productionArray;
+    }
 
     public JSONArray getDetailsarray() {
         return detailsarray;
@@ -29,6 +38,8 @@ public class CommonData {
         return reproductionarray;
     }
 
+
+
     public void setReproductioncommon(JSONArray arraycommon) {
         reproductionarray = arraycommon;
     }
@@ -41,7 +52,7 @@ public class CommonData {
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
         String formattedDate = df.format(c.getTime());
 
         return formattedDate;

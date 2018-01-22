@@ -34,7 +34,6 @@ public class VillageMainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_village);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tootlBarTitle = (TextView) toolbar.findViewById(R.id.title_Ctv);
         cattleBean=CattleBean.getCattleBeanInstance();
@@ -61,6 +60,8 @@ public class VillageMainActivity extends AppCompatActivity{
 
 
     }
+
+
 
     public String getId(){
         return idNumber;

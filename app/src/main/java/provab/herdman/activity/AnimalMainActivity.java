@@ -55,10 +55,11 @@ public class AnimalMainActivity extends AppCompatActivity {
 
         hint = intent.getStringExtra("Hint");
         id = intent.getStringExtra("ID");
-        ArrayList<String> arra =  DatabaseHelper.getDatabaseHelperInstance(AnimalMainActivity.this).getAnimalDetails(id);
+       // ArrayList<String> arra =  DatabaseHelper.getDatabaseHelperInstance(AnimalMainActivity.this).getAnimalDetails(id);
 
         //getSupportActionBar().setIcon(R.drawable.logo_toolbar);
         //getSupportActionBar().setTitle(" Smartmoo-Herdman");
+
 
 
         fmanager = getSupportFragmentManager();
@@ -91,11 +92,13 @@ public class AnimalMainActivity extends AppCompatActivity {
         LinearLayout headerNav = (LinearLayout) headerView.findViewById(R.id.navHeader);*/
 
 
-        ArrayList<ActionBean> lotList= DatabaseHelper.getDatabaseHelperInstance(AnimalMainActivity.this).getTask_details("","");
+
+
         if(hint.equalsIgnoreCase("1")){
             Fragment frag = new EntryFragment();
             replaceFragmentNoStack(frag);
         }else if(hint.equalsIgnoreCase("3")){
+            ArrayList<ActionBean> lotList= DatabaseHelper.getDatabaseHelperInstance(AnimalMainActivity.this).getTask_details("","");
             Fragment frag = new ActionListDetails(lotList);
             replaceFragmentNoStack(frag);
         }else{
@@ -114,14 +117,6 @@ public class AnimalMainActivity extends AppCompatActivity {
 
     }
 
-
-
-    /*private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Bowhouse-Black.otf");
-        SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        mi.setTitle(mNewTitle);
-    }*/
 
 
 

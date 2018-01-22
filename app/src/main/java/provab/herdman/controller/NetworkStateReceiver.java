@@ -24,7 +24,8 @@ public class NetworkStateReceiver extends BroadcastReceiver {
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             boolean isConnected = activeNetwork != null &&
                     activeNetwork.isConnectedOrConnecting();
-            Log.e("internet", isConnected + "");
+
+        Log.e("internet", isConnected + "");
 
             if (isConnected) {
                 dbSync();

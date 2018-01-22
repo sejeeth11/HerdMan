@@ -31,9 +31,12 @@ import provab.herdman.beans.DetailsBean;
 import provab.herdman.beans.DiseaseBean;
 import provab.herdman.beans.MedicineBean;
 import provab.herdman.beans.MultiSelectItem;
+import provab.herdman.beans.ProductionBean;
 import provab.herdman.beans.PurchaseDetailsBean;
+import provab.herdman.beans.ReportByBean;
 import provab.herdman.beans.ReproductionBean;
 import provab.herdman.beans.SearchBean;
+import provab.herdman.beans.UserBean;
 import provab.herdman.beans.UserInfo;
 import provab.herdman.constants.AnimalDetailsData;
 import provab.herdman.constants.CommonData;
@@ -377,7 +380,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "\t[SyncStatus]\tinteger default  NULL\n" +
                 ")");
 
-        db.execSQL("CREATE TABLE [Production] (\n\t[IdNo]\tnvarchar(20) COLLATE NOCASE,\n\t[Date]\tdatetime,\n\t[Parity]\tinteger,\n\t[Mor]\tnumeric DEFAULT 0,\n\t[Eve]\tnumeric DEFAULT 0,\n\t[Night]\tnumeric DEFAULT 0,\n\t[MidNight]\tnumeric DEFAULT 0,\n\t[IdCode]\tnvarchar(6) COLLATE NOCASE,\n\t[Fat]\tnumeric,\n\t[Snf]\tnumeric,\n\t[Lactose]\tnumeric,\n\t[Protein]\tnumeric,\n\t[FatC]\tnumeric,\n\t[SnfC]\tnumeric,\n\t[LactoseC]\tnumeric,\n\t[ProteinC]\tnumeric,\n\t[CumTotal]\tnumeric,\n\t[Lactation_Total]\tnumeric,\n\t[Days_Count]\tinteger,\n\t[Solidsc]\tnumeric,\n\t[Solids]\tnumeric,\n\t[EFAT]\tnumeric,\n\t[ESNF]\tnumeric,\n\t[NFAT]\tnumeric,\n\t[NSNF]\tnumeric,\n\t[MFAT]\tnumeric,\n\t[MSNF]\tnumeric,\n\t[CLR]\tnumeric,\n\t[CFU]\tnumeric,\n\t[Acidity]\tnumeric,\n\t[OfficialMilk]\tnumeric,\n\t[FDFlag]\tnvarchar(1) COLLATE NOCASE,\n\t[Days_total]\tnumeric,\n\t[SyncID]\tinteger\n,\n" +
+        db.execSQL("CREATE TABLE [Production] (\n\t[IdNo]\tnvarchar(20) COLLATE NOCASE,\n\t[Date]\tdatetime,\n\t[Parity]\tinteger,\n\t[Mor]\tnumeric DEFAULT 0,\n\t[Eve]\tnumeric DEFAULT 0,\n\t[Night]\tnumeric DEFAULT 0,\n\t[MidNight]\tnumeric DEFAULT 0,\n\t[IdCode]\tnvarchar(6) COLLATE NOCASE,\n\t[Fat]\tnumeric,\n\t[Snf]\tnumeric,\n\t[Lactose]\tnumeric,\n\t[Protein]\tnumeric,\n\t[FatC]\tnumeric,\n\t[SnfC]\tnumeric,\n\t[LactoseC]\tnumeric,\n\t[ProteinC]\tnumeric,\n\t[CumTotal]\tnumeric,\n\t[Lactation_Total]\tnumeric,\n\t[Days_Count]\tinteger,\n\t[Solidsc]\tnumeric,\n\t[Solids]\tnumeric,\n\t[EFAT]\tnumeric,\n\t[ESNF]\tnumeric,\n\t[NFAT]\tnumeric,\n\t[NSNF]\tnumeric,\n\t[MFAT]\tnumeric,\n\t[MSNF]\tnumeric,\n\t[CLR]\tnumeric,\n\t[CFU]\tnumeric,\n\t[Acidity]\tnumeric,\n\t[OfficialMilk]\tnumeric,\n\t[FDFlag]\tnvarchar(1) COLLATE NOCASE,\n\t[Days_total]\tnumeric,\n\t[UID] integer default NULL,\n\t[SyncID]\tinteger\n,\n" +
                 "\t[SyncStatus]\tinteger default  NULL\n" +
                 ")");
 
@@ -402,6 +405,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE [DiedDetails] (\n\t[CompanyCode]\tnvarchar(5) COLLATE NOCASE,\n\t[Herdno]\tnvarchar(50) COLLATE NOCASE,\n\t[Lotno]\tnvarchar(50) COLLATE NOCASE,\n\t[OldIdno]\tnvarchar(20) COLLATE NOCASE,\n\t[Idno]\tnvarchar(50) COLLATE NOCASE,\n\t[Date]\tdatetime,\n\t[Remark]\tnvarchar(100) COLLATE NOCASE,\n\t[Flag]\tnvarchar(20) COLLATE NOCASE,\n\t[Reason]\tnvarchar(25) COLLATE NOCASE,\n\t[SoldTo]\tnvarchar(50) COLLATE NOCASE,\n\t[Sprice]\tnumeric,\n\t[SyncID]\tinteger default NULL,\n" +
                 "\t[SyncStatus]\tinteger default  NULL\n" +
                 ")");
+
 
 
 
@@ -1222,7 +1226,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lotNumberName;
     }
 
-    /*Select Lotno,Name From Lot WHERE Herdno=Herdno order by Lotno*/
+
     public ArrayList<String> getLot(String herdNumber) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = null;
@@ -1261,6 +1265,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 try {
                     lotAndName.put(cursor.getString(cursor.getColumnIndex(TABLE_OWNER_COLUMN_NAME)), cursor.getString(cursor.getColumnIndex(TABLE_OWNER_COLUMN_CODE)));
                     lotNumberName.add(lotAndName.toString());
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -2086,18 +2092,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-         /*  if(cursor.moveToFirst()) {
-               try {
 
-                   int columnLength=cursor.getColumnCount();
-                   System.out.println("No of coloumn"+columnLength);
-                   for (int i=0;i<cursor.getColumnCount();i++){
-                       animalStatusObject.put(cursor.getColumnName(i),cursor.getString(cursor.getColumnIndex(cursor.getColumnName(i))));
-                   }
-               } catch (Exception e) {
-                   e.printStackTrace();
-               }
-           }*/
        }catch (Exception e){
            e.printStackTrace();
        }finally {
@@ -2461,6 +2456,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+
+
     public HashMap<String,ArrayList<Double>> getLactationCurve(String idNumber) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = null;
@@ -2639,12 +2636,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     public ArrayList<String> getSireEarTagListHardCoded(String idNo) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = null;
         ArrayList<String> lotNumberName = null;
         try {
-            String query = "SELECT SireId,Name FROM Sire WHERE Cbflg ='"+2+"' and NAFlag ='"+2+"' order by Name ASC";
+            String query = "SELECT SireId,Name FROM Sire WHERE Cbflg ='"+1+"' and NAFlag ='"+1+"' order by Name ASC";
             cursor = db.rawQuery(query, null);
             lotNumberName = new ArrayList<String>();
             while (cursor.moveToNext()) {
@@ -2689,8 +2687,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return status;
     }
 
-    public void saveBreeding() {
-    }
+
 
     public int getConCalv(String breedId) {
         Cursor cursor = null;
@@ -2740,9 +2737,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         saveRegistrationFirst(cattleBean.getAnimalId(), cattleBean.getHerdId(), cattleBean.getLotId(), cattleBean.getOwnerId(), cattleBean.getAnimalName(), cattleBean.getBirthDate(), cattleBean.getSexId(), cattleBean.getSpeciesId(), cattleBean.getBreedId(), cattleBean.getFarmIdBreed(), cattleBean.getRegistrationDate(), SessionManager.getSessionInstance().getPrefData(USER_TABLE_FIELD_UUID), "1");
         try {
             ContentValues values;
-
             if (cattleBean.getCalvingDryPregnant() == DATABASE_VERSION) {
-
                 values = new ContentValues();
                 values.put(this.TABLE_REPRODUCTION_COLUMN_IDNO, cattleBean.getAnimalId());
                 values.put(this.TABLE_REPRODUCTION_COLUMN_PARITY, cattleBean.getNumberOfCalvingDays());
@@ -2761,10 +2756,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "0");
                 values.put("SyncStatus","0");
-
-
-
-
                 System.out.println("SEE THE STATUS = " + db.insert(REPRODUCTION_TABLE_NAME, null, values));
 
             } else if (cattleBean.getCalvingDryPregnant() == 2) {
@@ -2818,7 +2809,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(this.TABLE_REPRODUCTION_COLUMN_PDII, "3");
                 values.put(this.TABLE_REPRODUCTION_COLUMN_PD_DATE, cattleBean.pregnantDate);
                 values.put(this.TABLE_REPRODUCTION_COLUMN_ENTRY, "M");
-               // values.put("SyncStatus","0");
+                values.put("SyncStatus","0");
 
 
                 System.out.println("SEE THE STATUS = " + db.insert(REPRODUCTION_TABLE_NAME, null, values));
@@ -3081,7 +3072,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
-        db.close();
+       // db.close();
 
      return  data;
 
@@ -3128,21 +3119,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertPurchaseDetails(IdNo,Dateofpurchased,Cost,Sourceid);
     }
 
-  public void save_parent_detail(String AnimalId,String sire , String dam,String paternalsire , String paternaldam){
-
-      SQLiteDatabase db = this.getWritableDatabase();
-      db.beginTransaction();
-      String where = "IDNo = ?";
-      String[] whereArgs = new String[] {String.valueOf(AnimalId)};
-      ContentValues values = new ContentValues();
-      values.put("[Sire]",AnimalId);
-      values.put("[Dam]",dam);
-      values.put("[paternalSire]",paternalsire);
-      values.put("[PaternalDam]",paternaldam);
-      values.put("[SyncStatus]","0");
 
 
-      db.update("[Details]",values,where,whereArgs);
+
+
+
+    public void save_parent_detail(String AnimalId,String sire , String dam,String paternalsire , String paternaldam){
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        String where = "IDNo = ?";
+        String[] whereArgs = new String[] {String.valueOf(AnimalId)};
+        ContentValues values = new ContentValues();
+        values.put("[Sire]",sire);
+        values.put("[Dam]",dam);
+        values.put("[paternalSire]",paternalsire);
+        values.put("[PaternalDam]",paternaldam);
+        values.put("[SyncStatus]","0");
+        int affected=db.update("[Details]",values,where,whereArgs);
+
+        Log.e("Update Status",affected+"");
+
+
+
+
+        db.endTransaction();
 
 
   }
@@ -3162,6 +3164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      String wherClass = "IDNo = ?";
      String []whereArg = {IdNo};
      db.delete("[Insurance]",wherClass,whereArg);
+     db.endTransaction();
 
 
  }
@@ -3169,7 +3172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void add_insurance_details(String Idno,String PolicyNo,String Value, String CompanyName,String IssueDate,String DueDate, String AgentName,String ClaimDate,String Reason, String Status,String SettlementDate,String AmtRecd  ){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
+      //  db.beginTransaction();
         String where = "IDNo = ?";
         String[] whereArgs = new String[] {String.valueOf(Idno)};
         ContentValues values = new ContentValues();
@@ -3186,12 +3189,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("[SettlementDate]",SettlementDate);
         values.put("[AmtRecd]",AmtRecd);
         db.insert("[Insurance]",null,values);
-
+     //   db.endTransaction();
     }
 
 
-    public void addOtherDetails(String idno ,String marketvalue , String Noofrings ,String rearingpurpose , String color ,String horndistance,String doctor ){
-         SQLiteDatabase db = this.getWritableDatabase();
+
+
+
+      public void addOtherDetails(String idno ,String marketvalue , String Noofrings ,String rearingpurpose , String color ,String horndistance,String doctor ){
+
+          SQLiteDatabase db = this.getWritableDatabase();
+
+          String where = "IDNo = ?";
+          String[] whereArgs = new String[] {String.valueOf(idno)};
+          ContentValues values = new ContentValues();
+          values.put("Market_Value",marketvalue);
+          values.put("No_rings",Noofrings);
+          values.put("Rearing_Purpose",rearingpurpose);
+          values.put("Color",color);
+          values.put("Horn_distance",horndistance);
+          values.put("Doctor",doctor);
+          values.put("SyncStatus","0");
+          db.update("[Details]",values,where,whereArgs);
+
+
+
+      /*  String Query = "UPDATE details SET Market_Value ='"+marketvalue+"',No_rings='"+Noofrings+"',Rearing_Purpose='"+rearingpurpose+"', Color='"+color+"',Horn_distance='"+horndistance+"',Doctor='"+doctor+"',SyncStatus='0'WHERE IDNo ="+idno;
+
+        System.out.println(Query);
+
+
+        db.execSQL(Query);
+
+
+        System.out.println("Done....");*/
+
+
+
+
+
+
+
+
+
+
+
+        /* SQLiteDatabase db = this.getWritableDatabase();
          db.beginTransaction();
          String where = "IDNo = ?";
          String[] whereArgs = new String[] {String.valueOf(idno)};
@@ -3203,13 +3246,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          values.put("Horn_distance",horndistance);
          values.put("Doctor",doctor);
          values.put("SyncStatus","0");
+          db.update("[Details]",values,where,whereArgs);
 
+        db.endTransaction();*/
 
-
-
-
-         db.update("[Details]",values,where,whereArgs);
- }
+    }
 
 
  public ArrayList<SearchBean> getAll_ids(){
@@ -3238,6 +3279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      ArrayList<SearchBean> data = new ArrayList<SearchBean>();
 
 
+
      if (cursor.moveToFirst()) {
          do {
            SearchBean bean = new SearchBean();
@@ -3253,7 +3295,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      }
 
 
-     db.close();
+    // db.close();
 
      return  data;
  }
@@ -3304,7 +3346,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
+       // db.beginTransaction();
 
         Cursor cursor = null;
 
@@ -3324,7 +3366,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          values.put("cost",rate);
          values.put("ROUTE",route);
          values.put("[DoneBy]",doneby);
-         values.put("[SyncStatus]",0);
+         values.put("[SyncStatus]","0");
          long ids = db.insert("[VaccineDetails]",null,values);
 
             String Query = "Select * from " + "[VaccineDetails]";
@@ -3332,14 +3374,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-
-            Log.e("Count",cursor.getCount()+"");
-            Log.e("Count",ids+"");
-            Log.e("Count",id+"");
-
-
-
-           // checkInsertedTable(id);
 
 
      }
@@ -3377,40 +3411,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-    private void exportDB() {
-        File sd = Environment.getExternalStorageDirectory();
-        File data = Environment.getDataDirectory();
-        FileChannel source = null;
-        FileChannel destination = null;
-        String currentDBPath = "/data/" + "provab.herdman" + "/databases/" + "HerdMan";
-        String backupDBPath = "New.db";
-        File currentDB = new File(data, currentDBPath);
-        File backupDB = new File(sd, backupDBPath);
-        try {
-            source = new FileInputStream(currentDB).getChannel();
-            destination = new FileOutputStream(backupDB).getChannel();
-            destination.transferFrom(source, 0, source.size());
-            source.close();
-            destination.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public void Insert_Deworming(String id, String Date,String cmbvaccinationtext,String cmbvaccine,String batch,String dose,String rate ,String route,String doneby){
 
@@ -3483,7 +3484,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
           }
 
 
-          db.close();
+      //    db.close();
 
 
 
@@ -3514,7 +3515,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      }
 
 
-     db.close();
+ //    db.close();
 
      return data;
 
@@ -3553,7 +3554,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      ContentValues valuess = new ContentValues();
      valuess.put("DisposalFlg","3");
      db.update("[Details]",valuess,where,whereArgs);
-     long b =  db.update("[Details]",valuess,where,whereArgs);
+   //  long b =  db.update("[Details]",valuess,where,whereArgs);
 
 
     }
@@ -3608,7 +3609,7 @@ public  ArrayList<String> getSystemdata(){
     }
 
 
-    db.close();
+ //   db.close();
 
 
 
@@ -3638,7 +3639,7 @@ public  ArrayList<String> getSystemdata(){
             }
 
 
-            db.close();
+       //     db.close();
 
 
 
@@ -3652,20 +3653,7 @@ public  ArrayList<String> getSystemdata(){
 
    public void Update_Sync_Flag(String TableName ,String FlagValue , String ColoumnName){
 
-
-
-       SQLiteDatabase db = this.getWritableDatabase();
-       db.beginTransaction();
-       ContentValues values = new ContentValues();
-       values.put("SyncStatus",FlagValue);
-       db.update(TableName,values,null,null);
-       db.endTransaction();
-
-
-
-
-
-
+       getWritableDatabase().execSQL("update "+String.valueOf(TableName)+" set SyncStatus='1'");
 
    }
 
@@ -3673,23 +3661,11 @@ public  ArrayList<String> getSystemdata(){
 
      public String SyncCattleRegistration(String Uid){
          ArrayList<ReproductionBean> arrayList = new ArrayList<ReproductionBean>();
-
-
          SQLiteDatabase db = this.getWritableDatabase();
-
-
-
-
-
          Cursor cursor = null;
          JSONObject animalStatusObject= null;
-
-
-
-         String Query = "select * from reproduction\n";
+         String Query = "select * from reproduction";
          cursor = db.rawQuery(Query, null);
-
-
          if (cursor.moveToFirst()) {
              do {
 
@@ -3733,8 +3709,9 @@ public  ArrayList<String> getSystemdata(){
          }
 
 
-         db.close();
+   //      db.close();
 
+         System.out.println("Re Arra "+arrayList.size());
 
 
 
@@ -3748,45 +3725,49 @@ public  ArrayList<String> getSystemdata(){
 
 
 
-                 if(arrayList.get(k).getSyncId().equalsIgnoreCase("0")) {
 
-                     JSONObject reproductiondata = new JSONObject();
-                     Log.e("IdNo", arrayList.get(k).getIdno());
+                 if(!String.valueOf(arrayList.get(k).getSyncId()).equalsIgnoreCase("1") &&!String.valueOf(arrayList.get(k).getSyncId()).equalsIgnoreCase("null") ) {
 
-                     reproductiondata.put("CompanyCode", arrayList.get(k).getCompanycode());
-                     reproductiondata.put("IdNo", arrayList.get(k).getIdno());
-                     reproductiondata.put("Parity", arrayList.get(k).getParity());
-                     reproductiondata.put("HeatSeq", arrayList.get(k).getHeatseq());
-                     reproductiondata.put("Service", arrayList.get(k).getService());
-                     reproductiondata.put("DtOfHeat", arrayList.get(k).getDtofheat());
-                     reproductiondata.put("Insim", arrayList.get(k).getInsim());
-                     reproductiondata.put("SireId", arrayList.get(k).getSireid());
-                     reproductiondata.put("PD1", arrayList.get(k).getPd1());
-                     reproductiondata.put("RemPD1", arrayList.get(k).getRmpd1());
-                     reproductiondata.put("PD2", arrayList.get(k).getPd2());
-                     reproductiondata.put("RemPD2", arrayList.get(k).getRmpd2());
-                     reproductiondata.put("Pddate", arrayList.get(k).getPddate());
-                     reproductiondata.put("DtOfCalving", arrayList.get(k).getDateofcalving());
-                     reproductiondata.put("DtOfDry", arrayList.get(k).getDtofdry());
-                     reproductiondata.put("Dry_Reson", arrayList.get(k).getDryreason());
-                     reproductiondata.put("Dry_Treatment", arrayList.get(k).getDrytreatement());
-                     reproductiondata.put("Flg", arrayList.get(k).getFlg());
-                     reproductiondata.put("Calf", arrayList.get(k).getCalf());
-                     reproductiondata.put("Sex", arrayList.get(k).getSex());
-                     reproductiondata.put("C_Type", arrayList.get(k).getCtype());
-                     reproductiondata.put("ROP", arrayList.get(k).getRop());
-                     reproductiondata.put("Comments", arrayList.get(k).getComments());
-                     reproductiondata.put("RP", arrayList.get(k).getRp());
-                     reproductiondata.put("ENTRY", arrayList.get(k).getEntry());
-                     reproductiondata.put("Total_Dose", arrayList.get(k).getTotaldose());
-                     reproductiondata.put("Abortion_Seq", arrayList.get(k).getAbortionseq());
-                     reproductiondata.put("Vaccine", arrayList.get(k).getVaccine());
-                     reproductiondata.put("CretationDate", arrayList.get(k).getCreationdate());
-                     reproductiondata.put("UID", arrayList.get(k).getUID());
-                     ReproductionArray.put(reproductiondata);
+                         Log.e("SYNC NUMBER", arrayList.get(k).getSyncId());
+
+                         JSONObject reproductiondata = new JSONObject();
+                         reproductiondata.put("CompanyCode", arrayList.get(k).getCompanycode());
+                         reproductiondata.put("IdNo", arrayList.get(k).getIdno());
+                         reproductiondata.put("Parity", arrayList.get(k).getParity());
+                         reproductiondata.put("HeatSeq", arrayList.get(k).getHeatseq());
+                         reproductiondata.put("Service", arrayList.get(k).getService());
+                         reproductiondata.put("DtOfHeat", arrayList.get(k).getDtofheat());
+                         reproductiondata.put("Insim", arrayList.get(k).getInsim());
+                         reproductiondata.put("SireId", arrayList.get(k).getSireid());
+                         reproductiondata.put("PD1", arrayList.get(k).getPd1());
+                         reproductiondata.put("RemPD1", arrayList.get(k).getRmpd1());
+                         reproductiondata.put("PD2", arrayList.get(k).getPd2());
+                         reproductiondata.put("RemPD2", arrayList.get(k).getRmpd2());
+                         reproductiondata.put("Pddate", arrayList.get(k).getPddate());
+                         reproductiondata.put("DtOfCalving", arrayList.get(k).getDateofcalving());
+                         reproductiondata.put("DtOfDry", arrayList.get(k).getDtofdry());
+                         reproductiondata.put("Dry_Reson", arrayList.get(k).getDryreason());
+                         reproductiondata.put("Dry_Treatment", arrayList.get(k).getDrytreatement());
+                         reproductiondata.put("Flg", arrayList.get(k).getFlg());
+                         reproductiondata.put("Calf", arrayList.get(k).getCalf());
+                         reproductiondata.put("Sex", arrayList.get(k).getSex());
+                         reproductiondata.put("C_Type", arrayList.get(k).getCtype());
+                         reproductiondata.put("ROP", arrayList.get(k).getRop());
+                         reproductiondata.put("Comments", arrayList.get(k).getComments());
+                         reproductiondata.put("RP", arrayList.get(k).getRp());
+                         reproductiondata.put("ENTRY", arrayList.get(k).getEntry());
+                         reproductiondata.put("Total_Dose", arrayList.get(k).getTotaldose());
+                         reproductiondata.put("Abortion_Seq", arrayList.get(k).getAbortionseq());
+                         reproductiondata.put("Vaccine", arrayList.get(k).getVaccine());
+                         reproductiondata.put("CretationDate", arrayList.get(k).getCreationdate());
+                         reproductiondata.put("UID", arrayList.get(k).getUID());
+                         ReproductionArray.put(reproductiondata);
+                     }
+
                  }
 
-                 }
+
+
              CommonData.getInstance().setReproductioncommon(ReproductionArray);
 
 
@@ -3821,8 +3802,6 @@ public  ArrayList<String> getSystemdata(){
       if (cursor.moveToFirst()) {
           do {
               DetailsBean bean = new DetailsBean();
-
-
               bean.setCompanyCode(String.valueOf(cursor.getString(0)));
               bean.setHerdNo(String.valueOf(cursor.getString(1)));
               bean.setLotNo(String.valueOf(cursor.getString(2)));
@@ -3887,8 +3866,7 @@ public  ArrayList<String> getSystemdata(){
               bean.setNewownerCode(String.valueOf(cursor.getString(61)));
               bean.setOwnerID(String.valueOf(cursor.getString(62)));
               bean.setVirtualLot(String.valueOf(cursor.getString(63)));
-              bean.setUID(UID);
-
+              bean.setUID(String.valueOf(UID));
               bean.setAllowUser(String.valueOf(cursor.getString(65)));
               bean.setISSuspend(String.valueOf(cursor.getString(66)));
               bean.setSyncID(String.valueOf(cursor.getString(68)));
@@ -3902,7 +3880,7 @@ public  ArrayList<String> getSystemdata(){
       }
 
 
-      db.close();
+    //  db.close();
 
 
       JSONArray detailsArrayy = new JSONArray();
@@ -3913,7 +3891,8 @@ public  ArrayList<String> getSystemdata(){
 
           for(int k=0;k<arrayList.size();k++){
 
-              if(arrayList.get(k).getSyncID().equalsIgnoreCase("0")) {
+
+              if(!String.valueOf(arrayList.get(k).getSyncID()).equalsIgnoreCase("1") &&!String.valueOf(arrayList.get(k).getSyncID()).equalsIgnoreCase("null") ) {
 
                   JSONObject Detailsdata = new JSONObject();
                   Detailsdata.put("CompanyCode", arrayList.get(k).getCompanyCode());
@@ -3983,18 +3962,13 @@ public  ArrayList<String> getSystemdata(){
                   Detailsdata.put("UID", arrayList.get(k).getUID());
                   Detailsdata.put("AllowUser", arrayList.get(k).getAllowUser());
                   Detailsdata.put("ISSuspend", arrayList.get(k).getISSuspend());
-                  //Detailsdata.put("SyncID",arrayList.get(k).getSyncID());
+
                   detailsArrayy.put(Detailsdata);
+
               }
           }
 
-
-          CommonData.getInstance().setReproductioncommon(detailsArrayy);
-
-
-
-
-
+          CommonData.getInstance().setDetailsarray(detailsArrayy);
           Master.put("details",detailsArrayy);
 
           //GetMasterData.put("GetMasterData",Master);
@@ -4006,6 +3980,158 @@ public  ArrayList<String> getSystemdata(){
 
 
   }
+
+
+ public ArrayList<DetailsBean> details(String UID){
+
+
+     ArrayList<DetailsBean> arrayList = new ArrayList<DetailsBean>();
+
+
+     SQLiteDatabase db = this.getWritableDatabase();
+     Cursor cursor = null;
+     JSONObject animalStatusObject= null;
+
+     String Query = "select * from details";
+     cursor = db.rawQuery(Query, null);
+
+
+     if (cursor.moveToFirst()) {
+         do {
+             DetailsBean bean = new DetailsBean();
+             bean.setCompanyCode(String.valueOf(cursor.getString(0)));
+             bean.setHerdNo(String.valueOf(cursor.getString(1)));
+             bean.setLotNo(String.valueOf(cursor.getString(2)));
+             bean.setIdNo(String.valueOf(cursor.getString(3)));
+             bean.setSexFlg(String.valueOf(cursor.getString(4)));
+             bean.setSpecies(String.valueOf(cursor.getString(5)));
+             bean.setBreed(String.valueOf(cursor.getString(6)));
+             bean.setStatus(String.valueOf(cursor.getString(7)));
+             bean.setDtOfBirth(String.valueOf(cursor.getString(8)));
+             bean.setName(String.valueOf(cursor.getString(9)));
+             bean.setAgeFlg(String.valueOf(cursor.getString(10)));
+             bean.setBirthWt(String.valueOf(cursor.getString(11)));
+             bean.setSalvFlg(String.valueOf(cursor.getString(12)));
+             bean.setGroupFlg(String.valueOf(cursor.getString(13)));
+             bean.setPBFlg(String.valueOf(cursor.getString(14)));
+             bean.setCatCalfFlg(String.valueOf(cursor.getString(15)));
+             bean.setHLAname(String.valueOf(cursor.getString(16)));
+             bean.setSensorNo(String.valueOf(cursor.getString(17)));
+             bean.setPhoto(String.valueOf(cursor.getString(18)));
+             bean.setParity(String.valueOf(cursor.getString(19)));
+             bean.setDisposalflg(String.valueOf(cursor.getString(20)));
+             bean.setSel_cancel(String.valueOf(cursor.getString(21)));
+             bean.setInsurance_No(String.valueOf(cursor.getString(22)));
+             bean.setAI_Tagno(String.valueOf(cursor.getString(23)));
+             bean.setCurrent_Parity(String.valueOf(cursor.getString(24)));
+             bean.setRegistration_Date(String.valueOf(cursor.getString(25)));
+             bean.setMarket_Value(String.valueOf(cursor.getString(26)));
+             bean.setNo_rings(String.valueOf(cursor.getString(27)));
+             bean.setRearing_Purpose(String.valueOf(cursor.getString(28)));
+             bean.setColor(String.valueOf(cursor.getString(29)));
+             bean.setHorn_distance(String.valueOf(cursor.getString(30)));
+             bean.setInsurNo(String.valueOf(cursor.getString(31)));
+             bean.setPolicy_period(String.valueOf(cursor.getString(32)));
+             bean.setTransaction_Date(String.valueOf(cursor.getString(33)));
+             bean.setHypothecation(String.valueOf(cursor.getString(34)));
+             bean.setHypothecation_No(String.valueOf(cursor.getString(35)));
+             bean.setDoctor(String.valueOf(cursor.getString(36)));
+             bean.setSend_CMS(String.valueOf(cursor.getString(37)));
+             bean.setImageContent(String.valueOf(cursor.getString(38)));
+             bean.setInsurance_Flag(String.valueOf(cursor.getString(39)));
+             bean.setBreedingStatus(String.valueOf(cursor.getString(40)));
+             bean.setHeatDate(String.valueOf(cursor.getString(41)));
+             bean.setHeatSeq(String.valueOf(cursor.getString(42)));
+             bean.setAbortionSeq(String.valueOf(cursor.getString(43)));
+             bean.setPDDate(String.valueOf(cursor.getString(44)));
+             bean.setPDI(String.valueOf(cursor.getString(45)));
+             bean.setPDII(String.valueOf(cursor.getString(46)));
+             bean.setCalvingDate(String.valueOf(cursor.getString(47)));
+             bean.setDryDate(String.valueOf(cursor.getString(48)));
+             bean.setMilkDate(String.valueOf(cursor.getString(49)));
+             bean.setLastMilk(String.valueOf(cursor.getString(50)));
+             bean.setTotalMilk(String.valueOf(cursor.getString(51)));
+             bean.setSelectFlag(String.valueOf(cursor.getString(52)));
+             bean.setSelectRemarks(String.valueOf(cursor.getString(53)));
+             bean.setSelectColor(String.valueOf(cursor.getString(54)));
+             bean.setLastSire(String.valueOf(cursor.getString(55)));
+             bean.setDisposalRemarks(String.valueOf(cursor.getString(56)));
+             bean.setSire(String.valueOf(cursor.getString(57)));
+             bean.setDam(String.valueOf(cursor.getString(58)));
+             bean.setPaternalSire(String.valueOf(cursor.getString(59)));
+             bean.setPaternalDam(String.valueOf(cursor.getString(60)));
+             bean.setNewownerCode(String.valueOf(cursor.getString(61)));
+             bean.setOwnerID(String.valueOf(cursor.getString(62)));
+             bean.setVirtualLot(String.valueOf(cursor.getString(63)));
+             bean.setUID(String.valueOf(UID));
+             bean.setAllowUser(String.valueOf(cursor.getString(65)));
+             bean.setISSuspend(String.valueOf(cursor.getString(66)));
+             bean.setSyncID(String.valueOf(cursor.getString(68)));
+             arrayList.add(bean);
+
+
+
+
+
+         } while (cursor.moveToNext());
+     }
+
+
+
+    return arrayList;
+
+
+
+
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public String PurchaseData(){
@@ -4047,26 +4173,528 @@ public  ArrayList<String> getSystemdata(){
         }
 
 
-        db.close();
-
-
-
-
-
-
-
-
-
-
-
-
-
+      //  db.close();
         return "";
+    }
+
+
+    public String Production_Tabel(String UID){
+        ArrayList<ProductionBean> arrayList = new ArrayList<ProductionBean>();
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        JSONObject animalStatusObject= null;
+
+        String Query = "select * from production";
+        cursor = db.rawQuery(Query, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                ProductionBean bean = new ProductionBean();
+                bean.setIdNo(String.valueOf(cursor.getString(0)));
+                bean.setDate(String.valueOf(cursor.getString(1)));
+                bean.setParity(String.valueOf(cursor.getString(2)));
+                bean.setMor(String.valueOf(cursor.getString(3)));
+                bean.setEve(String.valueOf(cursor.getString(4)));
+                bean.setNight(String.valueOf(cursor.getString(5)));
+                bean.setMidNight(String.valueOf(cursor.getString(6)));
+                bean.setIdCode(String.valueOf(cursor.getString(7)));
+                bean.setFat(String.valueOf(cursor.getString(8)));
+                bean.setSnf(String.valueOf(cursor.getString(9)));
+                bean.setLactose(String.valueOf(cursor.getString(10)));
+                bean.setProtein(String.valueOf(cursor.getString(11)));
+                bean.setFatC(String.valueOf(cursor.getString(12)));
+                bean.setSnfC(String.valueOf(cursor.getString(13)));
+                bean.setLactoseC(String.valueOf(cursor.getString(14)));
+                bean.setProteinC(String.valueOf(cursor.getString(15)));
+                bean.setCumTotal(String.valueOf(cursor.getString(16)));
+                bean.setLactation_Total(String.valueOf(cursor.getString(17)));
+                bean.setDays_Count(String.valueOf(cursor.getString(18)));
+                bean.setSolidsc(String.valueOf(cursor.getString(19)));
+                bean.setSolids(String.valueOf(cursor.getString(20)));
+                bean.setEFAT(String.valueOf(cursor.getString(21)));
+                bean.setESNF(String.valueOf(cursor.getString(22)));
+                bean.setNFAT(String.valueOf(cursor.getString(23)));
+                bean.setNSNF(String.valueOf(cursor.getString(24)));
+                bean.setMFAT(String.valueOf(cursor.getString(25)));
+                bean.setMSNF(String.valueOf(cursor.getString(26)));
+                bean.setCLR(String.valueOf(cursor.getString(27)));
+                bean.setCFU(String.valueOf(cursor.getString(28)));
+                bean.setAcidity(String.valueOf(cursor.getString(29)));
+                bean.setOfficialMilk(String.valueOf(cursor.getString(30)));
+                bean.setFDFLAG(String.valueOf(cursor.getString(31)));
+                bean.setDays_Total(String.valueOf(cursor.getString(32)));
+                bean.setUID(String.valueOf(cursor.getString(33)));
+                bean.setSYNCID(String.valueOf(cursor.getString(35)));
+                arrayList.add(bean);
+
+            } while (cursor.moveToNext());
+        }
+
+
+        System.out.println("Production Array Size"+arrayList.size());
+
+        JSONArray ProductionArray = new JSONArray();
+        JSONObject Master = new JSONObject();
+        JSONObject GetMasterData = new JSONObject();
+
+        try {
+
+            for(int k=0;k<arrayList.size();k++){
+
+                System.out.println("Production Array Sync Id "+arrayList.get(k).getSYNCID());
 
 
 
+                if(!String.valueOf(arrayList.get(k).getSYNCID()).equalsIgnoreCase("1") &&!String.valueOf(arrayList.get(k).getSYNCID()).equalsIgnoreCase("null") ) {
+
+                    JSONObject ProductionData = new JSONObject();
+                    ProductionData.put("IdNo", arrayList.get(k).getIdNo());
+                    ProductionData.put("Date", arrayList.get(k).getDate());
+                    ProductionData.put("parity", arrayList.get(k).getParity());
+                    ProductionData.put("Mor", arrayList.get(k).getMor());
+                    ProductionData.put("Eve", arrayList.get(k).getEve());
+                    ProductionData.put("Night", arrayList.get(k).getNight());
+                    ProductionData.put("MidNight", arrayList.get(k).getMidNight());
+                    ProductionData.put("IdCode", arrayList.get(k).getIdCode());
+                    ProductionData.put("Fat", arrayList.get(k).getFat());
+                    ProductionData.put("Snf", arrayList.get(k).getSnf());
+                    ProductionData.put("Lactose", arrayList.get(k).getLactose());
+                    ProductionData.put("Protein", arrayList.get(k).getProtein());
+                    ProductionData.put("FatC", arrayList.get(k).getFatC());
+                    ProductionData.put("SnfC", arrayList.get(k).getSnfC());
+                    ProductionData.put("LactoseC", arrayList.get(k).getLactoseC());
+                    ProductionData.put("ProteinC", arrayList.get(k).getProteinC());
+                    ProductionData.put("CumTotal", arrayList.get(k).getCumTotal());
+                    ProductionData.put("Lactation_Total", arrayList.get(k).getLactation_Total());
+                    ProductionData.put("Days_Count", arrayList.get(k).getDays_Count());
+                    ProductionData.put("Solidsc", arrayList.get(k).getSolidsc());
+                    ProductionData.put("Solids", arrayList.get(k).getSolids());
+                    ProductionData.put("EFAT", arrayList.get(k).getEFAT());
+                    ProductionData.put("ESNF", arrayList.get(k).getESNF());
+                    ProductionData.put("NFAT", arrayList.get(k).getNFAT());
+                    ProductionData.put("NSNF", arrayList.get(k).getNSNF());
+                    ProductionData.put("MFAT", arrayList.get(k).getMFAT());
+                    ProductionData.put("MSNF", arrayList.get(k).getMSNF());
+                    ProductionData.put("CLR", arrayList.get(k).getCLR());
+                    ProductionData.put("CFU", arrayList.get(k).getCFU());
+                    ProductionData.put("Acidity", arrayList.get(k).getAcidity());
+                    ProductionData.put("OfficialMilk", arrayList.get(k).getOfficialMilk());
+                    ProductionData.put("FDFLAG", arrayList.get(k).getFDFLAG());
+                  //  ProductionData.put("Days_Total", arrayList.get(k).getDays_Total());
+                    ProductionData.put("UID", UID);
+                    ProductionArray.put(ProductionData);
+                }
+            }
+
+
+            CommonData.getInstance().setProductionArray(ProductionArray);
+
+
+            Master.put("production",ProductionArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return Master.toString();
+
+    }
+
+    public void RefreshDb(){
+
+        String TableNames[] = {
+
+
+                "FarmDetail",
+                "Herd",
+                "Lot",
+                "Staff",
+                "Owner",
+                "SMSLanguage",
+                "SourceDetails",
+                "Sire",
+                "Breed",
+                "Parameter",
+                "SMSLabel",
+                "Medicineledger",
+                "Reproduction",
+                "Details",
+                "VaccineDetails",
+                "Deworming",
+                "DiseaseTest",
+                "Production",
+                "Treatment",
+                "TreatmentDetails",
+                "TreatmentFollow",
+                "DiedDetails",
+                "Insurance",
+                "Option",
+                "OldDetails"
+        };
+
+        for(int j=0;j<TableNames.length;j++) {
+
+            getWritableDatabase().execSQL("DELETE FROM " + TableNames[j] + ";");
 
         }
+    }
+
+
+
+
+
+   public void Insert_Milking_production(String IdNo,String Date ,String Parity , String Mor ,String Days_total ,String lactation_total ,String days_count ,String uid){
+
+
+       SQLiteDatabase db = this.getWritableDatabase();
+       db.beginTransaction();
+       JSONObject animalStatusObject=null;
+       String sqlstr;
+       String wherClass = "IDNo = ?";
+       String []whereArg = {IdNo};
+       db.delete("[Production]",wherClass,whereArg);
+
+       ContentValues values = new ContentValues();
+
+       values.put("IdNo",String.valueOf(IdNo)); //
+       values.put("Date",String.valueOf(Date)); //
+       values.put("Parity",String.valueOf(Parity));
+       values.put("Mor",String.valueOf(Mor));
+       values.put("Days_total",String.valueOf(Days_total));//
+       values.put("lactation_Total",String.valueOf(lactation_total));
+       values.put("days_Count",String.valueOf(days_count));
+       values.put("UID",String.valueOf(uid));
+       values.put("SyncStatus","0");
+
+       long k =   db.insert("[Production]",null,values);
+       Log.e("Key",k+"");
+
+
+
+
+   }
+
+
+
+
+    //Open Animal query for Alarm
+    public ArrayList<ReportByBean> OpenAnimal() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<ReportByBean>  openAnimalList = new ArrayList<>();
+        String Query = "SELECT   Distinct Details.IdNo, cast(Julianday('Now') -Julianday(calvingDate)  as INT)  as [Open Period],Lot.name as [HMBName],Owner.Code,Owner.NAme  ||  ' '  || Owner.middle_name  ||  ' '   ||  Owner.Last_Name as [Farmer Name] , Owner.Phno\n" +
+                "FROM         Details INNER JOIN Herd ON Details.Herdno = Herd.Herdno INNER JOIN\n" +
+                "Lot ON Details.LotNo = Lot.Lotno  INNER JOIN  Owner ON Details.Name = Owner.Code ";
+        cursor = db.rawQuery(Query, null);
+        try {
+            openAnimalList.clear();
+            if (cursor.moveToFirst()) {
+                do {
+                    ReportByBean bean=new ReportByBean();
+                    bean.setFarmer(cursor.getString(cursor.getColumnIndex("Farmer Name")));
+                    bean.setHMB(cursor.getString(cursor.getColumnIndex("HMBName")));
+                    openAnimalList.add(bean);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return openAnimalList;
+    }
+
+    public ArrayList<ReportByBean> DryPeriod() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<ReportByBean>  openAnimalList = new ArrayList<>();
+        String Query = "SELECT   Distinct Details.IdNo,  cast(Julianday('Now') -Julianday(drydate)  as INT)  as [Dry Period],\n" +
+                "Lot.name as [HMB Name],Owner.Code,Owner.NAme  ||  ' '  || Owner.middle_name  ||  ' '   ||  Owner.Last_Name as [Farmer Name] , Owner.Phno\n" +
+                "FROM         Details INNER JOIN Herd ON Details.Herdno = Herd.Herdno INNER JOIN\n" +
+                "Lot ON Details.LotNo = Lot.Lotno  INNER JOIN  Owner ON Details.Name = Owner.Code  ";
+        cursor = db.rawQuery(Query, null);
+        try {
+            openAnimalList.clear();
+            if (cursor.moveToFirst()) {
+                do {
+                    ReportByBean bean=new ReportByBean();
+                    bean.setFarmer(cursor.getString(cursor.getColumnIndex("Farmer Name")));
+                    bean.setHMB(cursor.getString(cursor.getColumnIndex("HMB Name")));
+                    openAnimalList.add(bean);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return openAnimalList;
+    }
+    public ArrayList<ReportByBean> HeatInterval() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<ReportByBean>  openAnimalList = new ArrayList<>();
+        String Query = "SELECT   Distinct Details.IdNo, cast(Julianday('Now') -Julianday(calvingDate)  as INT)  as [Open Period],Lot.name as [HMBName],Owner.Code,Owner.NAme  ||  ' '  || Owner.middle_name  ||  ' '   ||  Owner.Last_Name as [Farmer Name] , Owner.Phno\n" +
+                "FROM         Details INNER JOIN Herd ON Details.Herdno = Herd.Herdno INNER JOIN\n" +
+                "Lot ON Details.LotNo = Lot.Lotno  INNER JOIN  Owner ON Details.Name = Owner.Code ";
+        cursor = db.rawQuery(Query, null);
+        try {
+            openAnimalList.clear();
+            if (cursor.moveToFirst()) {
+                do {
+                    ReportByBean bean=new ReportByBean();
+                    bean.setFarmer(cursor.getString(cursor.getColumnIndex("Farmer Name")));
+                    bean.setHMB(cursor.getString(cursor.getColumnIndex("HMBName")));
+                    openAnimalList.add(bean);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return openAnimalList;
+    }
+
+    public ArrayList<ReportByBean> NoOfAI() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<ReportByBean>  openAnimalList = new ArrayList<>();
+        String Query = "SELECT   Distinct Details.IdNo, details.heatseq  as [NOI],\n" +
+                "Lot.name as [HMB Name],Owner.Code,Owner.NAme  ||  ' '  || Owner.middle_name  ||  ' '   ||  Owner.Last_Name as [Farmer Name] , Owner.Phno\n" +
+                "FROM         Details INNER JOIN Herd ON Details.Herdno = Herd.Herdno INNER JOIN\n" +
+                "Lot ON Details.LotNo = Lot.Lotno  INNER JOIN  Owner ON Details.Name = Owner.Code ";
+        cursor = db.rawQuery(Query, null);
+        try {
+            openAnimalList.clear();
+            if (cursor.moveToFirst()) {
+                do {
+                    ReportByBean bean=new ReportByBean();
+                    bean.setFarmer(cursor.getString(cursor.getColumnIndex("Farmer Name")));
+                    bean.setHMB(cursor.getString(cursor.getColumnIndex("HMB Name")));
+                    openAnimalList.add(bean);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return openAnimalList;
+    }
+    public ArrayList<ReportByBean> MilkYield() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<ReportByBean>  openAnimalList = new ArrayList<>();
+        String Query = "SELECT   Distinct Details.IdNo, cast(Julianday('Now') -Julianday(calvingDate)  as INT)  as [Open Period],Lot.name as [HMBName],Owner.Code,Owner.NAme  ||  ' '  || Owner.middle_name  ||  ' '   ||  Owner.Last_Name as [Farmer Name] , Owner.Phno\n" +
+                "FROM         Details INNER JOIN Herd ON Details.Herdno = Herd.Herdno INNER JOIN\n" +
+                "Lot ON Details.LotNo = Lot.Lotno  INNER JOIN  Owner ON Details.Name = Owner.Code ";
+        cursor = db.rawQuery(Query, null);
+        try {
+            openAnimalList.clear();
+            if (cursor.moveToFirst()) {
+                do {
+                    ReportByBean bean=new ReportByBean();
+                    bean.setFarmer(cursor.getString(cursor.getColumnIndex("Farmer Name")));
+                    bean.setHMB(cursor.getString(cursor.getColumnIndex("HMBName")));
+                    openAnimalList.add(bean);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return openAnimalList;
+    }
+
+    public ArrayList<ReportByBean> AverageYield() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<ReportByBean>  openAnimalList = new ArrayList<>();
+        String Query = "SELECT   Distinct Details.IdNo, details.[TotalMilk]/(cast(Julianday('Now') -Julianday(calvingDate)  as INT))  as [Average Milk kg],\n" +
+                "Lot.name as [HMB Name],Owner.Code,Owner.NAme  ||  ' '  || Owner.middle_name  ||  ' '   ||  Owner.Last_Name as [Farmer Name] , Owner.Phno\n" +
+                "FROM         Details INNER JOIN Herd ON Details.Herdno = Herd.Herdno INNER JOIN\n" +
+                "Lot ON Details.LotNo = Lot.Lotno  INNER JOIN  Owner ON Details.Name = Owner.Code ";
+        cursor = db.rawQuery(Query, null);
+        try {
+            openAnimalList.clear();
+            if (cursor.moveToFirst()) {
+                do {
+                    ReportByBean bean=new ReportByBean();
+                    bean.setFarmer(cursor.getString(cursor.getColumnIndex("Farmer Name")));
+                    bean.setHMB(cursor.getString(cursor.getColumnIndex("HMB Name")));
+                    openAnimalList.add(bean);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return openAnimalList;
+    }
+
+    public ArrayList<ReportByBean> PeakYield() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<ReportByBean>  openAnimalList = new ArrayList<>();
+        String Query = "SELECT   Distinct Details.IdNo, cast(Julianday('Now') -Julianday(calvingDate)  as INT)  as [Open Period],Lot.name as [HMBName],Owner.Code,Owner.NAme  ||  ' '  || Owner.middle_name  ||  ' '   ||  Owner.Last_Name as [Farmer Name] , Owner.Phno\n" +
+                "FROM         Details INNER JOIN Herd ON Details.Herdno = Herd.Herdno INNER JOIN\n" +
+                "Lot ON Details.LotNo = Lot.Lotno  INNER JOIN  Owner ON Details.Name = Owner.Code ";
+        cursor = db.rawQuery(Query, null);
+        try {
+            openAnimalList.clear();
+            if (cursor.moveToFirst()) {
+                do {
+                    ReportByBean bean=new ReportByBean();
+                    bean.setFarmer(cursor.getString(cursor.getColumnIndex("Farmer Name")));
+                    bean.setHMB(cursor.getString(cursor.getColumnIndex("HMBName")));
+                    openAnimalList.add(bean);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return openAnimalList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void changePassword(Context context,String userName, String old_password,String new_password) {
+        Cursor cursor = getReadableDatabase().query(USER_TABLE_NAME, new String[]{USER_TABLE_FIELD_UUID, USER_TABLE_FIELD_PASSWORD},
+                "PASSWORD=?", new String[]{old_password}, null, null, null, null);
+
+        if (cursor == null || cursor.getCount() <= 0) {
+            Toast.makeText(context, "User not exist.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            cursor.moveToFirst();
+            UpdatePassword(userName,new_password);
+            Toast.makeText(context, "User exist.", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    private void UpdatePassword(String userName, String new_password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor inner_cursor = null;
+        try {
+            inner_cursor = db.rawQuery("UPDATE User SET PASSWORD='"+new_password+"' WHERE UID='"+userName+"';", null);
+            Log.e("Query printing","UPDATE User SET PASSWORD='"+new_password+"' WHERE UID='"+userName+"';");
+            if (inner_cursor == null || inner_cursor.getCount() <= 0) {
+            }
+            inner_cursor.moveToFirst();
+            System.out.println("UPDATION STATUS = " + getUser(userName,new_password) + "  " + inner_cursor.getCount());
+
+        }catch (Exception ex){
+            Log.e("Printing Exception",ex.toString());
+        }
+        finally {
+            if (inner_cursor != null) {
+                inner_cursor.close();
+            }
+        }
+
+    }
+
+
+  public String UserArray(){
+
+      ArrayList<UserBean> userArrays = new ArrayList<UserBean>();
+      SQLiteDatabase db = this.getWritableDatabase();
+      Cursor cursor = null;
+      JSONObject animalStatusObject= null;
+
+      String Query = "select * from user";
+      cursor = db.rawQuery(Query, null);
+
+      if (cursor.moveToFirst()) {
+
+          do {
+
+              UserBean bean = new UserBean();
+              bean.setUID(cursor.getString(0));
+              bean.setPassword(cursor.getString(1));
+              bean.setGroups(cursor.getString(2));
+              bean.setHerd(cursor.getString(3));
+              bean.setCompanycode(cursor.getString(4));
+              bean.setApptype(cursor.getString(5));
+              bean.setUpdatedby(cursor.getString(6));
+              bean.setUpdatedat(cursor.getString(7));
+              bean.setUsercode(cursor.getString(8));
+              bean.setQrcode(cursor.getString(9));
+
+              userArrays.add(bean);
+
+          } while (cursor.moveToNext());
+      }
+
+      JSONArray UserArrayData = new JSONArray();
+      JSONObject objectUser = new JSONObject();
+      try {
+
+              for(int i=0; i<userArrays.size();i++) {
+                  JSONObject Tag = new JSONObject();
+                  Tag.put("UID", userArrays.get(i).getUID());
+                  Tag.put("PASSWORD", userArrays.get(i).getPassword());
+                  Tag.put("GROUP", userArrays.get(i).getGroups());
+                  Tag.put("HERD", userArrays.get(i).getHerd());
+                  Tag.put("CompanyCode", userArrays.get(i).getCompanycode());
+                  Tag.put("AppType", userArrays.get(i).getApptype());
+                  Tag.put("UpdatedBy", userArrays.get(i).getUpdatedby());
+                  Tag.put("UpdatedAt", userArrays.get(i).getUpdatedat());
+                  Tag.put("QRCode", userArrays.get(i).getQrcode());
+                  Tag.put("UserCode", userArrays.get(i).getUsercode());
+                  UserArrayData.put(Tag);
+              }
+
+              objectUser.put("User",UserArrayData);
+
+          }catch (JSONException e){
+
+          }
+
+      return  objectUser.toString();
+
+  }
+
+
+
+  public String getallUser(){
+
+      SQLiteDatabase db = this.getWritableDatabase();
+      Cursor cursor = null;
+      JSONObject animalStatusObject= null;
+
+      String Query = "select * from user";
+      cursor = db.rawQuery(Query, null);
+
+
+
+
+
+
+
+      return cursor.getCount()+"";
+
+
+  }
 
 
 

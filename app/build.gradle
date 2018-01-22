@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "provab.herdman"
@@ -33,11 +33,11 @@ dependencies {
     android {
         useLibrary 'org.apache.http.legacy'
     }
+
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.loopj.android:android-async-http:1.4.6'
     compile 'me.dm7.barcodescanner:zbar:1.8.4'
-
     compile 'com.android.support:support-v4:23.4.0'
 }

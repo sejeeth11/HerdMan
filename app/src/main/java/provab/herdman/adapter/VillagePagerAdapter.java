@@ -18,8 +18,8 @@ public class VillagePagerAdapter extends FragmentStatePagerAdapter {
 
 
 
-    String[] registrationForms={"Registration","Breeding","Purchase","Parent Details","Insurance Details","Other Details"};
-
+   // String[] registrationForms={"Registration","Breeding","Purchase","Parent Details","Insurance Details","Other Details"};
+   String[] registrationForms={"Registration","Breeding"};
 
     public VillagePagerAdapter(FragmentManager fm) {
         super(fm);

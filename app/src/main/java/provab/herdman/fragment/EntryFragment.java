@@ -55,6 +55,8 @@ public class EntryFragment extends Fragment {
 
     }
 
+
+
     public void setGridData() {
 
         gridView.setVisibility(View.VISIBLE);

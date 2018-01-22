@@ -64,8 +64,12 @@ public class SpinnerAdapter extends BaseAdapter {
             keys.hasNext();
             String valueString = (String)keys.next();
             String valueInt=currentObject.getString(valueString);
+
             spinnerLable.setText(valueString);
+
             spinnerLable.setTag(valueInt);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

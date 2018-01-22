@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText userPassword;
     UserInfo userInfo;
     SessionManager sessionManager;
-    Button SyncButton;
+    Button changepassword;
 
 
 
@@ -71,10 +72,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = (Button) findViewById(R.id.loginButton);
         userName = (EditText) findViewById(R.id.userName);
         userPassword = (EditText) findViewById(R.id.userPassword);
-        SyncButton = (Button)findViewById(R.id.Sync);
+        changepassword = (Button)findViewById(R.id.change_password);
+
 
         loginButton.setOnClickListener(this);
-        SyncButton.setOnClickListener(this);
+        changepassword.setOnClickListener(this);
+
         RequestParams params = new RequestParams();
         params.put("requestType", GET_REGISTERED_USERS_LIST);
         WebServiceSyncController wc = new WebServiceSyncController(this, this);
@@ -93,7 +96,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 SessionManager manager = new SessionManager(LoginActivity.this);
 
-                //  manager.checkLogin();
 
                 if ((userName.getText().toString().trim().equals("")) || userPassword.getText().toString().trim().equals("")) {
                     Toast.makeText(this, "BOTH THE FIELDS ARE MANDATORY", Toast.LENGTH_LONG).show();
@@ -121,7 +123,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 launchActivity();
                             } else {
                                 sessionManager.createLoginSession(userInfo.getUid(), userInfo.getPassword(), userInfo.getGroop(), userInfo.getHerd(), userInfo.getCompanycode(), userInfo.getApptype(), userInfo.getUpdatedby(), userInfo.getUpdatedat(), userInfo.getUsercode(), userInfo.getQrcode());
-
                                 Intent intent = new Intent(LoginActivity.this, SelectCategoryActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -130,16 +131,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         } else {
 
+
                             RequestParams params = new RequestParams();
                             params.put("requestType", GET_THIRD_AND_FOURTH_MASTERS);
                             params.put("Userid", userInfo.getUsercode());
-
                             params.put("Tablename", tableNameMaxId.toString());
                             WebServiceSyncController wc = new WebServiceSyncController(this, this);
                             wc.sendRequest(Links.GET_THIRD_AND_FOURTH_TYPE_MASTER, params, 3);
-
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putString("Sync_Login", "1");
                             editor.commit();
@@ -152,44 +151,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                 } else {
-                    Toast.makeText(this, "INVALID CREDENTIALS", Toast.LENGTH_LONG).show();
+
+                if(DatabaseHelper.getDatabaseHelperInstance(LoginActivity.this).getallUser().equalsIgnoreCase("0")){
+
+                    Toast.makeText(this, "Please Enable the Netconnection and Sync Server", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this, "Invalid  crediential", Toast.LENGTH_LONG).show();
+                }
+
+
                 }
                 break;
 
-            case R.id.Sync:
-                DatabaseHelper databaseHelpers = DatabaseHelper.getDatabaseHelperInstance(MyApplication.getContext());
-                userInfo = databaseHelpers.getUser(userName.getText().toString().trim(), userPassword.getText().toString().trim());
-
-                JSONObject tableNameMaxId = DatabaseHelper.getDatabaseHelperInstance(MyApplication.getContext()).getThirdTypeTableMaxId();
-                    if (tableNameMaxId != null) {
-                        Log.e("tablemaxid", tableNameMaxId.toString());
-
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-
-                        if (!preferences.getString("Sync_Login", "").equalsIgnoreCase("")) {
-                            Toast.makeText(getApplicationContext(),"Synced Succesfully",Toast.LENGTH_SHORT).show();
-                        } else {
-                            RequestParams params = new RequestParams();
-                            params.put("requestType", GET_THIRD_AND_FOURTH_MASTERS);
-                            params.put("Userid",  userInfo.getUsercode());
-                            params.put("Tablename", tableNameMaxId.toString());
-                            WebServiceSyncController wc = new WebServiceSyncController(this, this);
-                            wc.sendRequest(Links.GET_THIRD_AND_FOURTH_TYPE_MASTER, params, 5);
-
-                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("Sync_Login", "1");
-                            editor.commit();
 
 
-                        }
+            case R.id.change_password:
 
+                startActivity(new Intent(LoginActivity.this,ChangePasswordActivity.class));
 
-                    }
+                break;
 
-
-
-                    break;
 
 
         }
@@ -222,6 +203,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+
     @Override
     public void getResponse(String response ,int flag ) throws JSONException {
         final JSONObject responseObject = new JSONObject(response);
@@ -230,12 +213,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             JSONArray registeredUserList = responseObject.getJSONArray("User");
 
             Log.e("Calling","1");
+
             Log.e("Calling",responseObject.toString());
 
             DatabaseHelper.getDatabaseHelperInstance(MyApplication.getContext()).addRegisteredUsers(registeredUserList);
 
 
             System.out.println("Sync "+DatabaseHelper.getDatabaseHelperInstance(this).masterSyncStatus());
+
+
+
 
 
             if (!DatabaseHelper.getDatabaseHelperInstance(this).masterSyncStatus()) {
@@ -258,7 +245,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void run() {
                     try {
-                        Log.e("Calling","3");
+                        Log.e("Calling","2");
                         Log.e("Calling",responseObject.toString());
                         //System.out.println("FALG "+"THREE");
                         DatabaseHelper.getDatabaseHelperInstance(LoginActivity.this).addMasterData(responseObject.getJSONObject("OneTimeMasterTable"));
@@ -276,9 +263,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void run() {
                     try {
+
                         Log.e("Calling","2");
+
                         Log.e("Calling",responseObject.toString());
+
                         DatabaseHelper.getDatabaseHelperInstance(MyApplication.getContext()).saveThirdAndFourthTypeMaster(responseObject.getJSONObject("GetMasterData"));
+
                         try {
                             writeToSD();
                         }catch (IOException e){
@@ -299,36 +290,53 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (userInfo.getQrcode()) {
                 launchActivity();
             } else {
+
                 Intent intent = new Intent(LoginActivity.this, SelectCategoryActivity.class);
-                startActivity(intent);
-                finish();
+                        startActivity(intent);
+                        finish();
+
             }
         }else if(flag == 5){
-
-
             DatabaseHelper.getDatabaseHelperInstance(MyApplication.getContext()).saveThirdAndFourthTypeMaster(responseObject.getJSONObject("GetMasterData"));
-
             Toast.makeText(getApplicationContext(),"Synced Successfully",Toast.LENGTH_SHORT).show();
-
-
-
-
         }
-
     }
+
+
 
     @Override
     public void failureResponse(int statusCode) throws JSONException {
+
         Toast.makeText(this, "FAILED TO FETCH USERS = " + statusCode, Toast.LENGTH_LONG).show();
+
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void setQrCodeResult(String idNumber) {
 //        Toast.makeText(LoginActivity.this, ""+DatabaseHelper.getDatabaseHelperInstance(this).getDetails("310001930018"), Toast.LENGTH_SHORT).show();
+
+     //   idNumber = "789654324354";
+
         JSONObject detailsJsonObject=DatabaseHelper.getDatabaseHelperInstance(this).getDetails(idNumber);
 
 
+
+//        Log.e("Not Null",String.valueOf(detailsJsonObject.toString()));
+
+
         if (detailsJsonObject!=null){
+
+            sessionManager.createLoginSession(userInfo.getUid(), userInfo.getPassword(), userInfo.getGroop(), userInfo.getHerd(), userInfo.getCompanycode(), userInfo.getApptype(), userInfo.getUpdatedby(), userInfo.getUpdatedat(), userInfo.getUsercode(), userInfo.getQrcode());
             try{
                 GlobalVar.ID_NUMBER=detailsJsonObject.getString("IdNo");
                 GlobalVar.VILLAGE_CODE=detailsJsonObject.getString("LotNo");
@@ -352,8 +360,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         }else{
+
+            sessionManager.createLoginSession(userInfo.getUid(), userInfo.getPassword(), userInfo.getGroop(), userInfo.getHerd(), userInfo.getCompanycode(), userInfo.getApptype(), userInfo.getUpdatedby(), userInfo.getUpdatedat(), userInfo.getUsercode(), userInfo.getQrcode());
             Intent intent=new Intent(this,VillageMainActivity.class);
             intent.putExtra("idNumber",idNumber);
+            intent.putExtra("Hint","1");
             startActivity(intent);
             finish();
 

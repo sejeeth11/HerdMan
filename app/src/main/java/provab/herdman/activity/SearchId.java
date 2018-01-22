@@ -39,15 +39,11 @@ public class SearchId extends AppCompatActivity implements SearchView.OnQueryTex
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_id);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
-
-       setSupportActionBar(toolbar);
-
-
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Search Id");
-
         Id_list = (ListView)findViewById(R.id.list_ids);
-         data =  DatabaseHelper.getDatabaseHelperInstance(SearchId.this).getAll_ids();
+        data =  DatabaseHelper.getDatabaseHelperInstance(SearchId.this).getAll_ids();
         Adapter = new CustomSearchAdapter(SearchId.this,R.layout.id_row,data);
         Id_list.setAdapter(Adapter);
         Id_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -55,6 +51,8 @@ public class SearchId extends AppCompatActivity implements SearchView.OnQueryTex
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 GlobalVar.ID_NUMBER = data.get(position).getIdno();
+
+                // sejeeth Kumar
 
 
                 Intent intent = new Intent(SearchId.this, AnimalMainActivity.class);

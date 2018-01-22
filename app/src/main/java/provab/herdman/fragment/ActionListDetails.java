@@ -55,8 +55,8 @@ public class ActionListDetails extends Fragment {
 
 
     public ActionListDetails(ArrayList<ActionBean> all_data) {
+
         this.all_data = all_data;
-       //  this.duplicate = all_data;
         arrayList=new ArrayList<Test>();
 
     }
@@ -67,6 +67,7 @@ public class ActionListDetails extends Fragment {
         ArrayList<ActionBean> arra = new ArrayList<ActionBean>();
 
         LinkedHashSet<String> hashSet=new LinkedHashSet<>();
+
         LinkedHashSet<String> hashSet1 = new LinkedHashSet<>();
 
 
@@ -77,7 +78,7 @@ public class ActionListDetails extends Fragment {
         }
 
         Iterator itr = hashSet.iterator();
-        Iterator itr1 = hashSet1.iterator();
+
 
 
         while(itr.hasNext()) {
@@ -90,6 +91,7 @@ public class ActionListDetails extends Fragment {
             ArrayList<String> arrayListID=new ArrayList<String>();
             ArrayList<String> arrayList_Task = new ArrayList<String>();
             LinkedHashSet<String> taskSet=new LinkedHashSet<>();
+
             for(int j=0;j<all_data.size();j++) {
                 if(key.equals(all_data.get(j).getPhoneno())) {
                     arrayListID.add(all_data.get(j).getIdno());
@@ -106,21 +108,18 @@ public class ActionListDetails extends Fragment {
         }
 
 
-        for (int k=0;k<arrayList.size();k++)
-        {
+        for (int k=0;k<arrayList.size();k++) {
+
             LinkedHashSet<String> testset=arrayList.get(k).getTaskSet();
             ArrayList<String> Ids=arrayList.get(k).getArrayList();
             ArrayList<String> tasklist=arrayList.get(k).getTask_array();
             LinkedHashMap<String,ArrayList<String>> listLinkedHashMap=new LinkedHashMap<>();
-            for(String task:testset)
-            {
+
+            for(String task:testset) {
                 ArrayList<String> al=new ArrayList<>();
-                 for (int n=0;n< tasklist.size();n++)
-                 {
+                 for (int n=0;n< tasklist.size();n++) {
                        if(tasklist.get(n).equals(task)) {
-
                             al.add(Ids.get(n));
-
                        }
                  }
 
@@ -130,13 +129,7 @@ public class ActionListDetails extends Fragment {
 
              arrayList.get(k).setLinkedHashMap(listLinkedHashMap);
         }
-
-
-      //  for(int i=0)
         return  arra;
-
-
-
     }
 
 
@@ -221,7 +214,6 @@ public class ActionListDetails extends Fragment {
 
           public void Multiselect(){
 
-
               AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
               final ArrayList<String> lotList=DatabaseHelper.getDatabaseHelperInstance(getActivity()).get_Task();
               catch_data = new ArrayList<String>();
@@ -247,14 +239,14 @@ public class ActionListDetails extends Fragment {
                   @Override
                   public void onClick(DialogInterface dialog, int which) {
 
-                      for (int i = 0; i<checkedColors.length; i++){
-                          boolean checked = checkedColors[i];
-                          if (checked) {
-                              catch_data.add(colorsList.get(i));
-                          }
-                      }
-                      String data = TextUtils.join(",",catch_data);
-                      detailsInfoSpinner.setText(data);
+              for (int i = 0; i<checkedColors.length; i++){
+                  boolean checked = checkedColors[i];
+                  if (checked) {
+                      catch_data.add(colorsList.get(i));
+                  }
+              }
+              String data = TextUtils.join(",",catch_data);
+              detailsInfoSpinner.setText(data);
 
 
                   }

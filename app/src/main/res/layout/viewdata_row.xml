@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:gravity="center"
+
+    android:layout_height="100dp"
+    >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Id No 67868768768"
+        android:id="@+id/id"
+
+        android:textSize="20sp"
+        />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
+        android:id="@+id/success"
+        android:visibility="gone"
+
+
+        android:layout_height="30dp"
+        android:background="@drawable/successgreen"/>
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
+        android:id="@+id/failure"
+        android:visibility="gone"
+        android:layout_height="30dp"
+        android:background="@drawable/errorred"/>
+
+
+
+
+</LinearLayout>
